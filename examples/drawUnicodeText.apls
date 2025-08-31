@@ -1,0 +1,22 @@
+#!cd $dir && /usr/bin/dyalogscript $fileName
+globalThing←0
+rlDir ← '../link/',⍨⊃1⎕NPARTS''
+rl ← 0⎕Fix rlDir,'raylib.apln'
+rl.Init rlDir
+
+rl.InitWindow 800 800 'abc'
+validCodePoints ← ⎕UCS ⎕av~'┼├┤│' ⍝ Without characters that cause warnings, since they're too big
+
+font _ ← rl.LoadFontEx 'assets/APL386.ttf' 100 validCodePoints (≢validCodePoints)
+
+i←0
+:While (10>i)∧~rl.WindowShouldClose⍬
+    rl.BeginDrawing⍬
+        rl.ClearBackground rl.color.gray
+        rl.DrawFPS 100 100
+        str ← ⎕UCS'abc⍺⍵'
+        rl.DrawTextCodepoints font str (≢str) (20 20) 100 1 rl.color.white
+    rl.EndDrawing⍬
+:EndWhile
+rl.UnloadFont font
+rl.CloseWindow⍬

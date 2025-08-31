@@ -95,6 +95,64 @@ PtrToBytes ← {
   fromU1(⍵⍴0)⍺⍵
 }
 
+⍝ --------------------------- ⍝
+⍝ Special int vector handling ⍝
+⍝ --------------------------- ⍝
+LenStack ← ⍬
+popLenStack ← {l←⊃⌽LenStack ⋄ LenStack↓⍨←¯1 ⋄ l}
+intVecRefPopGen←{
+  _←'A'⎕NA lib,'|memcpy2 =I4[] P U8'
+  O←(⊃pop[atomTypes⍳⊂,'P']){
+    len←popLenStack⍬
+    intVecPtr ← ⍺⍺⍬
+    ptrToIntVec←(topRuntime+1)⊃stack
+    _←'Internal error, the string pointer popped was Null' Assert 0≢intVecPtr
+    r ← ⍵⍵((len⍴0) ptrToIntVec (len×4))
+    _←tempFree intVecPtr
+    r
+  }A
+  ⎕OR 'O'
+}
+intVecRefPushGen←{
+  _←'M'⎕NA lib,'|memcpy2 P <I4[] U8'
+
+  push←(⊃push[atomTypes⍳⊂,'P']){
+    LenStack,←≢⍵
+    (⌊≢⊢)⍵:0 Assert⍨'Expected int vector, got: ',⍎⍵
+    intVecPtr ← tempAlloc 4×≢⍵
+    _←'Internal error, pointer allocated for int vector was Null'Assert 0≢intVecPtr
+    _←⍵⍵(intVecPtr ⍵ (4×≢⍵))
+    ⍺⍺ intVecPtr
+  }M
+  ⎕OR 'push'
+}
+
+
+pop  ,← ⊂intVecRefPopGen ⍬
+push ,← ⊂intVecRefPushGen⍬
+atomTypes,←⊂'=I4'
+
+runAfterFuncDone ← 0/⊂id
+
+intVecPushGen←{
+  _←'M'⎕NA lib,'|memcpy2 P <I4[] U8'
+
+  push←(⊃push[atomTypes⍳⊂,'P']){
+    (⌊≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍎⍵
+    intVecPtr ← tempAlloc ≢⍵
+    _←'Internal error, string pointer allocated for string to push was Null'Assert 0≢intVecPtr
+    _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
+    r←⍺⍺ intVecPtr
+    F←intVecPtr{tempFree ⍺⍺}
+    runAfterFuncDone,←⊂⎕OR'F'
+    r
+  }M
+  ⎕OR 'push'
+}
+pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
+push ,← ⊂intVecPushGen⍬
+atomTypes,←⊂'<I4'
+
 ⍝ ---------------- ⍝
 ⍝ Stack operations ⍝
 ⍝ ---------------- ⍝
@@ -250,6 +308,8 @@ push,←⊂ StringPushGen ⍬
 
     maybeNilFunc ← ⍵⍵ ⍝ I tried simplifying out this assignment but was unsuccessful. ⎕OR with niladic functions is no joke.
     _←{⍬≡⍵:maybeNilFunc ⋄ maybeNilFunc⍵} args
+    _←{⍵∘⊢⍬}¨runAfterFuncDone
+    runAfterFuncDone ⊢← 0/⊂id
     _←Pop E._Each_⍬ (/⍨)~ref ⍝ First popping non reference inputs
     refOuts ←{⍵∘⊢⍬}E._Each_⍬⌽pop[atomTypes⍳in/⍨ref]
     {1≡≢⍵:⊃⍵⋄⍵} refOuts,⍨{⍵∘⊢⍬}E._Each_⍬⌽pop[atomTypes⍳out]
@@ -260,7 +320,7 @@ push,←⊂ StringPushGen ⍬
 ∇AfterDefaultDefinitions (mode replacementFileName)
   replacements ⊢← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/',replacementFileName
 
-  :if 'raylib'≡6↑replacementFileName
+  :if 'raylib'≡,∘'Replacement.apln.hide'⍣¯1⊢ replacementFileName
     SetTraceLogLevelRAYLIB TraceLogLevel.LOG_WARNING
     SetTargetFPSRAYLIB 60
   :EndIf
