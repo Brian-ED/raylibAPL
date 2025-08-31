@@ -118,7 +118,7 @@ intVecRefPushGen←{
 
   push←(⊃push[atomTypes⍳⊂,'P']){
     LenStack,←≢⍵
-    (⌊≢⊢)⍵:0 Assert⍨'Expected int vector, got: ',⍎⍵
+    (⌊≢⊢)⍵:0 Assert⍨'Expected int vector, got: ',⍕⍵
     intVecPtr ← tempAlloc 4×≢⍵
     _←'Internal error, pointer allocated for int vector was Null'Assert 0≢intVecPtr
     _←⍵⍵(intVecPtr ⍵ (4×≢⍵))
@@ -138,7 +138,7 @@ intVecPushGen←{
   _←'M'⎕NA lib,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
-    (⌊≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍎⍵
+    (⌊≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
     intVecPtr ← tempAlloc ≢⍵
     _←'Internal error, string pointer allocated for string to push was Null'Assert 0≢intVecPtr
     _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
@@ -269,7 +269,7 @@ StringPopGen←{
 StringPushGen←{
   _←'M'⎕NA lib,'|strcpy2 P <0T1[]'
   push←(⊃push[atomTypes⍳⊂,'P']){
-    (⍕≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍎⍵
+    (⍕≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
     strPtr ← tempAlloc 1+≢⍵
     _←'Internal error, string pointer allocated for string to push was Null'Assert 0≢strPtr
     _←⍵⍵ (strPtr ⍵)
