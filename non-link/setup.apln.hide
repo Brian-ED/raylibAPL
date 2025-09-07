@@ -317,29 +317,12 @@ push,←⊂ StringPushGen ⍬
 ∇
 
 
-∇AfterDefaultDefinitions (mode replacementFileName)
-  replacements ⊢← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/',replacementFileName
-
-  :if 'raylib'≡,∘'Replacement.apln.hide'⍣¯1⊢ replacementFileName
+∇AfterNewDefinitions libName
+  :if 'raylib'≡libName
     SetTraceLogLevelRAYLIB TraceLogLevel.LOG_WARNING
     SetTargetFPSRAYLIB 60
   :EndIf
-
-  :If mode∊1 3 ⍝ Automatic replacements
-    replacements {r←⍵ ⋄ r←r⊣'r'⎕NS⍺} ⎕THIS
-  :EndIf
-
-  :If mode∊2 3 ⍝ Custom replacements
-    customReplacements {r←⍵ ⋄ r←r⊣'r'⎕NS⍺} ⎕THIS
-  :EndIf
 ∇
-replacements ← ⎕NS''
-
-:Namespace customReplacements
-⍝ Automatic replacements are good enough currently :D
-
-:EndNamespace
-
 
 ⍝ list of rgba-format colors for convenience
 :Namespace color

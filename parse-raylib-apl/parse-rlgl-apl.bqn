@@ -74,8 +74,7 @@ Fix_StatePointer ← {
 libName ← "rlgl"
 libPrefix ← "RLAPI"
 
-⟨ header ⋄ autoErrorJson ⋄ replacementFilename
-  replacement ⋄ linkOutput
+⟨ header ⋄ autoErrorJson ⋄ linkOutput
 ⟩ ← GetFiles libName
 
 header {𝕩/˜¬∨`𝕩≠⊸↑𝕨⍷𝕩}˜↩ "/***********************************************************************************
@@ -88,7 +87,7 @@ header Fix_rlVertexBuffer↩
 header Fix_StatePointer↩
 
 ·‿·‿·‿·‿·‿functions ← headerTree ← libPrefix ParseHeader header
-replacement •FLines libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
+replacementsCode ← libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
 
-linkOutput •FChars libName‿replacementFilename FFISetup ToFFI headerTree
+linkOutput •FChars libName‿replacementsCode FFISetup ToFFI headerTree
 •Out linkOutput∾" successfully generated"

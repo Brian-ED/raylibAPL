@@ -8,8 +8,7 @@ MakeReplacement⟩ ← •Import "parseAPL.bqn"
 libName ← "raygui"
 libPrefix ← "RAYGUIAPI"
 
-⟨ header ⋄ autoErrorJson ⋄ replacementFilename
-  replacement ⋄ linkOutput
+⟨ header ⋄ autoErrorJson ⋄ linkOutput
 ⟩ ← GetFiles libName
 
 header {𝕩/˜¬∨`𝕩≠⊸↑𝕨⍷𝕩}˜↩ "/***********************************************************************************
@@ -19,7 +18,7 @@ header {𝕩/˜¬∨`𝕩≠⊸↑𝕨⍷𝕩}˜↩ "/**************************
 ************************************************************************************/
 "
 ·‿·‿·‿·‿·‿functions ← headerTree ← libPrefix ParseHeader header
-replacement •FLines libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
+replacementsCode ← libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
 
-linkOutput •FChars libName‿replacementFilename FFISetup [⟨"Texture2D"⟩⋄⟨"Texture"⟩] ToFFI headerTree
+linkOutput •FChars libName‿replacementsCode FFISetup [⟨"Texture2D"⟩⋄⟨"Texture"⟩] ToFFI headerTree
 •Out linkOutput∾" successfully generated"

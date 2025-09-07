@@ -8,8 +8,7 @@ MakeReplacement⟩ ← •Import "parseAPL.bqn"
 libName ← "physac"
 libPrefix ← "PHYSACDEF"
 
-⟨ header ⋄ autoErrorJson ⋄ replacementFilename
-  replacement ⋄ linkOutput
+⟨ header ⋄ autoErrorJson ⋄ linkOutput
 ⟩ ← GetFiles libName
 
 header {𝕩/˜¬∨`𝕩≠⊸↑𝕨⍷𝕩}˜↩ "/***********************************************************************************
@@ -19,9 +18,9 @@ header {𝕩/˜¬∨`𝕩≠⊸↑𝕨⍷𝕩}˜↩ "/**************************
 ************************************************************************************/
 "
 ·‿·‿·‿·‿·‿functions ← headerTree ← libPrefix ParseHeader header
-replacement •FLines libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
+replacementsCode ← libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
 
-linkOutput •FChars libName‿replacementFilename FFISetup [
+linkOutput •FChars libName‿replacementsCode FFISetup [
   "PhysicsShapeType"‿"PhysicsBody"
   "i"               ‿"ptr"
 ] ToFFI headerTree

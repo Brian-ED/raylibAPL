@@ -229,26 +229,24 @@ HeaderToFFI ← ToFFI ParseHeader
 GetFiles ← {𝕊libName:
   header ⇐ •FChars "include/"∾libName∾".h"
   autoErrorJson ⇐ •FChars "auto-error/"•file.At libName∾".json"
-  replacementFilename ⇐ libName∾"Replacement.apln.hide"
-  replacement ⇐ "../non-link"•file.At replacementFilename
   linkOutput ⇐ "../link/"•file.At libName∾".apln"
 }
 
-FFISetup ← {libName‿replacementFilename𝕊file:
-  file ∾⟜("AfterDefaultDefinitions mode '"∾replacementFilename∾"'"∾@+10)⌾(∾⟜"∇"⁼)↩
+FFISetup ← {libName‿replacementsCode𝕊file:
+  file ∾⟜("AfterNewDefinitions '"∾libName∾"'"∾@+10)⌾(∾⟜"∇"⁼)↩
+  file ∾⟜(∾replacementsCode∾¨@+10)∘(∾⟜(@+10))↩
   file ∾˜↩ ":Namespace "∾libName∾@+10
   file ∾ ↩ ":EndNamespace"∾˜@+10
   file ∾ ↩ @+10
 }
 
 HandleEverything ⇐ {libPrefix𝕊libName:
-  ⟨ header ⋄ autoErrorJson ⋄ replacementFilename
-    replacement ⋄ linkOutput
+  ⟨ header ⋄ autoErrorJson ⋄ linkOutput
   ⟩← GetFiles libName
   ·‿·‿·‿·‿·‿functions ← headerTree ← libPrefix ParseHeader header
 
-  replacement •FLines libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
-  linkOutput •FChars libName‿replacementFilename FFISetup ToFFI headerTree
+  replacementsCode ← libName‿autoErrorJson MakeReplacement ⍉(⍋⊏˘)⊸⊏(↕0‿5)∾´functions
+  linkOutput •FChars libName‿replacementsCode FFISetup ToFFI headerTree
   •Out linkOutput∾" successfully generated"
 }
 
@@ -285,12 +283,12 @@ MakeReplacement ← {libName‿jsonFile𝕊[names⋄comment⋄outType⋄argNames
   @∘{𝕊⟨n,aw,daw,an,r⟩:
     arg ← "_"⍟(0=≠)1↓∾' '∾¨an
     out∾↩<'∇'∾"r←"⊸∾⍟r n∾(' '⊸∾"("∾⁼∾⟜")"⁼)⍟(×∘≠∧∧´∘≠⟜' ') ('('∾∾⟜')')⍟(×≠) arg
-    {𝕊:out∾↩<"    '"∾n∾" errored' Assert ∨/"∾𝕩}⍟(¬"()"⊸≡) "("∾")"∾˜3↓∾{") ("∾3↓∾" ∧ scope"⊸∾¨𝕩}¨aw
-    {𝕊:out∾↩<"    '"∾n∾" errored' Assert ∧/"∾𝕩}⍟(¬"()"⊸≡) "("∾")"∾˜3↓∾{") ("∾3↓∾" ∨ scope"⊸∾¨𝕩}¨daw
-    {𝕊:out∾↩<"    '"∾n∾" errored' Assert ~scope"∾⊑1⊑𝕩⋄!1≡≠1⊑𝕩}⍟(¬∧´∘⊑)(n⊸≡¨begin)⊸/¨nested‿begin
-    {𝕊:out∾↩<"    scope"∾𝕩∾" ← 1"}∘⊑⍟(×≠) begin/˜n⊸≡¨begin
-    {𝕊:out∾↩<"    scope"∾𝕩∾" ← 0"}∘⊑⍟(×≠) begin/˜n⊸≡¨end
-    out∾↩"∇"⋈˜"    "∾(r⊑"_←"‿"r←")∾ (n∾"RAYLIB")∾ (¬×∘≠∧∧´∘≠⟜' ')◶⟨' '⊸∾⋄'('∾∾⟜')'⟩ arg
+    {𝕊:out∾↩<"  '"∾n∾" errored' Assert ∨/"∾𝕩}⍟(¬"()"⊸≡) "("∾")"∾˜3↓∾{") ("∾3↓∾" ∧ scope"⊸∾¨𝕩}¨aw
+    {𝕊:out∾↩<"  '"∾n∾" errored' Assert ∧/"∾𝕩}⍟(¬"()"⊸≡) "("∾")"∾˜3↓∾{") ("∾3↓∾" ∨ scope"⊸∾¨𝕩}¨daw
+    {𝕊:out∾↩<"  '"∾n∾" errored' Assert ~scope"∾⊑1⊑𝕩⋄!1≡≠1⊑𝕩}⍟(¬∧´∘⊑)(n⊸≡¨begin)⊸/¨nested‿begin
+    {𝕊:out∾↩<"  scope"∾𝕩∾" ← 1"}∘⊑⍟(×≠) begin/˜n⊸≡¨begin
+    {𝕊:out∾↩<"  scope"∾𝕩∾" ← 0"}∘⊑⍟(×≠) begin/˜n⊸≡¨end
+    out∾↩"∇"⋈˜"  "∾(r⊑"_←"‿"r←")∾ (n∾"RAYLIB")∾ (¬×∘≠∧∧´∘≠⟜' ')◶⟨' '⊸∾⋄'('∾∾⟜')'⟩ arg
 
   }˘⍉ [
     name
@@ -299,9 +297,6 @@ MakeReplacement ← {libName‿jsonFile𝕊[names⋄comment⋄outType⋄argNames
     argNames
     returnViaRef∨"void"⊸≢¨outtype
   ]
-
-  out∾˜↩(":Namespace "∾libName∾"Replacement")‿""
-  out∾↩""‿":EndNamespace"
 
   out # Return value
 }
