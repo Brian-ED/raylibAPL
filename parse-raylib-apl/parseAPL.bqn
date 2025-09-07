@@ -197,18 +197,18 @@ ToFFI ← {𝕨𝕊data: nameMapping ← 𝕨⊣↕2‿0
     sAllLinesExtended ← (↕∘≠⊸+⌾/↑˜+´+≠)s2Lines∨sLines
     s1LinesExtended‿s2LinesExtended ← s2Lines{((+´+≠)𝕩+𝕨)↑𝕨⊸{(¬𝕩∊/𝕨)/𝕩+↕≠𝕩}⌾/𝕨+𝕩}{𝔽⋈𝔽˜}sLines
 
-    (»s2LinesExtended)⊸/<˘""‿" ← "‿" R('"‿" ("‿")) ⍝"‿" ⍝ "⟨
-      ∾⟜"RAYLIB"¨⌾((»s2LinesExtended)⊸/)·∾⟜"Ref"¨⌾((0»s1LinesExtended)⊸/)MapNames¨
-      ""¨⌾((»s2LinesExtended)⊸/) MapFuncReturnType # Returns
-      ∾⟜"'"¨·∾⟜"RetPtr"¨⌾((»s2LinesExtended)⊸/)·∾⟜"Ref"¨⌾((0»s1LinesExtended)⊸/)MapNames¨ # Function Names
-      { # Argument types
+    <˘""‿" ←"‿" R('"‿" ("‿")) ⍝"‿" ⍝ "⟨
+      (»s2LinesExtended)⊸/·∾⟜"RAYLIB"¨⌾((»s2LinesExtended)⊸/)·∾⟜"Ref"¨⌾((0»s1LinesExtended)⊸/)MapNames¨
+      (»s2LinesExtended)⊸/·""¨⌾((»s2LinesExtended)⊸/) MapFuncReturnType # Returns
+      (»s2LinesExtended)⊸/·∾⟜"'"¨·∾⟜"RetPtr"¨⌾((»s2LinesExtended)⊸/)·∾⟜"Ref"¨⌾((0»s1LinesExtended)⊸/)MapNames¨ # Function Names
+      (»s2LinesExtended)⊸/{ # Argument types
         returnTypes ← MapArgTypes returnTypes/˜1+s2Lines∨sLines
         a←returnTypes <∘{"('="≡3↑𝕩?"ptr"; "('>',"∾𝕩∾")"}⊸∾¨⌾(((" "⊸≢¨returnTypes)∧0»s2LinesExtended)⊸/) MapArgTypes¨𝕩
         b← (2⌊≠)◶⟨⋈"⍬"⋄⟨",⊂"⟩∾⊢⋄⊢⟩¨a
         (1↓·∾' '⊸∾¨)¨b
       }
-      (∾' '⊸∾¨)¨ # Argument names turned into comments
-      ⊢ # Function comment
+      (»s2LinesExtended)⊸/(∾' '⊸∾¨)¨ # Argument names turned into comments
+      (»s2LinesExtended)⊸/ # Function comment
     ⟩_MetaParse ⍉[names⋄returns⋄names⋄argTypes⋄argNames⋄desc]
   }
   1↓∾nl∾¨top∾bottom∾˜∨`⌾⌽∘≠⟜' '⊸/¨∾1↓∾⟨""⟩⊸⋈¨definesDone‿enumsDone‿structsDone‿functionsDone
