@@ -146,19 +146,11 @@ ToFFI ← {𝕨𝕊data: nameMapping ← 𝕨⊣↕2‿0
   ⟩
   initTradFnHeader ← ⟨
     "⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes"
-    "∇{mode} Init pathToRaylibDotAPLN ;import"
+    "∇Init pathToRaylibDotAPLN ;import"
     ""
     "pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN"
-    ""
     "import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'"
     "'' ⎕NS 'import.'∘,¨import.⎕NL-2 3 9"
-    "⎕EX 'import'"
-    ""
-    "pathToBinary ← lib"
-    ":If 0=⎕NC 'mode'"
-    "  mode ← 3 ⍝ Default is All changes"
-    ":EndIf"
-    ""
   ⟩
   bottom ← ⟨
     "∇"

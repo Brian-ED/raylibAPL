@@ -47,7 +47,7 @@ prefix←FilePrefixGet ⍬
     :If 9≡40∘⎕ATX '##.##.TatinVars'
       ##.##.installraylib 1
     :Else
-      0 Assert⍨ 'File ',lib,' was not found'
+      0 Assert⍨ 'File ',pathToBinary,' was not found'
     :EndIf
   :EndIf
   success←1
@@ -67,22 +67,22 @@ fixPath←{
   ⍵
 }
 
-lib ← fixPath ∊1⎕NPARTS PlatfromToLibFile '-64'~⍨⊃#⎕WG'APLVersion'
-_ ← installAutoForTatin ⎕NEXISTS lib
-lib ← '"',lib,'"'
+pathToBinary ← fixPath ∊1⎕NPARTS PlatfromToLibFile '-64'~⍨⊃#⎕WG'APLVersion'
+_ ← installAutoForTatin ⎕NEXISTS pathToBinary
+pathToBinary ← '"',pathToBinary,'"'
 
 Read←{
-  _←'R'⎕NA lib,'|memcpy2 =U1[',(⍕⍺),'] P U8' ⍝ MA = Mid After. Means these convert to/from pointer. IF = Into From
+  _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8' ⍝ MA = Mid After. Means these convert to/from pointer. IF = Into From
   R (⍺⍴0) ⍵ ⍺
 }
 
 unitPopGen ← {
-  _←'CpyPop'⎕NA lib,'|memcpy2 >',⍵,' P U8'
+  _←'CpyPop'⎕NA pathToBinary,'|memcpy2 >',⍵,' P U8'
   o ← CpyPop{ ⍺⍺ (⍬ (Pop⍬) ⍵⍵) }⍺
   ⎕OR'o'
 }
 unitPushGen ← {
-  _←'CpyPush'⎕NA lib,'|memcpy2 P <',⍵,' U8'
+  _←'CpyPush'⎕NA pathToBinary,'|memcpy2 P <',⍵,' U8'
   o ← CpyPush{ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
   ⎕OR'o'
 }
@@ -91,7 +91,7 @@ pop  ← typeByteSize unitPopGen  E._Each_(0/⊂id)⊢ atomTypes
 push ← typeByteSize unitPushGen E._Each_(0/⊂id)⊢ atomTypes
 
 PtrToBytes ← {
-  _←'fromU1'⎕NA lib,'|memcpy2 =U1[','] P U8',⍨⍕⍵
+  _←'fromU1'⎕NA pathToBinary,'|memcpy2 =U1[','] P U8',⍨⍕⍵
   fromU1(⍵⍴0)⍺⍵
 }
 
@@ -101,7 +101,7 @@ PtrToBytes ← {
 LenStack ← ⍬
 popLenStack ← {l←⊃⌽LenStack ⋄ LenStack↓⍨←¯1 ⋄ l}
 intVecRefPopGen←{
-  _←'A'⎕NA lib,'|memcpy2 =I4[] P U8'
+  _←'A'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
   O←(⊃pop[atomTypes⍳⊂,'P']){
     len←popLenStack⍬
     intVecPtr ← ⍺⍺⍬
@@ -114,7 +114,7 @@ intVecRefPopGen←{
   ⎕OR 'O'
 }
 intVecRefPushGen←{
-  _←'M'⎕NA lib,'|memcpy2 P <I4[] U8'
+  _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
     LenStack,←≢⍵
@@ -135,7 +135,7 @@ atomTypes,←⊂'=I4'
 runAfterFuncDone ← 0/⊂id
 
 intVecPushGen←{
-  _←'M'⎕NA lib,'|memcpy2 P <I4[] U8'
+  _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
     (⌊≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
@@ -182,17 +182,17 @@ remPtrInfo ← {⍵/⍨~ (~atomTypes∊⍨⊂⍵)∧ ∧\'<=>'∊⍨⍵}
 ⍝ Handling pop and pushing structs ⍝
 ⍝ -------------------------------- ⍝
 structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}##.{⍎⍵._Each_(0/⊂,⊂'')⎕NL¯2} E
-⎕NA 'I4 ',lib,'|StructCount'
+⎕NA 'I4 ',pathToBinary,'|StructCount'
 
-⎕NA 'I4 ',lib,'|GetStructNameLength I4'
-⎕NA lib,'|GetStructName =C1[] I4 I4'
+⎕NA 'I4 ',pathToBinary,'|GetStructNameLength I4'
+⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
 structNames ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ¯1+⍳StructCount
 
 ('Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNames∊⍨NameOfStruct¨structs
 
-⎕NA 'I4 ',lib,'|GetStructSize I4'
-'tempAlloc' ⎕NA 'P ',lib,'|MemAlloc U4'
-'tempFree'  ⎕NA      lib,'|MemFree P'
+⎕NA 'I4 ',pathToBinary,'|GetStructSize I4'
+'tempAlloc' ⎕NA 'P ',pathToBinary,'|MemAlloc U4'
+'tempFree'  ⎕NA      pathToBinary,'|MemFree P'
 BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
 atomTypes ,← 1↓¨⊃¨structs
 
@@ -201,7 +201,7 @@ PopStructGen←{
   cleaned ← {0=≢⍵: ⍵ ⋄ NameOfStruct¨⍵} {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
   _←('Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
   args←' P'⍴⍨2×1+≢cleaned   ⍝ Includes result
-  _←'F'⎕NA lib,'|',name,'FROM',args
+  _←'F'⎕NA pathToBinary,'|',name,'FROM',args
 
   O←F{ ⍝ pop value
     i←atomTypes⍳⍵⍵
@@ -215,7 +215,7 @@ PushStructGen ← {
   cleaned ← NameOfStruct E._Each_ (0/⊂'') {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
   _←('Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
   args←' P'⍴⍨2×1+≢cleaned   ⍝ Includes result
-  _←'I'⎕NA lib,'|',name,'INTO',args
+  _←'I'⎕NA pathToBinary,'|',name,'INTO',args
 
   O←I{ ⍝ push value
     (name cleaned)←⍵⍵
@@ -255,7 +255,7 @@ atomTypes,←'=',¨atomTypes
 ⍝ --------------------------- ⍝
 atomTypes ,←⊂ str ← '=0C1'
 StringPopGen←{
-  _←'A'⎕NA lib,'|strcpy2 >0T1[] P'
+  _←'A'⎕NA pathToBinary,'|strcpy2 >0T1[] P'
   O←(⊃pop[atomTypes⍳⊂,'P']){
     strPtr ← ⍺⍺⍬
     ptrToStr←(topRuntime+1)⊃stack
@@ -267,7 +267,7 @@ StringPopGen←{
   ⎕OR 'O'
 }
 StringPushGen←{
-  _←'M'⎕NA lib,'|strcpy2 P <0T1[]'
+  _←'M'⎕NA pathToBinary,'|strcpy2 P <0T1[]'
   push←(⊃push[atomTypes⍳⊂,'P']){
     (⍕≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
     strPtr ← tempAlloc 1+≢⍵
@@ -283,7 +283,7 @@ push,←⊂ StringPushGen ⍬
 
 
 ∇F←R (name t);bm;in;out;io
-  'Func'⎕NA lib,'|',name,' P'⍴⍨2×≢t
+  'Func'⎕NA pathToBinary,'|',name,' P'⍴⍨2×≢t
   io←(~atomTypes∊⍨t)∧'='≡¨⊃¨t ⍝ In and out
   bm ← '>'≢¨⊃¨t ⍝ In or out mask, neither is impossible
   FF ← {(~atomTypes∊⍨⊂⍵)∧'='≡⊃⍵: ,'P' ⋄ ⍵}

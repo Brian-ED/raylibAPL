@@ -3,15 +3,12 @@ rlDir ← '../link/',⍨⊃1⎕NPARTS''
 rl ← 0⎕Fix rlDir,'raylib.apln'
 rl.Init rlDir
 
-_←'MemCpyF4'   ⎕NA rl.lib,'|memcpy2 P <F4[] U8'
-_←'MemCpyI4'   ⎕NA rl.lib,'|memcpy2 P <I4[] U8'
-_←'MemCpyI4Out'⎕NA rl.lib,'|memcpy2 =I4[] P U8'
-_←'MemCpyF4Out'⎕NA rl.lib,'|memcpy2 =F4[] P U8'
-_←'MovePtr'⎕NA'P ',rl.lib,'|MovePtr P I4'
+_←'MemCpyF4'   ⎕NA rl.pathToBinary,'|memcpy2 P <F4[] U8'
+_←'MemCpyI4'   ⎕NA rl.pathToBinary,'|memcpy2 P <I4[] U8'
+_←'MemCpyI4Out'⎕NA rl.pathToBinary,'|memcpy2 =I4[] P U8'
+_←'MemCpyF4Out'⎕NA rl.pathToBinary,'|memcpy2 =F4[] P U8'
+_←'MovePtr'⎕NA'P ',rl.pathToBinary,'|MovePtr P I4'
 
-⍝WriteF4 ← { ptr←⍺ ⋄ floats ← ⍵ ⋄ MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats)) }
-⍝WriteI4 ← { ptr←⍺ ⋄ ints   ← ⍵ ⋄ MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints)) }
-⍝ReadI4  ← { ptr←⍺ ⋄ amount ← ⍵ ⋄ MemCpyI4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount)) }
 ∇ptr WriteF4 floats
   MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
 ∇

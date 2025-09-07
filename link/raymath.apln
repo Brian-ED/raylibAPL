@@ -65,19 +65,11 @@ float16 ← ⍬ ⍝
   float16,←⊂ '⋄float16' ⍝    ⍝
   float16,←⊂ f,'[16]'   ⍝ v  ⍝
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
-∇{mode} Init pathToRaylibDotAPLN ;import
+∇Init pathToRaylibDotAPLN ;import
 
 pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN
-
 import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'
 '' ⎕NS 'import.'∘,¨import.⎕NL-2 3 9
-⎕EX 'import'
-
-pathToBinary ← lib
-:If 0=⎕NC 'mode'
-  mode ← 3 ⍝ Default is All changes
-:EndIf
-
 
 ClampRAYLIB                          ←            R('ClampRetPtr'                          (('>',f) f f f                                                 )) ⍝ value min max                                   ⍝
 LerpRAYLIB                           ←            R('LerpRetPtr'                           (('>',f) f f f                                                 )) ⍝ start end amount                                ⍝
