@@ -3,28 +3,6 @@ rlDir ← '../link/',⍨⊃1⎕NPARTS''
 rl ← 0⎕Fix rlDir,'raylib.apln'
 rl.Init rlDir
 
-_←'MemCpyF4'   ⎕NA rl.pathToBinary,'|memcpy2 P <F4[] U8'
-_←'MemCpyI4'   ⎕NA rl.pathToBinary,'|memcpy2 P <I4[] U8'
-_←'MemCpyI4Out'⎕NA rl.pathToBinary,'|memcpy2 =I4[] P U8'
-_←'MemCpyF4Out'⎕NA rl.pathToBinary,'|memcpy2 =F4[] P U8'
-_←'MovePtr'⎕NA'P ',rl.pathToBinary,'|MovePtr P I4'
-
-∇ptr WriteF4 floats
-  MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
-∇
-
-∇ptr WriteI4 ints
-  MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints))
-∇
-
-∇r←ptr ReadI4 amount
-  r←MemCpyI4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))
-∇
-∇r←ptr ReadF4 amount
-  r←MemCpyF4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))
-∇
-
-⍝  ⟨ReadI32 ⋄ ReadI8⟩⇐low
 (black white raywhite) ← rl.color.(black white raywhite)
 key ← rl.KeyboardKey
 
@@ -56,8 +34,8 @@ shader ← rl.LoadShader (⊃1⎕NPARTS'')∘,¨'assets/shaders/glsl330/'∘,¨'
 veiwPos ← rl.GetShaderLocation(shader 'viewPos')
 GF←{
   locsPtr ← shaderIndex.locs⊃shader
-  newLocsPtr ← MovePtr locsPtr (4×rl.ShaderLocationIndex.SHADER_LOC_VECTOR_VIEW)
-  newLocsPtr WriteI4 ,veiwPos
+  newLocsPtr ← rl.MovePtr locsPtr (4×rl.ShaderLocationIndex.SHADER_LOC_VECTOR_VIEW)
+  newLocsPtr rl.WriteI4 ,veiwPos
 }
 GF⍬
 ⍝ Create a RenderTexture2D to be used for render to texture
@@ -78,13 +56,13 @@ offsetLoc ← rl.GetShaderLocation (shader 'offset')
 ⍝ Report to dzaima: &ref seem to accept pointer objects
 
 cv2 ← rl.MemAlloc 8
-cv2 WriteF4 c
+cv2 rl.WriteF4 c
 
 zoomFloat ← rl.MemAlloc 4
-zoomFloat WriteF4 ,zoom
+zoomFloat rl.WriteF4 ,zoom
 
 offsetV2 ← rl.MemAlloc 8
-offsetV2 WriteF4 offset
+offsetV2 rl.WriteF4 offset
 
 ⍝ Upload the shader uniform values!
 rl.SetShaderValue (shader cLoc      cv2       rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
@@ -100,17 +78,17 @@ increment←0
 :While ~rl.WindowShouldClose⍬
 
   FF←{
-    cv2 WriteF4 ⍵
+    cv2 rl.WriteF4 ⍵
     rl.SetShaderValue (shader cLoc cv2 rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2)
   }
   FF⍤¯1⍣(0<≢a)⊢a←pointsOfInterest⌿⍨rl.IsKeyPressed¨key.KEY_ZERO+⍳6
 
   ⍝ If 'R' is pressed, reset zoom and offset.
   FG←{
-    zoomFloat WriteF4 ,zoom
+    zoomFloat rl.WriteF4 ,zoom
     offset⊢←0 0
-    offsetV2 WriteF4 offset
-    zoomFloat WriteF4 ,startingZoom
+    offsetV2 rl.WriteF4 offset
+    zoomFloat rl.WriteF4 ,startingZoom
     rl.SetShaderValue(shader zoomLoc   zoomFloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
     rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
@@ -136,7 +114,7 @@ increment←0
     offset +← offsetVelocity÷rl.GetFrameTime⍬
 
     ⍝ Update the shader uniform values!
-    zoomFloat WriteF4 ,zoom
+    zoomFloat rl.WriteF4 ,zoom
 
 
     offset⊢←0 0

@@ -324,6 +324,28 @@ push,←⊂ StringPushGen ⍬
   :EndIf
 ∇
 
+⍝ ----------------------------- ⍝
+⍝ Utilities alongside libraries ⍝
+⍝ ----------------------------- ⍝
+_←'MemCpyF4'   ⎕NA pathToBinary,'|memcpy2 P <F4[] U8'
+_←'MemCpyI4'   ⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
+_←'MemCpyI4Out'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
+_←'MemCpyF4Out'⎕NA pathToBinary,'|memcpy2 =F4[] P U8'
+_←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
+
+∇ptr WriteF4 floats
+  MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
+∇
+∇ptr WriteI4 ints
+  MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints))
+∇
+∇r←ptr ReadI4 amount
+  r←MemCpyI4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))
+∇
+∇r←ptr ReadF4 amount
+  r←MemCpyF4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))
+∇
+
 ⍝ list of rgba-format colors for convenience
 :Namespace color
   aliceblue            ← 240 248 255 255
