@@ -19,8 +19,6 @@ tesseractSize ← 1.8
 rl.InitWindow 800 800 'Tesseract'
 rl.DisableCursor⍬
 
-model ← rl.LoadModel 'OBJ/RubberDuck_LOD0.obj'
-
 ⍝ For every frame till user closes the window
 :While ~rl.WindowShouldClose⍬
     ⍝ Look for keystrokes from user, move the camera
@@ -78,5 +76,4 @@ model ← rl.LoadModel 'OBJ/RubberDuck_LOD0.obj'
     rl.EndDrawing⍬
 :EndWhile
 
-rl.UnloadModel model
 rl.CloseWindow⍬
