@@ -84,6 +84,8 @@ unitPopGen ← {
 unitPushGen ← {
   _←'CpyPush'⎕NA pathToBinary,'|memcpy2 P <',⍵,' U8'
   o ← CpyPush{ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
+  i ← CpyPush{_←'DOMAIN ERROR: Expected a whole number, got a non-whole number' Assert ⍵≡⌊⍵ ⋄ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
+  'I'≡⊃⍵: ⎕OR'i'
   ⎕OR'o'
 }
 typeByteSize ← {⍵≡,'P':8 ⋄ ⍎⊃⌽⍵} E._Each_ ⍬⊢ atomTypes
