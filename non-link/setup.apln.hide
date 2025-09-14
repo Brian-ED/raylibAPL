@@ -141,7 +141,7 @@ intVecPushGen←{
 
   push←(⊃push[atomTypes⍳⊂,'P']){
     (⌊≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
-    intVecPtr ← tempAlloc ≢⍵
+    intVecPtr ← tempAlloc 4×≢⍵
     _←'Internal error, string pointer allocated for string to push was Null'Assert 0≢intVecPtr
     _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
     r←⍺⍺ intVecPtr
