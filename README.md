@@ -5,15 +5,15 @@ raylibAPL is a library made to write cross-platform graphical applications using
 <img align="right" style="width:240px" src="https://github.com/user-attachments/assets/bf969426-7741-4eda-aa03-5c90ee6f87de">
 
 - Supports platforms Windows, Linux, and MacOS.
-- Input-methods: Keyboard, Mouse, Controler and Touchscreen.
-- Graphics: 2D, 3D, Sound, Text, Vector graphics, Images/Textures and shaders.
+- Input-methods: Keyboard, Mouse, Controler, and Touchscreen.
+- Graphics: 2D, 3D, Sound, Text, Vector graphics, Images/Textures, and shaders.
 - Multiple Fonts formats supported (TTF, OTF, Image fonts, AngelCode fonts).
 - Multiple texture formats supported, including compressed formats (DXT, ETC, ASTC).
-- Full 3D support, including 3D Shapes, Models, Billboards, Heightmaps and more!
+- Full 3D support, including 3D Shapes, Models, Billboards, Heightmaps, and more!
 - Flexible Materials system, supporting classic maps and PBR maps.
 - Animated 3D models supported (skeletal bones animation) (IQM, M3D, glTF).
 - Shaders support, including model shaders and postprocessing shaders.
-- Powerful math module for Vector, Matrix and Quaternion operations: raymath.
+- Powerful math module for Vector, Matrix, and Quaternion operations: raymath.
 - Audio loading and playing with streaming support (WAV, QOA, OGG, MP3, FLAC, XM, MOD).
 - VR stereo rendering support with configurable HMD device parameters.
 
