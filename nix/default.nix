@@ -9,12 +9,13 @@
   src = ./..;
 
   buildPhase = ''
-    mkdir -p $out/lib
-    cp ${temp-c-raylib}/lib/libtemp-c-raylib.so $out/lib
-    cp -r ./link $out
-    cp -r ./non-link $out
-    cp -r ./examples $out
-    cp -r ./testing $out
+    mkdir -p "$out/lib"
+    cp ${temp-c-raylib}/lib/libtemp-c-raylib.so "$out/lib"
+    cp -r ./link "$out"
+    cp -r ./non-link "$out"
+    cp -r ./examples "$out"
+    cp -r ./testing "$out"
+    cp apl-package.json "$out/apl-package.json"
   '';
 
   meta = {

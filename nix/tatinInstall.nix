@@ -5,15 +5,18 @@
   writeShellScriptBin,
   tatinCLI,
 }: let
-  tatinDirForLib = "./packages/BrianED-raylibAPL-${versionNums}";
+  tatinPkgName = "BrianED-raylibAPL-${versionNums}";
+  tatinDirForLib = "./packages/${tatinPkgName}";
   raylibLibInTatinPkgDir = "${tatinDirForLib}/lib/libraylib.so";
   raylibAPLTatinInstall = writeShellScriptBin "raylibAPLTatinInstall" ''
     if [ ! -d "${tatinDirForLib}" ]; then
       echo "Installing raylibAPL via tatin"
-      ${tatinCLI}/bin/tatin install raylibAPL
+      ${tatinCLI}/bin/tatin install ${tatinPkgName}
     fi
     if [ -e "${raylibLibInTatinPkgDir}" ]; then
-      echo "The raylib library is already installed at ${raylibLibInTatinPkgDir}"
+      echo "The raylib library is already installed at ${raylibLibInTatinPkgDir}."
+    elif [ ! -d ${tatinDirForLib} ]; then
+      echo "Error: Tatin did not install successfully. Aborting."
     else
       mkdir -p "${tatinDirForLib}/lib"
       ln -s "${raylibAPL}/lib/libtemp-c-raylib.so" "${raylibLibInTatinPkgDir}"
