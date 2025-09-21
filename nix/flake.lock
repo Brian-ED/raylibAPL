@@ -56,16 +56,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1753939845,
-        "narHash": "sha256-K2ViRJfdVGE8tpJejs8Qpvvejks1+A4GQej/lBk5y7I=",
+        "lastModified": 1758346548,
+        "narHash": "sha256-afXE7AJ7MY6wY1pg/Y6UPHNYPy5GtUKeBkrZZ/gC71E=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "94def634a20494ee057c76998843c015909d6311",
+        "rev": "b2a3852bd078e68dd2b3dfa8c00c67af1f0a7d20",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -154,11 +154,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755478790,
-        "narHash": "sha256-NlkUBT+2FwqRu/xB0LXQskFsLNRsnYgeABXQRW+8Ow8=",
+        "lastModified": 1758487884,
+        "narHash": "sha256-g0fz2GCxO4IhXTkJGflLP/p3NYhIwyVlUdLVT3gPmos=",
         "owner": "Brian-ED",
         "repo": "temp-c-raylib",
-        "rev": "803beb91841cc8e9b7e27b098ea02cae45ef4303",
+        "rev": "585427725c3f57067ea4302b36ee5504741d220d",
         "type": "github"
       },
       "original": {
