@@ -2,9 +2,10 @@
   lib,
   stdenv,
   temp-c-raylib,
+  versionNums
 }: stdenv.mkDerivation (finalAttrs: {
   pname = "raylibAPL";
-  version = "v0.2.0";
+  version = "v${versionNums}";
   src = ./..;
 
   buildPhase = ''

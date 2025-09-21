@@ -1,9 +1,12 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {}, raylibAPL, tatinInstall, tatinCLI }:
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
     git
     bqn
+    raylibAPL
+    tatinInstall
+    tatinCLI
   ];
 
   shellHook = ''
