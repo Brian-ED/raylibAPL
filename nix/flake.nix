@@ -12,7 +12,11 @@
   in flake-utils.lib.eachSystem systems (system:
     let
       tatinCLI = tatinCLIPkg.packages.${pkgs.system}.default;
-      versionNums = "0.2.0";
+      versionNums = let
+        splitPick = ss: i: s: builtins.elemAt (pkgs.lib.strings.splitString ss s) i;
+      in splitPick "\",\n" 0 (splitPick "  version: \"" 1
+        (builtins.readFile ../apl-package.json)
+      );
       pkgs = nixpkgs.legacyPackages.${system};
       raylibAPL = import ./default.nix {
         temp-c-raylib = temp-c-raylib.packages.${pkgs.system}.default;
