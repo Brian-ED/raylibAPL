@@ -7,7 +7,7 @@
 }: let
   tatinPkgName = "BrianED-raylibAPL-${versionNums}";
   tatinDirForLib = "./packages/${tatinPkgName}";
-  raylibLibInTatinPkgDir = "${tatinDirForLib}/lib/libraylib.so";
+  raylibLibInTatinPkgDir = "${tatinDirForLib}/lib/libtemp-c-raylib.so";
   raylibAPLTatinInstall = writeShellScriptBin "raylibAPLTatinInstall" ''
     if [ ! -d "${tatinDirForLib}" ]; then
       echo "Installing raylibAPL via tatin"
