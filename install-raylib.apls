@@ -1,4 +1,4 @@
-#!cd $dir && /usr/bin/dyalogscript $fileName
+#!/usr/local/bin/dyalogscript
 
 2 ⎕FIX 'link/installraylib.aplf'
 installraylib 0

@@ -1,9 +1,9 @@
-#!cd $dir && /usr/bin/dyalogscript $fileName
-⍝ Copied from https://github.com/arceryz/raylib-tesseract
-
-rlDir ← '../link/',⍨dir←⊃1⎕NPARTS''
+#!/usr/local/bin/dyalogscript
+rlDir ← '../link/',⍨⊃1⎕NPARTS''
 rl ← 0⎕Fix rlDir,'raylib.apln'
 rl.Init rlDir
+
+⍝ Copied from https://github.com/arceryz/raylib-tesseract
 
 ⍝ Define the camera to look into our 3d world
 camera  ←⊂ 10×4 4 4 ⍝ Camera position
