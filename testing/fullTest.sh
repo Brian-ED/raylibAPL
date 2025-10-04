@@ -10,14 +10,14 @@ git clone --filter=blob:none --recurse-submodules https://github.com/Brian-ED/te
 git submodule update --init --recursive ..
 cp result/lib/libtemp-c-raylib.so raylibAPL/lib/
 cd raylibAPL/examples
-dyalogscript "3d-duck.apls"
+dyalogscript "duck3D.apls"
 dyalogscript "basicStart.apls"
 dyalogscript "drawUnicodeText.apls"
-dyalogscript "game-of-life.apls"
-dyalogscript "music-test.apls"
+dyalogscript "gameOfLife.apls"
+dyalogscript "musicTest.apls"
 dyalogscript "shader.apls"
 dyalogscript "shapes.apls"
-dyalogscript "simple-tetris.apls"
+dyalogscript "simpleTetris.apls"
 dyalogscript "stripes.apls"
 dyalogscript "tesseract.apls"
 dyalogscript "texture.apls"

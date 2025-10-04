@@ -156,7 +156,7 @@ It is recommended that raylibAPL applications follow this pattern:
 
 ### Exploring Further
 
-- **Examples**: Check out the [examples directory](https://github.com/Brian-ED/raylibAPL/tree/master/examples) for practical demonstrations. They can be run via dyalogscript, for example run `3d-duck.apls` via `dyalogscript raylibAPL/examples/3d-duck.apls`.
+- **Examples**: Check out the [examples directory](https://github.com/Brian-ED/raylibAPL/tree/master/examples) for practical demonstrations. They can be run via dyalogscript, for example run `duck3D.apls` via `dyalogscript raylibAPL/examples/duck3D.apls`.
 - **API Reference**: Examine the [raylib.apln file](https://github.com/Brian-ED/raylibAPL/blob/master/link/raylib.apln) for available functions and constants. Please ignore the `RAYLIB` suffix on the functions, since you should call the error-checking [wrapped versions](https://github.com/Brian-ED/raylibAPL/blob/master/non-link/raylibReplacement.apln.hide).
 - **Scope information**: See [this json file](https://github.com/Brian-ED/raylibAPL/blob/master/parse-raylib-apl/auto-error/raylib.json) for all information on scopes. It is used to generate [replicas of raylib functions](https://github.com/Brian-ED/raylibAPL/blob/master/non-link/raylibReplacement.apln.hide) that error instead of crashing.
 - **raylib Documentation**: Sometimes, [raylib's documentation](https://github.com/raysan5/raylib/wiki) applies to raylibAPL aswell.

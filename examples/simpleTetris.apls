@@ -14,7 +14,7 @@ board ⍪← 0 0 0 0 0 0 0
 board ⍪← 0 0 0 0 0 0 0
 
 
-∇r←NewBoard
+NewBoard ← {
     a ←⍉⍪0 0 1 0
     a ⍪← 0 1 1 1
     a ⍪← 0 0 0 0
@@ -50,10 +50,10 @@ board ⍪← 0 0 0 0 0 0 0
     g ⍪← 0 0 0 1
     g ⍪← 0 0 0 0
 
-    r ← {(?≢⍵)⊃(⍴board)∘↑¨0,¨⍵}a b c d e f g
-∇
+    {(?≢⍵)⊃(⍴board)∘↑¨0,¨⍵}a b c d e f g
+}
 
-boardMoving ← NewBoard
+boardMoving ← NewBoard⍬
 
 board ← 0×boardMoving
 
@@ -67,7 +67,7 @@ frame ← 0
     :if (20|frame) = 0
         :If (∨/1∘⌷,∘,board∘∧) ¯1⊖boardMoving
             board∨←boardMoving
-            boardMoving←NewBoard
+            boardMoving←NewBoard⍬
         :Else
             boardMoving ← ¯1⊖boardMoving
         :EndIf
