@@ -11,7 +11,7 @@ Features not showcased in examples are crosssed out, since they are untested.
 - Multiple Fonts formats supported (TTF, ~~OTF~~, ~~Image fonts~~, ~~AngelCode fonts~~).
 - Multiple texture formats supported, ~~including compressed formats (DXT, ETC, ASTC).~~
 - Full 3D support, including ~~3D Shapes~~, Models, ~~Billboards~~, ~~Heightmaps~~, and more!
-- ~~Flexible Materials system, supporting classic maps and PBR maps.~~
+- Flexible Materials system, supporting classic maps and ~~PBR maps~~.
 - ~~Animated 3D models supported (skeletal bones animation) (IQM, M3D, glTF).~~
 - Shaders support, ~~including model shaders and postprocessing shaders~~.
 - ~~Powerful math module for Vector, Matrix, and Quaternion operations: raymath~~.
