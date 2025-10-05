@@ -36,15 +36,9 @@ atomTypes ,←⊂ i8   ← 'I8'
 atomTypes ,←⊂ u2   ← 'U2'
 atomTypes←∪atomTypes
 
-FilePrefixGet←{
-  9≡40∘⎕ATX '##.##.TatinVars':##.##.TatinVars.HOME,'/'
-  '../'
-}
-prefix←FilePrefixGet ⍬
-
 ∇ success←installAutoForTatin fileExists
   :If (~fileExists)
-    :If 9≡40∘⎕ATX '##.##.TatinVars'
+    :If 9≡40⎕ATX '##.##.TatinVars'
       ##.##.installraylib 1
     :Else
       0 Assert⍨ 'File ',pathToBinary,' was not found'
@@ -56,9 +50,9 @@ prefix←FilePrefixGet ⍬
 ⍝ Optain path to lib file for the current platform
 PlatfromToLibFile ← {
   platform←⍵
-  'Windows'≡platform:prefix,'lib/temp-c-raylib.dll'
-  'Mac'    ≡platform:prefix,'lib/libtemp-c-raylib.dylib'
-  'Linux'  ≡platform:prefix,'lib/libtemp-c-raylib.so'
+  'Windows'≡platform:'temp-c-raylib.dll'
+  'Mac'    ≡platform:'libtemp-c-raylib.dylib'
+  'Linux'  ≡platform:'libtemp-c-raylib.so'
   ('Unknown platform (',platform,')') Assert 0
 }
 
@@ -67,7 +61,9 @@ fixPath←{
   ⍵
 }
 
-pathToBinary ← fixPath ∊1⎕NPARTS PlatfromToLibFile '-64'~⍨⊃#⎕WG'APLVersion'
+binaryFileName ← PlatfromToLibFile '-64'~⍨⊃#⎕WG'APLVersion'
+pathToBinary ← ##.pathToRaylibDotAPLN,'../lib/',binaryFileName
+pathToBinary ← fixPath ∊1⎕NPARTS pathToBinary
 _ ← installAutoForTatin ⎕NEXISTS pathToBinary
 pathToBinary ← '"',pathToBinary,'"'
 

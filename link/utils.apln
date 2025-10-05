@@ -1,0 +1,29 @@
+:Namespace utils
+Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺{(⎕←⍺) ⎕SIGNAL 8}⍵ ⋄ shy←0}
+
+shortLibNames ← 'rl'     'rg'     'rp'     'rm'      'rlgl'
+longLibNames  ← 'raylib' 'raygui' 'physac' 'raymath' 'rlgl'
+
+TrimImports ← {
+  st←⍵
+  st⊣shortLibNames {st⊢←st/⍨~(¯1∘⌽∨⊢)st⍷⍨(⍺,' ← 0⎕Fix rlDir,''',⍵,'.apln''')(⍺,'.Init rlDir')}¨longLibNames
+}
+
+topLines ←,⊂ '#!/usr/local/bin/dyalogscript'
+topLines ,←⊂ 'rlDir ← ''../link/'',⍨⊃1⎕NPARTS'''''
+topLen ← ≢topLines
+
+∇raylibAPL RunWithTatin (rlDir example) ;pathToMe;pathToEx;scriptText;errMsgTopIncorrect;rlDir
+  rlDir ← ∊1⎕NParts rlDir,'/link/'
+  rlDir raylibAPL.(⊂⍤⊣{⍵.Init⍺}¨⍎¨⍤⊢)longLibNames
+  scriptText←⊃⎕NGet example 1
+  errMsgTopIncorrect ← 'Filepath does not point to a valid example. Top ',(⍕topLen),' lines did not match the standard'
+  errMsgTopIncorrect Assert topLines≡2↑scriptText
+  'Example cannot include ∇s'Assert∧/'∇'≠⊃,/4↓scriptText
+  pathToMe←⊃1⎕NPARTS''
+  pathToEx←⊃1⎕NParts example
+  ⎕SE.Dyalog.Utils.CD pathToEx
+    (0⎕Fix '∇' ':EndNamespace',⍨(':Namespace n',⍥⊂'∇namespaceName (','rlDir)',⍨∊,∘' '¨shortLibNames),TrimImports topLen↓scriptText).namespaceName (raylibAPL.(⍎¨)longLibNames),⊂rlDir
+  ⎕SE.Dyalog.Utils.CD pathToMe
+∇
+:EndNamespace

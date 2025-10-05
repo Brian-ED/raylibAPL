@@ -1,0 +1,15 @@
+#!/usr/local/bin/dyalogscript DYALOG_INITSESSION=1
+⎕SE.(⍎⊃2⎕FIX'/StartupSession.aplf',⍨2⎕NQ # 'GetEnvironment' 'DYALOG') ⍝ Start the session
+d←'..' ⍝ Relative path to raylibAPL root
+_←(d,'/link')⎕SE.Link.Create⍨{⍵⊣⍵.((watch fastLoad ignoreconfig)←'none' 1 1)}⎕NS'' ⍝ Using link
+exs ← x←('.apls'∘≡¨¯5↑¨x)/x←⊃0⎕NINFO⍠1⊢d,'/examples/*'
+{link link.utils.RunWithTatin d⍵}¨exs
+platform ← '-64'~⍨⊃#⎕WG'APLVersion'
+cmd←''
+:If 'Windows'≡platform ⋄ cmd←'Powershell.exe -Command "dyalogscript" ' ⋄ :EndIf
+:If 'Linux'  ≡platform ⋄ cmd←'dyalogscript '                           ⋄ :EndIf
+:If 'Mac'    ≡platform ⋄ cmd←'dyalogscript '                           ⋄ :EndIf
+→0⍴⍨''≡cmd
+]cd ../examples
+⎕SH¨cmd∘,¨exs
+]cd ../testing
