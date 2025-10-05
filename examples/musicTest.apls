@@ -20,27 +20,27 @@ rl.SetMusicVolume music 0.75
 :While ~rl.WindowShouldClose⍬
     ⍝ Update music stream (required for music to play)
     rl.UpdateMusicStream music
-    
+
     ⍝ Check for spacebar press to pause/resume
     :If rl.IsKeyPressed rl.KeyboardKey.KEY_SPACE
         :If rl.IsMusicStreamPlaying music
-            rl.PauseMusicStream music        
+            rl.PauseMusicStream music
         :Else
             rl.ResumeMusicStream music
        :EndIf
     :EndIf
-    
+
     rl.BeginDrawing⍬
         rl.ClearBackground rl.color.gray
-        
+
         ⍝ Display instructions
         rl.DrawText 'Music Test - Piano Loop' 10 10 20 rl.color.white
         rl.DrawText 'Press SPACE to pause/resume' 10 40 16 rl.color.lightgray
-        
+
         ⍝ Show music status
         status ← ('Paused' 'Playing')[1+rl.IsMusicStreamPlaying music]
         rl.DrawText (∊'Status: ',status) 10 70 16 ,rl.color.red rl.color.green[1+rl.IsMusicStreamPlaying music]
-        
+
     rl.EndDrawing⍬
 :EndWhile
 
