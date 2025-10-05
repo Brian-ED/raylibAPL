@@ -6,10 +6,9 @@ rl.Init rlDir
 (black white raywhite) ← rl.color.(black white raywhite)
 key ← rl.KeyboardKey
 
-:Namespace shaderIndex ⍝ Shader
-  id   ← 1+0 ⍝ u     ⍝ Shader program id
-  locs ← 1+1 ⍝ '*',i ⍝ Shader locations array (RL_MAX_SHADER_LOCATIONS)
-:EndNamespace
+shaderIndex ← ⎕NS⍬ ⍝ Shader
+shaderIndex.id   ← 1+0 ⍝ u     ⍝ Shader program id
+shaderIndex.locs ← 1+1 ⍝ '*',i ⍝ Shader locations array (RL_MAX_SHADER_LOCATIONS)
 
 ⍝ A few good julia sets
 pointsOfInterest ← 0 2⍴⍬
@@ -25,7 +24,6 @@ offsetSpeedMul ← 2
 startingZoom ← 0.75
 
 rl.InitWindow 1920 1080 'raylib [shaders] example - basic lighting'
-rl.SetExitKey 0
 
 ⍝ Load julia set shader
 shader ← rl.LoadShader (⊃1⎕NPARTS'')∘,¨'assets/shaders/glsl330/'∘,¨'default.vs' 'julia_set.fs'
@@ -53,7 +51,6 @@ zoom ← startingZoom
 cLoc      ← rl.GetShaderLocation (shader (,'c')  )
 zoomLoc   ← rl.GetShaderLocation (shader 'zoom'  )
 offsetLoc ← rl.GetShaderLocation (shader 'offset')
-⍝ Report to dzaima: &ref seem to accept pointer objects
 
 cv2 ← rl.MemAlloc 8
 cv2 rl.WriteF4 c
@@ -72,11 +69,8 @@ rl.SetShaderValue (shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UN
 incrementSpeed ← 0 ⍝ Multiplier of speed to change c value
 showControls ← 1   ⍝ Show controls
 
-increment←0
-
 ⍝ Main game loop
 :While ~rl.WindowShouldClose⍬
-
   FF←{
     cv2 rl.WriteF4 ⍵
     rl.SetShaderValue (shader cLoc cv2 rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2)
@@ -85,10 +79,10 @@ increment←0
 
   ⍝ If 'R' is pressed, reset zoom and offset.
   FG←{
-    zoomFloat rl.WriteF4 ,zoom
+    zoom⊢←startingZoom
     offset⊢←0 0
+    zoomFloat rl.WriteF4 ,zoom
     offsetV2 rl.WriteF4 offset
-    zoomFloat rl.WriteF4 ,startingZoom
     rl.SetShaderValue(shader zoomLoc   zoomFloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
     rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
@@ -97,45 +91,37 @@ increment←0
   incrementSpeed ×← ~rl.IsKeyPressed key.KEY_SPACE ⍝ Pause animation (c change)
   showControls   ≠←  rl.IsKeyPressed key.KEY_F1    ⍝ Toggle whether or not to show controls
 
-  increment +← key.KEY_RIGHT (-⍥rl.IsKeyPressed) key.KEY_LEFT
+  incrementSpeed +← key.KEY_RIGHT (-⍥rl.IsKeyPressed) key.KEY_LEFT
 
   ⍝ If either left or right button is pressed, zoom in/out.
   FH←{
     ⍝ Change zoom. If Mouse left -> zoom in. Mouse right -> zoom out.
-    zoom ×← *0.01×-/rl.IsMouseButtonDown (rl.MouseButton.MOUSE_BUTTON_LEFT rl.MouseButton.MOUSE_BUTTON_RIGHT)
+    zoom ×← *0.01×-/rl.IsMouseButtonDown¨(rl.MouseButton.MOUSE_BUTTON_LEFT rl.MouseButton.MOUSE_BUTTON_RIGHT)
     mousePos ← rl.GetMousePosition⍬
     ⍝ Find the velocity at which to change the camera. Take the distance of the mouse
     ⍝ from the center of the screen as the direction, and adjust magnitude based on
     ⍝ the current zoom.
-    offsetVelocity ← (0.5-⍨mousePos÷rl.window.GetSize⍬)×offsetSpeedMul÷zoom
+    offsetVelocity ← (offsetSpeedMul÷zoom)÷¯0.5+mousePos÷(rl.GetScreenWidth⍬)(rl.GetScreenHeight⍬)
 
-
-    ⍝ Apply move velocity to camera
-    offset +← offsetVelocity÷rl.GetFrameTime⍬
-
-    ⍝ Update the shader uniform values!
-    zoomFloat rl.WriteF4 ,zoom
-
+    offset +← offsetVelocity÷rl.GetFrameTime⍬ ⍝ Apply move velocity to camera
+    zoomFloat rl.WriteF4 ,zoom ⍝ Update the shader uniform values!
 
     offset⊢←0 0
     (¯1+⍳2)offsetV2.Write¨offset
 
     rl.SetShaderValue(shader zoomLoc   zoomfloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
-
-
     rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
 
   FH⍣(rl.IsMouseButtonDown rl.MouseButton.MOUSE_BUTTON_RIGHT)⊢⍬
 
-
-  rl.SetShaderValue (shader cLoc cv2 rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2)
-  ⍝----------------------------------------------------------------------------------
+  ⍝ Increment c value with time
+  c +← (rl.GetFrameTime⍬)×incrementSpeed×0.0005
+  cv2 rl.WriteF4 c
+  rl.SetShaderValue(shader cLoc cv2 rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2)
 
   rl.BeginDrawing⍬
-
     rl.ClearBackground rl.color.black
-
     ⍝ Draw the saved texture and rendered julia set with shader
     ⍝ NOTE: We do not invert texture on Y, already considered inside shader
     rl.BeginShaderMode shader
