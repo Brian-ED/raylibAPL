@@ -56,11 +56,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1758346548,
-        "narHash": "sha256-afXE7AJ7MY6wY1pg/Y6UPHNYPy5GtUKeBkrZZ/gC71E=",
+        "lastModified": 1759994382,
+        "narHash": "sha256-wSK+3UkalDZRVHGCRikZ//CyZUJWDJkBDTQX1+G77Ow=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b2a3852bd078e68dd2b3dfa8c00c67af1f0a7d20",
+        "rev": "5da4a26309e796daa7ffca72df93dbe53b8164c7",
         "type": "github"
       },
       "original": {
@@ -132,11 +132,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1758482972,
-        "narHash": "sha256-VWnEWQZ7Acz8coriDF3l5ctpFPxmr5ou3rCo8GZrobE=",
+        "lastModified": 1759619842,
+        "narHash": "sha256-G0wCSY6rb9qpQCAaghthNQWSguNMmxvgINhEx6HXdA4=",
         "owner": "Bombardier-C-Kram",
         "repo": "TatinCLI",
-        "rev": "e761b4dc1da58ef6ef0c0e19919873cf234a6f58",
+        "rev": "9b9ec06a7a7fde47f5bd6f9c840fdf2ec04a2796",
         "type": "github"
       },
       "original": {
@@ -154,11 +154,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758487884,
-        "narHash": "sha256-g0fz2GCxO4IhXTkJGflLP/p3NYhIwyVlUdLVT3gPmos=",
+        "lastModified": 1758490801,
+        "narHash": "sha256-d+TYMeraHDNuJ+7EX9ZTZkfvJhb6v9otfzzhcf2jPic=",
         "owner": "Brian-ED",
         "repo": "temp-c-raylib",
-        "rev": "585427725c3f57067ea4302b36ee5504741d220d",
+        "rev": "3448499461f8f1e40d8850d445fa7912379b9605",
         "type": "github"
       },
       "original": {
