@@ -154,11 +154,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758490801,
-        "narHash": "sha256-d+TYMeraHDNuJ+7EX9ZTZkfvJhb6v9otfzzhcf2jPic=",
+        "lastModified": 1761054586,
+        "narHash": "sha256-gjXPoMDL7xudWv+36u7ATFD/I9vC936Seg/sQYmBY30=",
         "owner": "Brian-ED",
         "repo": "temp-c-raylib",
-        "rev": "3448499461f8f1e40d8850d445fa7912379b9605",
+        "rev": "ca2de71367cbd6edac2035186a28015a31fdd90f",
         "type": "github"
       },
       "original": {

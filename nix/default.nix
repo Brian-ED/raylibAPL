@@ -10,7 +10,7 @@
 
   buildPhase = ''
     mkdir -p "$out/lib"
-    cp ${temp-c-raylib}/lib/libtemp-c-raylib.so "$out/lib"
+    ln -s "${temp-c-raylib}/lib/libraylib.so" "$out/lib/libtemp-c-raylib.so"
     cp -r ./link "$out"
     cp -r ./non-link "$out"
     cp -r ./examples "$out"
