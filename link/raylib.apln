@@ -385,102 +385,90 @@ u2   ← 'U2'
 ustr ← '=C1'
 str  ← '=0C1'
 
-v2 ← ⍬ ⍝ Vector2, 2 components
-  v2,←⊂ '⋄Vector2' ⍝    ⍝
-  v2,←⊂ f          ⍝ x  ⍝ Vector x component
-  v2,←⊂ f          ⍝ y  ⍝ Vector y component
+v2 ← ⊂'⋄Vector2' ⍝ Vector2, 2 components
+  v2,←⊂ f ⍝ x  ⍝ Vector x component
+  v2,←⊂ f ⍝ y  ⍝ Vector y component
 
-v3 ← ⍬ ⍝ Vector3, 3 components
-  v3,←⊂ '⋄Vector3' ⍝    ⍝
-  v3,←⊂ f          ⍝ x  ⍝ Vector x component
-  v3,←⊂ f          ⍝ y  ⍝ Vector y component
-  v3,←⊂ f          ⍝ z  ⍝ Vector z component
+v3 ← ⊂'⋄Vector3' ⍝ Vector3, 3 components
+  v3,←⊂ f ⍝ x  ⍝ Vector x component
+  v3,←⊂ f ⍝ y  ⍝ Vector y component
+  v3,←⊂ f ⍝ z  ⍝ Vector z component
 
-v4 ← ⍬ ⍝ Vector4, 4 components
-  v4,←⊂ '⋄Vector4' ⍝    ⍝
-  v4,←⊂ f          ⍝ x  ⍝ Vector x component
-  v4,←⊂ f          ⍝ y  ⍝ Vector y component
-  v4,←⊂ f          ⍝ z  ⍝ Vector z component
-  v4,←⊂ f          ⍝ w  ⍝ Vector w component
+v4 ← ⊂'⋄Vector4' ⍝ Vector4, 4 components
+  v4,←⊂ f ⍝ x  ⍝ Vector x component
+  v4,←⊂ f ⍝ y  ⍝ Vector y component
+  v4,←⊂ f ⍝ z  ⍝ Vector z component
+  v4,←⊂ f ⍝ w  ⍝ Vector w component
 Quaternion ← v4 ⍝ Quaternion, 4 components (Vector4 alias)
 
-Matrix ← ⍬ ⍝ Matrix, 4x4 components, column major, OpenGL style, right-handed
-  Matrix,←⊂ '⋄Matrix' ⍝      ⍝
-  Matrix,←⊂ f         ⍝ m0   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m4   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m8   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m12  ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m1   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m5   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m9   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m13  ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m2   ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m6   ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m10  ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m14  ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m3   ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m7   ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m11  ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m15  ⍝ Matrix fourth row (4 components)
+Matrix ← ⊂'⋄Matrix' ⍝ Matrix, 4x4 components, column major, OpenGL style, right-handed
+  Matrix,←⊂ f ⍝ m0   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m4   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m8   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m12  ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m1   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m5   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m9   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m13  ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m2   ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m6   ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m10  ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m14  ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m3   ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m7   ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m11  ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m15  ⍝ Matrix fourth row (4 components)
 
-Color ← ⍬ ⍝ Color, 4 components, R8G8B8A8 (32bit)
-  Color,←⊂ '⋄Color' ⍝    ⍝
-  Color,←⊂ u1       ⍝ r  ⍝ Color red value
-  Color,←⊂ u1       ⍝ g  ⍝ Color green value
-  Color,←⊂ u1       ⍝ b  ⍝ Color blue value
-  Color,←⊂ u1       ⍝ a  ⍝ Color alpha value
+Color ← ⊂'⋄Color' ⍝ Color, 4 components, R8G8B8A8 (32bit)
+  Color,←⊂ u1 ⍝ r  ⍝ Color red value
+  Color,←⊂ u1 ⍝ g  ⍝ Color green value
+  Color,←⊂ u1 ⍝ b  ⍝ Color blue value
+  Color,←⊂ u1 ⍝ a  ⍝ Color alpha value
 
-Rectangle ← ⍬ ⍝ Rectangle, 4 components
-  Rectangle,←⊂ '⋄Rectangle' ⍝         ⍝
-  Rectangle,←⊂ f            ⍝ x       ⍝ Rectangle top-left corner position x
-  Rectangle,←⊂ f            ⍝ y       ⍝ Rectangle top-left corner position y
-  Rectangle,←⊂ f            ⍝ width   ⍝ Rectangle width
-  Rectangle,←⊂ f            ⍝ height  ⍝ Rectangle height
+Rectangle ← ⊂'⋄Rectangle' ⍝ Rectangle, 4 components
+  Rectangle,←⊂ f ⍝ x       ⍝ Rectangle top-left corner position x
+  Rectangle,←⊂ f ⍝ y       ⍝ Rectangle top-left corner position y
+  Rectangle,←⊂ f ⍝ width   ⍝ Rectangle width
+  Rectangle,←⊂ f ⍝ height  ⍝ Rectangle height
 
-Image ← ⍬ ⍝ Image, pixel data stored in CPU memory (RAM)
-  Image,←⊂ '⋄Image' ⍝          ⍝
-  Image,←⊂ ptr      ⍝ data     ⍝ Image raw data
-  Image,←⊂ i        ⍝ width    ⍝ Image base width
-  Image,←⊂ i        ⍝ height   ⍝ Image base height
-  Image,←⊂ i        ⍝ mipmaps  ⍝ Mipmap levels, 1 by default
-  Image,←⊂ i        ⍝ format   ⍝ Data format (PixelFormat type)
+Image ← ⊂'⋄Image' ⍝ Image, pixel data stored in CPU memory (RAM)
+  Image,←⊂ ptr ⍝ data     ⍝ Image raw data
+  Image,←⊂ i   ⍝ width    ⍝ Image base width
+  Image,←⊂ i   ⍝ height   ⍝ Image base height
+  Image,←⊂ i   ⍝ mipmaps  ⍝ Mipmap levels, 1 by default
+  Image,←⊂ i   ⍝ format   ⍝ Data format (PixelFormat type)
 
-Texture ← ⍬ ⍝ Texture, tex data stored in GPU memory (VRAM)
-  Texture,←⊂ '⋄Texture' ⍝          ⍝
-  Texture,←⊂ u          ⍝ id       ⍝ OpenGL texture id
-  Texture,←⊂ i          ⍝ width    ⍝ Texture base width
-  Texture,←⊂ i          ⍝ height   ⍝ Texture base height
-  Texture,←⊂ i          ⍝ mipmaps  ⍝ Mipmap levels, 1 by default
-  Texture,←⊂ i          ⍝ format   ⍝ Data format (PixelFormat type)
+Texture ← ⊂'⋄Texture' ⍝ Texture, tex data stored in GPU memory (VRAM)
+  Texture,←⊂ u ⍝ id       ⍝ OpenGL texture id
+  Texture,←⊂ i ⍝ width    ⍝ Texture base width
+  Texture,←⊂ i ⍝ height   ⍝ Texture base height
+  Texture,←⊂ i ⍝ mipmaps  ⍝ Mipmap levels, 1 by default
+  Texture,←⊂ i ⍝ format   ⍝ Data format (PixelFormat type)
 Texture2D ← Texture ⍝ Texture2D, same as Texture
 TextureCubemap ← Texture ⍝ TextureCubemap, same as Texture
 
-RenderTexture ← ⍬ ⍝ RenderTexture, fbo for texture rendering
-  RenderTexture,←⊂ '⋄RenderTexture' ⍝          ⍝
-  RenderTexture,←⊂ u                ⍝ id       ⍝ OpenGL framebuffer object id
-  RenderTexture,←⊂ Texture          ⍝ texture  ⍝ Color buffer attachment texture
-  RenderTexture,←⊂ Texture          ⍝ depth    ⍝ Depth buffer attachment texture
+RenderTexture ← ⊂'⋄RenderTexture' ⍝ RenderTexture, fbo for texture rendering
+  RenderTexture,←⊂ u       ⍝ id       ⍝ OpenGL framebuffer object id
+  RenderTexture,←⊂ Texture ⍝ texture  ⍝ Color buffer attachment texture
+  RenderTexture,←⊂ Texture ⍝ depth    ⍝ Depth buffer attachment texture
 RenderTexture2D ← RenderTexture ⍝ RenderTexture2D, same as RenderTexture
 
-NPatchInfo ← ⍬ ⍝ NPatchInfo, n-patch layout info
-  NPatchInfo,←⊂ '⋄NPatchInfo' ⍝         ⍝
-  NPatchInfo,←⊂ Rectangle     ⍝ source  ⍝ Texture source rectangle
-  NPatchInfo,←⊂ i             ⍝ left    ⍝ Left border offset
-  NPatchInfo,←⊂ i             ⍝ top     ⍝ Top border offset
-  NPatchInfo,←⊂ i             ⍝ right   ⍝ Right border offset
-  NPatchInfo,←⊂ i             ⍝ bottom  ⍝ Bottom border offset
-  NPatchInfo,←⊂ i             ⍝ layout  ⍝ Layout of the n-patch: 3x3, 1x3 or 3x1
+NPatchInfo ← ⊂'⋄NPatchInfo' ⍝ NPatchInfo, n-patch layout info
+  NPatchInfo,←⊂ Rectangle ⍝ source  ⍝ Texture source rectangle
+  NPatchInfo,←⊂ i         ⍝ left    ⍝ Left border offset
+  NPatchInfo,←⊂ i         ⍝ top     ⍝ Top border offset
+  NPatchInfo,←⊂ i         ⍝ right   ⍝ Right border offset
+  NPatchInfo,←⊂ i         ⍝ bottom  ⍝ Bottom border offset
+  NPatchInfo,←⊂ i         ⍝ layout  ⍝ Layout of the n-patch: 3x3, 1x3 or 3x1
 
-GlyphInfo ← ⍬ ⍝ GlyphInfo, font characters glyphs info
-  GlyphInfo,←⊂ '⋄GlyphInfo' ⍝           ⍝
-  GlyphInfo,←⊂ i            ⍝ value     ⍝ Character value (Unicode)
-  GlyphInfo,←⊂ i            ⍝ offsetX   ⍝ Character offset X when drawing
-  GlyphInfo,←⊂ i            ⍝ offsetY   ⍝ Character offset Y when drawing
-  GlyphInfo,←⊂ i            ⍝ advanceX  ⍝ Character advance position X
-  GlyphInfo,←⊂ Image        ⍝ image     ⍝ Character image data
+GlyphInfo ← ⊂'⋄GlyphInfo' ⍝ GlyphInfo, font characters glyphs info
+  GlyphInfo,←⊂ i     ⍝ value     ⍝ Character value (Unicode)
+  GlyphInfo,←⊂ i     ⍝ offsetX   ⍝ Character offset X when drawing
+  GlyphInfo,←⊂ i     ⍝ offsetY   ⍝ Character offset Y when drawing
+  GlyphInfo,←⊂ i     ⍝ advanceX  ⍝ Character advance position X
+  GlyphInfo,←⊂ Image ⍝ image     ⍝ Character image data
 
-Font ← ⍬ ⍝ Font, font texture and GlyphInfo array data
-  Font,←⊂ '⋄Font'       ⍝               ⍝
+Font ← ⊂'⋄Font' ⍝ Font, font texture and GlyphInfo array data
   Font,←⊂ i             ⍝ baseSize      ⍝ Base size (default chars height)
   Font,←⊂ i             ⍝ glyphCount    ⍝ Number of glyph characters
   Font,←⊂ i             ⍝ glyphPadding  ⍝ Padding around the glyph characters
@@ -488,24 +476,21 @@ Font ← ⍬ ⍝ Font, font texture and GlyphInfo array data
   Font,←⊂ '=',Rectangle ⍝ recs          ⍝ Rectangles in texture for the glyphs
   Font,←⊂ '=',GlyphInfo ⍝ glyphs        ⍝ Glyphs info data
 
-Camera3D ← ⍬ ⍝ Camera, defines position/orientation in 3d space
-  Camera3D,←⊂ '⋄Camera3D' ⍝             ⍝
-  Camera3D,←⊂ v3          ⍝ position    ⍝ Camera position
-  Camera3D,←⊂ v3          ⍝ target      ⍝ Camera target it looks-at
-  Camera3D,←⊂ v3          ⍝ up          ⍝ Camera up vector (rotation over its axis)
-  Camera3D,←⊂ f           ⍝ fovy        ⍝ Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic
-  Camera3D,←⊂ i           ⍝ projection  ⍝ Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC
+Camera3D ← ⊂'⋄Camera3D' ⍝ Camera, defines position/orientation in 3d space
+  Camera3D,←⊂ v3 ⍝ position    ⍝ Camera position
+  Camera3D,←⊂ v3 ⍝ target      ⍝ Camera target it looks-at
+  Camera3D,←⊂ v3 ⍝ up          ⍝ Camera up vector (rotation over its axis)
+  Camera3D,←⊂ f  ⍝ fovy        ⍝ Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic
+  Camera3D,←⊂ i  ⍝ projection  ⍝ Camera projection: CAMERA_PERSPECTIVE or CAMERA_ORTHOGRAPHIC
 Camera ← Camera3D ⍝ Camera type fallback, defaults to Camera3D
 
-Camera2D ← ⍬ ⍝ Camera2D, defines position/orientation in 2d space
-  Camera2D,←⊂ '⋄Camera2D' ⍝           ⍝
-  Camera2D,←⊂ v2          ⍝ offset    ⍝ Camera offset (displacement from target)
-  Camera2D,←⊂ v2          ⍝ target    ⍝ Camera target (rotation and zoom origin)
-  Camera2D,←⊂ f           ⍝ rotation  ⍝ Camera rotation in degrees
-  Camera2D,←⊂ f           ⍝ zoom      ⍝ Camera zoom (scaling), should be 1.0f by default
+Camera2D ← ⊂'⋄Camera2D' ⍝ Camera2D, defines position/orientation in 2d space
+  Camera2D,←⊂ v2 ⍝ offset    ⍝ Camera offset (displacement from target)
+  Camera2D,←⊂ v2 ⍝ target    ⍝ Camera target (rotation and zoom origin)
+  Camera2D,←⊂ f  ⍝ rotation  ⍝ Camera rotation in degrees
+  Camera2D,←⊂ f  ⍝ zoom      ⍝ Camera zoom (scaling), should be 1.0f by default
 
-Mesh ← ⍬ ⍝ Mesh, vertex data and vao/vbo
-  Mesh,←⊂ '⋄Mesh'    ⍝                ⍝
+Mesh ← ⊂'⋄Mesh' ⍝ Mesh, vertex data and vao/vbo
   Mesh,←⊂ i          ⍝ vertexCount    ⍝ Number of vertices stored in arrays
   Mesh,←⊂ i          ⍝ triangleCount  ⍝ Number of triangles stored (indexed or not)
   Mesh,←⊂ '=',f      ⍝ vertices       ⍝ Vertex position (XYZ - 3 components per vertex) (shader-location = 0)
@@ -524,36 +509,30 @@ Mesh ← ⍬ ⍝ Mesh, vertex data and vao/vbo
   Mesh,←⊂ u          ⍝ vaoId          ⍝ OpenGL Vertex Array Object id
   Mesh,←⊂ '=',u      ⍝ vboId          ⍝ OpenGL Vertex Buffer Objects id (default vertex data)
 
-Shader ← ⍬ ⍝ Shader
-  Shader,←⊂ '⋄Shader' ⍝       ⍝
-  Shader,←⊂ u         ⍝ id    ⍝ Shader program id
-  Shader,←⊂ '=',i     ⍝ locs  ⍝ Shader locations array (RL_MAX_SHADER_LOCATIONS)
+Shader ← ⊂'⋄Shader' ⍝ Shader
+  Shader,←⊂ u     ⍝ id    ⍝ Shader program id
+  Shader,←⊂ '=',i ⍝ locs  ⍝ Shader locations array (RL_MAX_SHADER_LOCATIONS)
 
-MaterialMap ← ⍬ ⍝ MaterialMap
-  MaterialMap,←⊂ '⋄MaterialMap' ⍝          ⍝
-  MaterialMap,←⊂ Texture2D      ⍝ texture  ⍝ Material map texture
-  MaterialMap,←⊂ Color          ⍝ color    ⍝ Material map color
-  MaterialMap,←⊂ f              ⍝ value    ⍝ Material map value
+MaterialMap ← ⊂'⋄MaterialMap' ⍝ MaterialMap
+  MaterialMap,←⊂ Texture2D ⍝ texture  ⍝ Material map texture
+  MaterialMap,←⊂ Color     ⍝ color    ⍝ Material map color
+  MaterialMap,←⊂ f         ⍝ value    ⍝ Material map value
 
-Material ← ⍬ ⍝ Material, includes shader and maps
-  Material,←⊂ '⋄Material'     ⍝         ⍝
+Material ← ⊂'⋄Material' ⍝ Material, includes shader and maps
   Material,←⊂ Shader          ⍝ shader  ⍝ Material shader
   Material,←⊂ '=',MaterialMap ⍝ maps    ⍝ Material maps array (MAX_MATERIAL_MAPS)
   Material,←⊂ f,'[4]'         ⍝ params  ⍝ Material generic parameters (if required)
 
-Transform ← ⍬ ⍝ Transform, vertex transformation data
-  Transform,←⊂ '⋄Transform' ⍝              ⍝
-  Transform,←⊂ v3           ⍝ translation  ⍝ Translation
-  Transform,←⊂ Quaternion   ⍝ rotation     ⍝ Rotation
-  Transform,←⊂ v3           ⍝ scale        ⍝ Scale
+Transform ← ⊂'⋄Transform' ⍝ Transform, vertex transformation data
+  Transform,←⊂ v3         ⍝ translation  ⍝ Translation
+  Transform,←⊂ Quaternion ⍝ rotation     ⍝ Rotation
+  Transform,←⊂ v3         ⍝ scale        ⍝ Scale
 
-BoneInfo ← ⍬ ⍝ Bone, skeletal animation bone
-  BoneInfo,←⊂ '⋄BoneInfo' ⍝         ⍝
-  BoneInfo,←⊂ u1,'[32]'   ⍝ name    ⍝ Bone name
-  BoneInfo,←⊂ i           ⍝ parent  ⍝ Bone parent
+BoneInfo ← ⊂'⋄BoneInfo' ⍝ Bone, skeletal animation bone
+  BoneInfo,←⊂ u1,'[32]' ⍝ name    ⍝ Bone name
+  BoneInfo,←⊂ i         ⍝ parent  ⍝ Bone parent
 
-Model ← ⍬ ⍝ Model, meshes, materials and animation data
-  Model,←⊂ '⋄Model'      ⍝                ⍝
+Model ← ⊂'⋄Model' ⍝ Model, meshes, materials and animation data
   Model,←⊂ Matrix        ⍝ transform      ⍝ Local transform matrix
   Model,←⊂ i             ⍝ meshCount      ⍝ Number of meshes
   Model,←⊂ i             ⍝ materialCount  ⍝ Number of materials
@@ -564,100 +543,89 @@ Model ← ⍬ ⍝ Model, meshes, materials and animation data
   Model,←⊂ '=',BoneInfo  ⍝ bones          ⍝ Bones information (skeleton)
   Model,←⊂ '=',Transform ⍝ bindPose       ⍝ Bones base transformation (pose)
 
-ModelAnimation ← ⍬ ⍝ ModelAnimation
-  ModelAnimation,←⊂ '⋄ModelAnimation' ⍝             ⍝
-  ModelAnimation,←⊂ i                 ⍝ boneCount   ⍝ Number of bones
-  ModelAnimation,←⊂ i                 ⍝ frameCount  ⍝ Number of animation frames
-  ModelAnimation,←⊂ '=',BoneInfo      ⍝ bones       ⍝ Bones information (skeleton)
-  ModelAnimation,←⊂ '==',Transform    ⍝ framePoses  ⍝ Poses array by frame
-  ModelAnimation,←⊂ u1,'[32]'         ⍝ name        ⍝ Animation name
+ModelAnimation ← ⊂'⋄ModelAnimation' ⍝ ModelAnimation
+  ModelAnimation,←⊂ i              ⍝ boneCount   ⍝ Number of bones
+  ModelAnimation,←⊂ i              ⍝ frameCount  ⍝ Number of animation frames
+  ModelAnimation,←⊂ '=',BoneInfo   ⍝ bones       ⍝ Bones information (skeleton)
+  ModelAnimation,←⊂ '==',Transform ⍝ framePoses  ⍝ Poses array by frame
+  ModelAnimation,←⊂ u1,'[32]'      ⍝ name        ⍝ Animation name
 
-Ray ← ⍬ ⍝ Ray, ray for raycasting
-  Ray,←⊂ '⋄Ray' ⍝            ⍝
-  Ray,←⊂ v3     ⍝ position   ⍝ Ray position (origin)
-  Ray,←⊂ v3     ⍝ direction  ⍝ Ray direction (normalized)
+Ray ← ⊂'⋄Ray' ⍝ Ray, ray for raycasting
+  Ray,←⊂ v3 ⍝ position   ⍝ Ray position (origin)
+  Ray,←⊂ v3 ⍝ direction  ⍝ Ray direction (normalized)
 
-RayCollision ← ⍬ ⍝ RayCollision, ray hit information
-  RayCollision,←⊂ '⋄RayCollision' ⍝           ⍝
-  RayCollision,←⊂ bool            ⍝ hit       ⍝ Did the ray hit something?
-  RayCollision,←⊂ f               ⍝ distance  ⍝ Distance to the nearest hit
-  RayCollision,←⊂ v3              ⍝ point     ⍝ Point of the nearest hit
-  RayCollision,←⊂ v3              ⍝ normal    ⍝ Surface normal of hit
+RayCollision ← ⊂'⋄RayCollision' ⍝ RayCollision, ray hit information
+  RayCollision,←⊂ bool ⍝ hit       ⍝ Did the ray hit something?
+  RayCollision,←⊂ f    ⍝ distance  ⍝ Distance to the nearest hit
+  RayCollision,←⊂ v3   ⍝ point     ⍝ Point of the nearest hit
+  RayCollision,←⊂ v3   ⍝ normal    ⍝ Surface normal of hit
 
-BoundingBox ← ⍬ ⍝ BoundingBox
-  BoundingBox,←⊂ '⋄BoundingBox' ⍝      ⍝
-  BoundingBox,←⊂ v3             ⍝ min  ⍝ Minimum vertex box-corner
-  BoundingBox,←⊂ v3             ⍝ max  ⍝ Maximum vertex box-corner
+BoundingBox ← ⊂'⋄BoundingBox' ⍝ BoundingBox
+  BoundingBox,←⊂ v3 ⍝ min  ⍝ Minimum vertex box-corner
+  BoundingBox,←⊂ v3 ⍝ max  ⍝ Maximum vertex box-corner
 
-Wave ← ⍬ ⍝ Wave, audio wave data
-  Wave,←⊂ '⋄Wave' ⍝             ⍝
-  Wave,←⊂ u       ⍝ frameCount  ⍝ Total number of frames (considering channels)
-  Wave,←⊂ u       ⍝ sampleRate  ⍝ Frequency (samples per second)
-  Wave,←⊂ u       ⍝ sampleSize  ⍝ Bit depth (bits per sample): 8, 16, 32 (24 not supported)
-  Wave,←⊂ u       ⍝ channels    ⍝ Number of channels (1-mono, 2-stereo, ...)
-  Wave,←⊂ ptr     ⍝ data        ⍝ Buffer data pointer
+Wave ← ⊂'⋄Wave' ⍝ Wave, audio wave data
+  Wave,←⊂ u   ⍝ frameCount  ⍝ Total number of frames (considering channels)
+  Wave,←⊂ u   ⍝ sampleRate  ⍝ Frequency (samples per second)
+  Wave,←⊂ u   ⍝ sampleSize  ⍝ Bit depth (bits per sample): 8, 16, 32 (24 not supported)
+  Wave,←⊂ u   ⍝ channels    ⍝ Number of channels (1-mono, 2-stereo, ...)
+  Wave,←⊂ ptr ⍝ data        ⍝ Buffer data pointer
 
-AudioStream ← ⍬ ⍝ AudioStream, custom audio stream
-  AudioStream,←⊂ '⋄AudioStream' ⍝             ⍝
-  AudioStream,←⊂ ptr            ⍝ buffer      ⍝ Pointer to internal data used by the audio system
-  AudioStream,←⊂ ptr            ⍝ processor   ⍝ Pointer to internal data processor, useful for audio effects
-  AudioStream,←⊂ u              ⍝ sampleRate  ⍝ Frequency (samples per second)
-  AudioStream,←⊂ u              ⍝ sampleSize  ⍝ Bit depth (bits per sample): 8, 16, 32 (24 not supported)
-  AudioStream,←⊂ u              ⍝ channels    ⍝ Number of channels (1-mono, 2-stereo, ...)
+AudioStream ← ⊂'⋄AudioStream' ⍝ AudioStream, custom audio stream
+  AudioStream,←⊂ ptr ⍝ buffer      ⍝ Pointer to internal data used by the audio system
+  AudioStream,←⊂ ptr ⍝ processor   ⍝ Pointer to internal data processor, useful for audio effects
+  AudioStream,←⊂ u   ⍝ sampleRate  ⍝ Frequency (samples per second)
+  AudioStream,←⊂ u   ⍝ sampleSize  ⍝ Bit depth (bits per sample): 8, 16, 32 (24 not supported)
+  AudioStream,←⊂ u   ⍝ channels    ⍝ Number of channels (1-mono, 2-stereo, ...)
 
-Sound ← ⍬ ⍝ Sound
-  Sound,←⊂ '⋄Sound'    ⍝             ⍝
+Sound ← ⊂'⋄Sound' ⍝ Sound
   Sound,←⊂ AudioStream ⍝ stream      ⍝ Audio stream
   Sound,←⊂ u           ⍝ frameCount  ⍝ Total number of frames (considering channels)
 
-Music ← ⍬ ⍝ Music, audio stream, anything longer than ~10 seconds should be streamed
-  Music,←⊂ '⋄Music'    ⍝             ⍝
+Music ← ⊂'⋄Music' ⍝ Music, audio stream, anything longer than ~10 seconds should be streamed
   Music,←⊂ AudioStream ⍝ stream      ⍝ Audio stream
   Music,←⊂ u           ⍝ frameCount  ⍝ Total number of frames (considering channels)
   Music,←⊂ bool        ⍝ looping     ⍝ Music looping enable
   Music,←⊂ i           ⍝ ctxType     ⍝ Type of music context (audio filetype)
   Music,←⊂ ptr         ⍝ ctxData     ⍝ Audio context data, depends on type
 
-VrDeviceInfo ← ⍬ ⍝ VrDeviceInfo, Head-Mounted-Display device parameters
-  VrDeviceInfo,←⊂ '⋄VrDeviceInfo' ⍝                         ⍝
-  VrDeviceInfo,←⊂ i               ⍝ hResolution             ⍝ Horizontal resolution in pixels
-  VrDeviceInfo,←⊂ i               ⍝ vResolution             ⍝ Vertical resolution in pixels
-  VrDeviceInfo,←⊂ f               ⍝ hScreenSize             ⍝ Horizontal size in meters
-  VrDeviceInfo,←⊂ f               ⍝ vScreenSize             ⍝ Vertical size in meters
-  VrDeviceInfo,←⊂ f               ⍝ eyeToScreenDistance     ⍝ Distance between eye and display in meters
-  VrDeviceInfo,←⊂ f               ⍝ lensSeparationDistance  ⍝ Lens separation distance in meters
-  VrDeviceInfo,←⊂ f               ⍝ interpupillaryDistance  ⍝ IPD (distance between pupils) in meters
-  VrDeviceInfo,←⊂ f,'[4]'         ⍝ lensDistortionValues    ⍝ Lens distortion constant parameters
-  VrDeviceInfo,←⊂ f,'[4]'         ⍝ chromaAbCorrection      ⍝ Chromatic aberration correction parameters
+VrDeviceInfo ← ⊂'⋄VrDeviceInfo' ⍝ VrDeviceInfo, Head-Mounted-Display device parameters
+  VrDeviceInfo,←⊂ i       ⍝ hResolution             ⍝ Horizontal resolution in pixels
+  VrDeviceInfo,←⊂ i       ⍝ vResolution             ⍝ Vertical resolution in pixels
+  VrDeviceInfo,←⊂ f       ⍝ hScreenSize             ⍝ Horizontal size in meters
+  VrDeviceInfo,←⊂ f       ⍝ vScreenSize             ⍝ Vertical size in meters
+  VrDeviceInfo,←⊂ f       ⍝ eyeToScreenDistance     ⍝ Distance between eye and display in meters
+  VrDeviceInfo,←⊂ f       ⍝ lensSeparationDistance  ⍝ Lens separation distance in meters
+  VrDeviceInfo,←⊂ f       ⍝ interpupillaryDistance  ⍝ IPD (distance between pupils) in meters
+  VrDeviceInfo,←⊂ f,'[4]' ⍝ lensDistortionValues    ⍝ Lens distortion constant parameters
+  VrDeviceInfo,←⊂ f,'[4]' ⍝ chromaAbCorrection      ⍝ Chromatic aberration correction parameters
 
-VrStereoConfig ← ⍬ ⍝ VrStereoConfig, VR stereo rendering configuration for simulator
-  VrStereoConfig,←⊂ '⋄VrStereoConfig' ⍝                    ⍝
-  VrStereoConfig,←⊂ Matrix,'[2]'      ⍝ projection         ⍝ VR projection matrices (per eye)
-  VrStereoConfig,←⊂ Matrix,'[2]'      ⍝ viewOffset         ⍝ VR view offset matrices (per eye)
-  VrStereoConfig,←⊂ f,'[2]'           ⍝ leftLensCenter     ⍝ VR left lens center
-  VrStereoConfig,←⊂ f,'[2]'           ⍝ rightLensCenter    ⍝ VR right lens center
-  VrStereoConfig,←⊂ f,'[2]'           ⍝ leftScreenCenter   ⍝ VR left screen center
-  VrStereoConfig,←⊂ f,'[2]'           ⍝ rightScreenCenter  ⍝ VR right screen center
-  VrStereoConfig,←⊂ f,'[2]'           ⍝ scale              ⍝ VR distortion scale
-  VrStereoConfig,←⊂ f,'[2]'           ⍝ scaleIn            ⍝ VR distortion scale in
+VrStereoConfig ← ⊂'⋄VrStereoConfig' ⍝ VrStereoConfig, VR stereo rendering configuration for simulator
+  VrStereoConfig,←⊂ Matrix,'[2]' ⍝ projection         ⍝ VR projection matrices (per eye)
+  VrStereoConfig,←⊂ Matrix,'[2]' ⍝ viewOffset         ⍝ VR view offset matrices (per eye)
+  VrStereoConfig,←⊂ f,'[2]'      ⍝ leftLensCenter     ⍝ VR left lens center
+  VrStereoConfig,←⊂ f,'[2]'      ⍝ rightLensCenter    ⍝ VR right lens center
+  VrStereoConfig,←⊂ f,'[2]'      ⍝ leftScreenCenter   ⍝ VR left screen center
+  VrStereoConfig,←⊂ f,'[2]'      ⍝ rightScreenCenter  ⍝ VR right screen center
+  VrStereoConfig,←⊂ f,'[2]'      ⍝ scale              ⍝ VR distortion scale
+  VrStereoConfig,←⊂ f,'[2]'      ⍝ scaleIn            ⍝ VR distortion scale in
 
-FilePathList ← ⍬ ⍝ File path list
-  FilePathList,←⊂ '⋄FilePathList' ⍝           ⍝
-  FilePathList,←⊂ u               ⍝ capacity  ⍝ Filepaths max entries
-  FilePathList,←⊂ u               ⍝ count     ⍝ Filepaths entries count
-  FilePathList,←⊂ '=',str         ⍝ paths     ⍝ Filepaths entries
+FilePathList ← ⊂'⋄FilePathList' ⍝ File path list
+  FilePathList,←⊂ u       ⍝ capacity  ⍝ Filepaths max entries
+  FilePathList,←⊂ u       ⍝ count     ⍝ Filepaths entries count
+  FilePathList,←⊂ '=',str ⍝ paths     ⍝ Filepaths entries
 
-AutomationEvent ← ⍬ ⍝ Automation event
-  AutomationEvent,←⊂ '⋄AutomationEvent' ⍝         ⍝
-  AutomationEvent,←⊂ u                  ⍝ frame   ⍝ Event frame
-  AutomationEvent,←⊂ u                  ⍝ type    ⍝ Event type (AutomationEventType)
-  AutomationEvent,←⊂ i,'[4]'            ⍝ params  ⍝ Event parameters (if required)
+AutomationEvent ← ⊂'⋄AutomationEvent' ⍝ Automation event
+  AutomationEvent,←⊂ u       ⍝ frame   ⍝ Event frame
+  AutomationEvent,←⊂ u       ⍝ type    ⍝ Event type (AutomationEventType)
+  AutomationEvent,←⊂ i,'[4]' ⍝ params  ⍝ Event parameters (if required)
 
-AutomationEventList ← ⍬ ⍝ Automation event list
-  AutomationEventList,←⊂ '⋄AutomationEventList' ⍝           ⍝
-  AutomationEventList,←⊂ u                      ⍝ capacity  ⍝ Events max entries (MAX_AUTOMATION_EVENTS)
-  AutomationEventList,←⊂ u                      ⍝ count     ⍝ Events entries count
-  AutomationEventList,←⊂ '=',AutomationEvent    ⍝ events    ⍝ Events entries
+AutomationEventList ← ⊂'⋄AutomationEventList' ⍝ Automation event list
+  AutomationEventList,←⊂ u                   ⍝ capacity  ⍝ Events max entries (MAX_AUTOMATION_EVENTS)
+  AutomationEventList,←⊂ u                   ⍝ count     ⍝ Events entries count
+  AutomationEventList,←⊂ '=',AutomationEvent ⍝ events    ⍝ Events entries
+
+
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
 ∇Init pathToRaylibDotAPLN ;import
 
@@ -1285,7 +1253,7 @@ scopeInitAudioDevice ← 0
   _←BeginMode2DRAYLIB camera
 ∇
 ∇BeginMode3D camera
-  'BeginMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'BeginMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode)
   'BeginMode3D errored' Assert ~scopeBeginMode3D
   scopeBeginMode3D ← 1
   _←BeginMode3DRAYLIB camera
@@ -1301,7 +1269,7 @@ scopeInitAudioDevice ← 0
   _←BeginShaderModeRAYLIB shader
 ∇
 ∇BeginTextureMode target
-  'BeginTextureMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'BeginTextureMode errored' Assert ∨/(scopeInitWindow)
   scopeBeginTextureMode ← 1
   _←BeginTextureModeRAYLIB target
 ∇
@@ -1456,11 +1424,11 @@ scopeInitAudioDevice ← 0
   _←DrawBoundingBoxRAYLIB(box color)
 ∇
 ∇DrawCapsule(startPos endPos radius slices rings color)
-  'DrawCapsule errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCapsule errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCapsuleRAYLIB(startPos endPos radius slices rings color)
 ∇
 ∇DrawCapsuleWires(startPos endPos radius slices rings color)
-  'DrawCapsuleWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCapsuleWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCapsuleWiresRAYLIB(startPos endPos radius slices rings color)
 ∇
 ∇DrawCircle(centerX centerY radius color)
@@ -1468,7 +1436,7 @@ scopeInitAudioDevice ← 0
   _←DrawCircleRAYLIB(centerX centerY radius color)
 ∇
 ∇DrawCircle3D(center radius rotationAxis rotationAngle color)
-  'DrawCircle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCircle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCircle3DRAYLIB(center radius rotationAxis rotationAngle color)
 ∇
 ∇DrawCircleGradient(centerX centerY radius inner outer)
@@ -1496,35 +1464,35 @@ scopeInitAudioDevice ← 0
   _←DrawCircleVRAYLIB(center radius color)
 ∇
 ∇DrawCube(position width height length color)
-  'DrawCube errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCube errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCubeRAYLIB(position width height length color)
 ∇
 ∇DrawCubeV(position size color)
-  'DrawCubeV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCubeV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCubeVRAYLIB(position size color)
 ∇
 ∇DrawCubeWires(position width height length color)
-  'DrawCubeWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCubeWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCubeWiresRAYLIB(position width height length color)
 ∇
 ∇DrawCubeWiresV(position size color)
-  'DrawCubeWiresV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCubeWiresV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCubeWiresVRAYLIB(position size color)
 ∇
 ∇DrawCylinder(position radiusTop radiusBottom height slices color)
-  'DrawCylinder errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCylinder errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCylinderRAYLIB(position radiusTop radiusBottom height slices color)
 ∇
 ∇DrawCylinderEx(startPos endPos startRadius endRadius sides color)
-  'DrawCylinderEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCylinderEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCylinderExRAYLIB(startPos endPos startRadius endRadius sides color)
 ∇
 ∇DrawCylinderWires(position radiusTop radiusBottom height slices color)
-  'DrawCylinderWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCylinderWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCylinderWiresRAYLIB(position radiusTop radiusBottom height slices color)
 ∇
 ∇DrawCylinderWiresEx(startPos endPos startRadius endRadius sides color)
-  'DrawCylinderWiresEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawCylinderWiresEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawCylinderWiresExRAYLIB(startPos endPos startRadius endRadius sides color)
 ∇
 ∇DrawEllipse(centerX centerY radiusH radiusV color)
@@ -1539,7 +1507,7 @@ scopeInitAudioDevice ← 0
   _←DrawFPSRAYLIB(posX posY)
 ∇
 ∇DrawGrid(slices spacing)
-  'DrawGrid errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawGrid errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawGridRAYLIB(slices spacing)
 ∇
 ∇DrawLine(startPosX startPosY endPosX endPosY color)
@@ -1547,7 +1515,7 @@ scopeInitAudioDevice ← 0
   _←DrawLineRAYLIB(startPosX startPosY endPosX endPosY color)
 ∇
 ∇DrawLine3D(startPos endPos color)
-  'DrawLine3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawLine3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawLine3DRAYLIB(startPos endPos color)
 ∇
 ∇DrawLineBezier(startPos endPos thick color)
@@ -1599,11 +1567,11 @@ scopeInitAudioDevice ← 0
   _←DrawPixelVRAYLIB(position color)
 ∇
 ∇DrawPlane(centerPos size color)
-  'DrawPlane errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawPlane errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawPlaneRAYLIB(centerPos size color)
 ∇
 ∇DrawPoint3D(position color)
-  'DrawPoint3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawPoint3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawPoint3DRAYLIB(position color)
 ∇
 ∇DrawPoly(center sides radius rotation color)
@@ -1619,7 +1587,7 @@ scopeInitAudioDevice ← 0
   _←DrawPolyLinesExRAYLIB(center sides radius rotation lineThick color)
 ∇
 ∇DrawRay(ray color)
-  'DrawRay errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawRay errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawRayRAYLIB(ray color)
 ∇
 ∇DrawRectangle(posX posY width height color)
@@ -1679,15 +1647,15 @@ scopeInitAudioDevice ← 0
   _←DrawRingLinesRAYLIB(center innerRadius outerRadius startAngle endAngle segments color)
 ∇
 ∇DrawSphere(centerPos radius color)
-  'DrawSphere errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawSphere errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawSphereRAYLIB(centerPos radius color)
 ∇
 ∇DrawSphereEx(centerPos radius rings slices color)
-  'DrawSphereEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawSphereEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawSphereExRAYLIB(centerPos radius rings slices color)
 ∇
 ∇DrawSphereWires(centerPos radius rings slices color)
-  'DrawSphereWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawSphereWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawSphereWiresRAYLIB(centerPos radius rings slices color)
 ∇
 ∇r←DrawSplineBasis(points pointCount thick color)
@@ -1774,7 +1742,7 @@ scopeInitAudioDevice ← 0
   _←DrawTriangleRAYLIB(v1 v2 v3 color)
 ∇
 ∇DrawTriangle3D(v1 v2 v3 color)
-  'DrawTriangle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawTriangle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   _←DrawTriangle3DRAYLIB(v1 v2 v3 color)
 ∇
 ∇r←DrawTriangleFan(points pointCount color)
@@ -1790,7 +1758,7 @@ scopeInitAudioDevice ← 0
   r←DrawTriangleStripRAYLIB(points pointCount color)
 ∇
 ∇r←DrawTriangleStrip3D(points pointCount color)
-  'DrawTriangleStrip3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'DrawTriangleStrip3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←DrawTriangleStrip3DRAYLIB(points pointCount color)
 ∇
 ∇EnableCursor _
@@ -1819,7 +1787,7 @@ scopeInitAudioDevice ← 0
   _←EndMode2DRAYLIB _
 ∇
 ∇EndMode3D _
-  'EndMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D)
+  'EndMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   scopeBeginMode3D ← 0
   _←EndMode3DRAYLIB _
 ∇
@@ -1834,7 +1802,7 @@ scopeInitAudioDevice ← 0
   _←EndShaderModeRAYLIB _
 ∇
 ∇EndTextureMode _
-  'EndTextureMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginTextureMode)
+  'EndTextureMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode)
   scopeBeginTextureMode ← 0
   _←EndTextureModeRAYLIB _
 ∇

@@ -250,50 +250,48 @@ u2   ← 'U2'
 ustr ← '=C1'
 str  ← '=0C1'
 
-Matrix ← ⍬ ⍝ Matrix, 4x4 components, column major, OpenGL style, right handed
-  Matrix,←⊂ '⋄Matrix' ⍝      ⍝
-  Matrix,←⊂ f         ⍝ m0   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m4   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m8   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m12  ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m1   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m5   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m9   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m13  ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m2   ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m6   ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m10  ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m14  ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m3   ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m7   ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m11  ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m15  ⍝ Matrix fourth row (4 components)
+Matrix ← ⊂'⋄Matrix' ⍝ Matrix, 4x4 components, column major, OpenGL style, right handed
+  Matrix,←⊂ f ⍝ m0   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m4   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m8   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m12  ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m1   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m5   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m9   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m13  ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m2   ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m6   ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m10  ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m14  ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m3   ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m7   ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m11  ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m15  ⍝ Matrix fourth row (4 components)
 
-rlVertexBuffer ← ⍬ ⍝ Dynamic vertex buffers (position + texcoords + colors + indices arrays)
-  rlVertexBuffer,←⊂ '⋄rlVertexBuffer' ⍝               ⍝
-  rlVertexBuffer,←⊂ i                 ⍝ elementCount  ⍝ Number of elements in the buffer (QUADS)
-  rlVertexBuffer,←⊂ '=',f             ⍝ vertices      ⍝ Vertex position (XYZ - 3 components per vertex) (shader-location = 0)
-  rlVertexBuffer,←⊂ '=',f             ⍝ texcoords     ⍝ Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1)
-  rlVertexBuffer,←⊂ ustr              ⍝ colors        ⍝ Vertex colors (RGBA - 4 components per vertex) (shader-location = 3)
-  rlVertexBuffer,←⊂ '=',u             ⍝ indices       ⍝ Vertex indices (in case vertex data comes indexed) (6 indices per quad)
-  rlVertexBuffer,←⊂ u                 ⍝ vaoId         ⍝ OpenGL Vertex Array Object id
-  rlVertexBuffer,←⊂ u,'[4]'           ⍝ vboId         ⍝ OpenGL Vertex Buffer Objects id (4 types of vertex data)
+rlVertexBuffer ← ⊂'⋄rlVertexBuffer' ⍝ Dynamic vertex buffers (position + texcoords + colors + indices arrays)
+  rlVertexBuffer,←⊂ i       ⍝ elementCount  ⍝ Number of elements in the buffer (QUADS)
+  rlVertexBuffer,←⊂ '=',f   ⍝ vertices      ⍝ Vertex position (XYZ - 3 components per vertex) (shader-location = 0)
+  rlVertexBuffer,←⊂ '=',f   ⍝ texcoords     ⍝ Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1)
+  rlVertexBuffer,←⊂ ustr    ⍝ colors        ⍝ Vertex colors (RGBA - 4 components per vertex) (shader-location = 3)
+  rlVertexBuffer,←⊂ '=',u   ⍝ indices       ⍝ Vertex indices (in case vertex data comes indexed) (6 indices per quad)
+  rlVertexBuffer,←⊂ u       ⍝ vaoId         ⍝ OpenGL Vertex Array Object id
+  rlVertexBuffer,←⊂ u,'[4]' ⍝ vboId         ⍝ OpenGL Vertex Buffer Objects id (4 types of vertex data)
 
-rlDrawCall ← ⍬ ⍝ of those state-change happens (this is done in core module)
-  rlDrawCall,←⊂ '⋄rlDrawCall' ⍝                  ⍝
-  rlDrawCall,←⊂ i             ⍝ mode             ⍝ Drawing mode: LINES, TRIANGLES, QUADS
-  rlDrawCall,←⊂ i             ⍝ vertexCount      ⍝ Number of vertex of the draw
-  rlDrawCall,←⊂ i             ⍝ vertexAlignment  ⍝ Number of vertex required for index alignment (LINES, TRIANGLES)
-  rlDrawCall,←⊂ u             ⍝ textureId        ⍝ Texture id to be used on the draw -> Use to create new draw call if changes
+rlDrawCall ← ⊂'⋄rlDrawCall' ⍝ of those state-change happens (this is done in core module)
+  rlDrawCall,←⊂ i ⍝ mode             ⍝ Drawing mode: LINES, TRIANGLES, QUADS
+  rlDrawCall,←⊂ i ⍝ vertexCount      ⍝ Number of vertex of the draw
+  rlDrawCall,←⊂ i ⍝ vertexAlignment  ⍝ Number of vertex required for index alignment (LINES, TRIANGLES)
+  rlDrawCall,←⊂ u ⍝ textureId        ⍝ Texture id to be used on the draw -> Use to create new draw call if changes
 
-rlRenderBatch ← ⍬ ⍝ rlRenderBatch type
-  rlRenderBatch,←⊂ '⋄rlRenderBatch'   ⍝                ⍝
+rlRenderBatch ← ⊂'⋄rlRenderBatch' ⍝ rlRenderBatch type
   rlRenderBatch,←⊂ i                  ⍝ bufferCount    ⍝ Number of vertex buffers (multi-buffering support)
   rlRenderBatch,←⊂ i                  ⍝ currentBuffer  ⍝ Current buffer tracking in case of multi-buffering
   rlRenderBatch,←⊂ '=',rlVertexBuffer ⍝ vertexBuffer   ⍝ Dynamic buffer(s) for vertex data
   rlRenderBatch,←⊂ '=',rlDrawCall     ⍝ draws          ⍝ Draw calls array, depends on textureId
   rlRenderBatch,←⊂ i                  ⍝ drawCounter    ⍝ Draw calls counter
   rlRenderBatch,←⊂ f                  ⍝ currentDepth   ⍝ Current depth value for next draw
+
+
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
 ∇Init pathToRaylibDotAPLN ;import
 

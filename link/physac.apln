@@ -26,66 +26,62 @@ u2   ← 'U2'
 ustr ← '=C1'
 str  ← '=0C1'
 
-v2 ← ⍬ ⍝ Vector2 type
-  v2,←⊂ '⋄Vector2' ⍝    ⍝
-  v2,←⊂ f          ⍝ x  ⍝
-  v2,←⊂ f          ⍝ y  ⍝
+v2 ← ⊂'⋄Vector2' ⍝ Vector2 type
+  v2,←⊂ f ⍝ x  ⍝
+  v2,←⊂ f ⍝ y  ⍝
 
-Mat2 ← ⍬ ⍝ Mat2 type (used for polygon shape rotation matrix)
-  Mat2,←⊂ '⋄Mat2' ⍝      ⍝
-  Mat2,←⊂ f       ⍝ m00  ⍝
-  Mat2,←⊂ f       ⍝ m01  ⍝
-  Mat2,←⊂ f       ⍝ m10  ⍝
-  Mat2,←⊂ f       ⍝ m11  ⍝
+Mat2 ← ⊂'⋄Mat2' ⍝ Mat2 type (used for polygon shape rotation matrix)
+  Mat2,←⊂ f ⍝ m00  ⍝
+  Mat2,←⊂ f ⍝ m01  ⍝
+  Mat2,←⊂ f ⍝ m10  ⍝
+  Mat2,←⊂ f ⍝ m11  ⍝
 
-PolygonData ← ⍬ ⍝
-  PolygonData,←⊂ '⋄PolygonData'             ⍝              ⍝
+PolygonData ← ⊂'⋄PolygonData' ⍝
   PolygonData,←⊂ u                          ⍝ vertexCount  ⍝ Current used vertex and normals count
   PolygonData,←⊂ v2,'[SECITREV_XAM_CASYHP]' ⍝ positions    ⍝ Polygon vertex positions vectors
   PolygonData,←⊂ v2,'[SECITREV_XAM_CASYHP]' ⍝ normals      ⍝ Polygon vertex normals vectors
 
-PhysicsShape ← ⍬ ⍝
-  PhysicsShape,←⊂ '⋄PhysicsShape' ⍝             ⍝
-  PhysicsShape,←⊂ i               ⍝ type        ⍝ Physics shape type (circle or polygon)
-  PhysicsShape,←⊂ ptr             ⍝ body        ⍝ Shape physics body reference
-  PhysicsShape,←⊂ f               ⍝ radius      ⍝ Circle shape radius (used for circle shapes)
-  PhysicsShape,←⊂ Mat2            ⍝ transform   ⍝ Vertices transform matrix 2x2
-  PhysicsShape,←⊂ PolygonData     ⍝ vertexData  ⍝ Polygon shape vertices position and normals data (just used for polygon shapes)
+PhysicsShape ← ⊂'⋄PhysicsShape' ⍝
+  PhysicsShape,←⊂ i           ⍝ type        ⍝ Physics shape type (circle or polygon)
+  PhysicsShape,←⊂ ptr         ⍝ body        ⍝ Shape physics body reference
+  PhysicsShape,←⊂ f           ⍝ radius      ⍝ Circle shape radius (used for circle shapes)
+  PhysicsShape,←⊂ Mat2        ⍝ transform   ⍝ Vertices transform matrix 2x2
+  PhysicsShape,←⊂ PolygonData ⍝ vertexData  ⍝ Polygon shape vertices position and normals data (just used for polygon shapes)
 
-PhysicsBodyData ← ⍬ ⍝
-  PhysicsBodyData,←⊂ '⋄PhysicsBodyData' ⍝                  ⍝
-  PhysicsBodyData,←⊂ u                  ⍝ id               ⍝ Reference unique identifier
-  PhysicsBodyData,←⊂ bool               ⍝ enabled          ⍝ Enabled dynamics state (collisions are calculated anyway)
-  PhysicsBodyData,←⊂ v2                 ⍝ position         ⍝ Physics body shape pivot
-  PhysicsBodyData,←⊂ v2                 ⍝ velocity         ⍝ Current linear velocity applied to position
-  PhysicsBodyData,←⊂ v2                 ⍝ force            ⍝ Current linear force (reset to 0 every step)
-  PhysicsBodyData,←⊂ f                  ⍝ angularVelocity  ⍝ Current angular velocity applied to orient
-  PhysicsBodyData,←⊂ f                  ⍝ torque           ⍝ Current angular force (reset to 0 every step)
-  PhysicsBodyData,←⊂ f                  ⍝ orient           ⍝ Rotation in radians
-  PhysicsBodyData,←⊂ f                  ⍝ inertia          ⍝ Moment of inertia
-  PhysicsBodyData,←⊂ f                  ⍝ inverseInertia   ⍝ Inverse value of inertia
-  PhysicsBodyData,←⊂ f                  ⍝ mass             ⍝ Physics body mass
-  PhysicsBodyData,←⊂ f                  ⍝ inverseMass      ⍝ Inverse value of mass
-  PhysicsBodyData,←⊂ f                  ⍝ staticFriction   ⍝ Friction when the body has not movement (0 to 1)
-  PhysicsBodyData,←⊂ f                  ⍝ dynamicFriction  ⍝ Friction when the body has movement (0 to 1)
-  PhysicsBodyData,←⊂ f                  ⍝ restitution      ⍝ Restitution coefficient of the body (0 to 1)
-  PhysicsBodyData,←⊂ bool               ⍝ useGravity       ⍝ Apply gravity force to dynamics
-  PhysicsBodyData,←⊂ bool               ⍝ isGrounded       ⍝ Physics grounded on other body state
-  PhysicsBodyData,←⊂ bool               ⍝ freezeOrient     ⍝ Physics rotation constraint
-  PhysicsBodyData,←⊂ PhysicsShape       ⍝ shape            ⍝ Physics body shape information (type, radius, vertices, normals)
+PhysicsBodyData ← ⊂'⋄PhysicsBodyData' ⍝
+  PhysicsBodyData,←⊂ u            ⍝ id               ⍝ Reference unique identifier
+  PhysicsBodyData,←⊂ bool         ⍝ enabled          ⍝ Enabled dynamics state (collisions are calculated anyway)
+  PhysicsBodyData,←⊂ v2           ⍝ position         ⍝ Physics body shape pivot
+  PhysicsBodyData,←⊂ v2           ⍝ velocity         ⍝ Current linear velocity applied to position
+  PhysicsBodyData,←⊂ v2           ⍝ force            ⍝ Current linear force (reset to 0 every step)
+  PhysicsBodyData,←⊂ f            ⍝ angularVelocity  ⍝ Current angular velocity applied to orient
+  PhysicsBodyData,←⊂ f            ⍝ torque           ⍝ Current angular force (reset to 0 every step)
+  PhysicsBodyData,←⊂ f            ⍝ orient           ⍝ Rotation in radians
+  PhysicsBodyData,←⊂ f            ⍝ inertia          ⍝ Moment of inertia
+  PhysicsBodyData,←⊂ f            ⍝ inverseInertia   ⍝ Inverse value of inertia
+  PhysicsBodyData,←⊂ f            ⍝ mass             ⍝ Physics body mass
+  PhysicsBodyData,←⊂ f            ⍝ inverseMass      ⍝ Inverse value of mass
+  PhysicsBodyData,←⊂ f            ⍝ staticFriction   ⍝ Friction when the body has not movement (0 to 1)
+  PhysicsBodyData,←⊂ f            ⍝ dynamicFriction  ⍝ Friction when the body has movement (0 to 1)
+  PhysicsBodyData,←⊂ f            ⍝ restitution      ⍝ Restitution coefficient of the body (0 to 1)
+  PhysicsBodyData,←⊂ bool         ⍝ useGravity       ⍝ Apply gravity force to dynamics
+  PhysicsBodyData,←⊂ bool         ⍝ isGrounded       ⍝ Physics grounded on other body state
+  PhysicsBodyData,←⊂ bool         ⍝ freezeOrient     ⍝ Physics rotation constraint
+  PhysicsBodyData,←⊂ PhysicsShape ⍝ shape            ⍝ Physics body shape information (type, radius, vertices, normals)
 
-PhysicsManifoldData ← ⍬ ⍝
-  PhysicsManifoldData,←⊂ '⋄PhysicsManifoldData' ⍝                  ⍝
-  PhysicsManifoldData,←⊂ u                      ⍝ id               ⍝ Reference unique identifier
-  PhysicsManifoldData,←⊂ ptr                    ⍝ bodyA            ⍝ Manifold first physics body reference
-  PhysicsManifoldData,←⊂ ptr                    ⍝ bodyB            ⍝ Manifold second physics body reference
-  PhysicsManifoldData,←⊂ f                      ⍝ penetration      ⍝ Depth of penetration from collision
-  PhysicsManifoldData,←⊂ v2                     ⍝ normal           ⍝ Normal direction vector from 'a' to 'b'
-  PhysicsManifoldData,←⊂ v2,'[2]'               ⍝ contacts         ⍝ Points of contact during collision
-  PhysicsManifoldData,←⊂ u                      ⍝ contactsCount    ⍝ Current collision number of contacts
-  PhysicsManifoldData,←⊂ f                      ⍝ restitution      ⍝ Mixed restitution during collision
-  PhysicsManifoldData,←⊂ f                      ⍝ dynamicFriction  ⍝ Mixed dynamic friction during collision
-  PhysicsManifoldData,←⊂ f                      ⍝ staticFriction   ⍝ Mixed static friction during collision
+PhysicsManifoldData ← ⊂'⋄PhysicsManifoldData' ⍝
+  PhysicsManifoldData,←⊂ u        ⍝ id               ⍝ Reference unique identifier
+  PhysicsManifoldData,←⊂ ptr      ⍝ bodyA            ⍝ Manifold first physics body reference
+  PhysicsManifoldData,←⊂ ptr      ⍝ bodyB            ⍝ Manifold second physics body reference
+  PhysicsManifoldData,←⊂ f        ⍝ penetration      ⍝ Depth of penetration from collision
+  PhysicsManifoldData,←⊂ v2       ⍝ normal           ⍝ Normal direction vector from 'a' to 'b'
+  PhysicsManifoldData,←⊂ v2,'[2]' ⍝ contacts         ⍝ Points of contact during collision
+  PhysicsManifoldData,←⊂ u        ⍝ contactsCount    ⍝ Current collision number of contacts
+  PhysicsManifoldData,←⊂ f        ⍝ restitution      ⍝ Mixed restitution during collision
+  PhysicsManifoldData,←⊂ f        ⍝ dynamicFriction  ⍝ Mixed dynamic friction during collision
+  PhysicsManifoldData,←⊂ f        ⍝ staticFriction   ⍝ Mixed static friction during collision
+
+
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
 ∇Init pathToRaylibDotAPLN ;import
 

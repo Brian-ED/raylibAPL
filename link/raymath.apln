@@ -19,51 +19,47 @@ u2   ← 'U2'
 ustr ← '=C1'
 str  ← '=0C1'
 
-v2 ← ⍬ ⍝ Vector2 type
-  v2,←⊂ '⋄Vector2' ⍝    ⍝
-  v2,←⊂ f          ⍝ x  ⍝
-  v2,←⊂ f          ⍝ y  ⍝
+v2 ← ⊂'⋄Vector2' ⍝ Vector2 type
+  v2,←⊂ f ⍝ x  ⍝
+  v2,←⊂ f ⍝ y  ⍝
 
-v3 ← ⍬ ⍝ Vector3 type
-  v3,←⊂ '⋄Vector3' ⍝    ⍝
-  v3,←⊂ f          ⍝ x  ⍝
-  v3,←⊂ f          ⍝ y  ⍝
-  v3,←⊂ f          ⍝ z  ⍝
+v3 ← ⊂'⋄Vector3' ⍝ Vector3 type
+  v3,←⊂ f ⍝ x  ⍝
+  v3,←⊂ f ⍝ y  ⍝
+  v3,←⊂ f ⍝ z  ⍝
 
-v4 ← ⍬ ⍝ Vector4 type
-  v4,←⊂ '⋄Vector4' ⍝    ⍝
-  v4,←⊂ f          ⍝ x  ⍝
-  v4,←⊂ f          ⍝ y  ⍝
-  v4,←⊂ f          ⍝ z  ⍝
-  v4,←⊂ f          ⍝ w  ⍝
+v4 ← ⊂'⋄Vector4' ⍝ Vector4 type
+  v4,←⊂ f ⍝ x  ⍝
+  v4,←⊂ f ⍝ y  ⍝
+  v4,←⊂ f ⍝ z  ⍝
+  v4,←⊂ f ⍝ w  ⍝
 Quaternion ← v4 ⍝ Quaternion type
 
-Matrix ← ⍬ ⍝ Matrix type (OpenGL style 4x4 - right handed, column major)
-  Matrix,←⊂ '⋄Matrix' ⍝      ⍝
-  Matrix,←⊂ f         ⍝ m0   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m4   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m8   ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m12  ⍝ Matrix first row (4 components)
-  Matrix,←⊂ f         ⍝ m1   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m5   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m9   ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m13  ⍝ Matrix second row (4 components)
-  Matrix,←⊂ f         ⍝ m2   ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m6   ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m10  ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m14  ⍝ Matrix third row (4 components)
-  Matrix,←⊂ f         ⍝ m3   ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m7   ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m11  ⍝ Matrix fourth row (4 components)
-  Matrix,←⊂ f         ⍝ m15  ⍝ Matrix fourth row (4 components)
+Matrix ← ⊂'⋄Matrix' ⍝ Matrix type (OpenGL style 4x4 - right handed, column major)
+  Matrix,←⊂ f ⍝ m0   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m4   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m8   ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m12  ⍝ Matrix first row (4 components)
+  Matrix,←⊂ f ⍝ m1   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m5   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m9   ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m13  ⍝ Matrix second row (4 components)
+  Matrix,←⊂ f ⍝ m2   ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m6   ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m10  ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m14  ⍝ Matrix third row (4 components)
+  Matrix,←⊂ f ⍝ m3   ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m7   ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m11  ⍝ Matrix fourth row (4 components)
+  Matrix,←⊂ f ⍝ m15  ⍝ Matrix fourth row (4 components)
 
-float3 ← ⍬ ⍝ NOTE: Helper types to be used instead of array return types for *ToFloat functions
-  float3,←⊂ '⋄float3' ⍝    ⍝
-  float3,←⊂ f,'[3]'   ⍝ v  ⍝
+float3 ← ⊂'⋄float3' ⍝ NOTE: Helper types to be used instead of array return types for *ToFloat functions
+  float3,←⊂ f,'[3]' ⍝ v  ⍝
 
-float16 ← ⍬ ⍝
-  float16,←⊂ '⋄float16' ⍝    ⍝
-  float16,←⊂ f,'[16]'   ⍝ v  ⍝
+float16 ← ⊂'⋄float16' ⍝
+  float16,←⊂ f,'[16]' ⍝ v  ⍝
+
+
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
 ∇Init pathToRaylibDotAPLN ;import
 
