@@ -1,0 +1,30 @@
+#!/usr/local/bin/dyalogscript
+rlDir ← '../link/',⍨⊃1⎕NPARTS''
+rl ← 0⎕Fix rlDir,'raylib.apln'
+rl.Init rlDir
+
+⍝ Press A to start a blast noise
+⍝ Press B to start a slash noise
+rl.SetTraceLogLevelRAYLIB rl.TraceLogLevel.LOG_ALL
+
+rl.InitWindow 800 800 'abc'
+rl.InitAudioDevice⍬
+
+
+sounds ← rl.LoadSound¨ rlDir∘,¨'../examples/assets/testSound'∘,¨'1.wav' '2.wav'
+
+
+:While ~rl.WindowShouldClose⍬
+    rl.BeginDrawing⍬
+        rl.ClearBackground rl.color.gray
+        sounds {rl.PlaySound     ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_A KEY_B)
+        sounds {rl.PauseSound    ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_C KEY_D)
+        sounds {rl.ResumeSound   ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_E KEY_F)
+        sounds {rl.StopSound     ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_G KEY_H)
+        sounds {rl.IsSoundPlaying⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_I KEY_J)
+    rl.EndDrawing⍬
+:EndWhile
+
+rl.UnloadSound¨sounds
+rl.CloseAudioDevice⍬
+rl.CloseWindow⍬
