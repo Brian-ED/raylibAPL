@@ -1,0 +1,161 @@
+⍝!/usr/local/bin/dyalogscript
+rlDir ← '../link/',⍨⊃1⎕NPARTS''
+rl ← 0⎕Fix rlDir,'raylib.apln'
+rl.Init rlDir
+
+⍝ Initialization
+⍝--------------------------------------------------------------------------------------
+
+⍝ VR device parameters definition
+⍝   Oculus Rift CV1 parameters for simulator
+device ← ⍬
+  device ,← 2160     ⍝ Horizontal resolution in pixels
+  device ,← 1200     ⍝ Vertical resolution in pixels
+  device ,← 0.133793 ⍝ Horizontal size in meters
+  device ,← 0.0669   ⍝ Vertical size in meters
+  device ,← 0.041    ⍝ Distance between eye and display in meters
+  device ,← 0.07     ⍝ Lens separation distance in meters
+  device ,← 0.07     ⍝ IPD (distance between pupils) in meters
+
+  ⍝ NOTE: CV1 uses fresnel-hybrid-asymmetric lenses with specific compute shaders
+  ⍝ Following parameters are just an approximation to CV1 distortion stereo rendering
+  device ,← ⊂ 1      0.22  0.24  0   ⍝ Lens distortion
+  device ,← ⊂ 0.996 ¯0.004 1.014 0   ⍝ Chromatic aberration correction
+
+:Namespace deviceIndex
+  hResolution            ← ⎕IO+0 ⍝ Horizontal resolution in pixels
+  vResolution            ← ⎕IO+1 ⍝ Vertical resolution in pixels
+  hScreenSize            ← ⎕IO+2 ⍝ Horizontal size in meters
+  vScreenSize            ← ⎕IO+3 ⍝ Vertical size in meters
+  eyeToScreenDistance    ← ⎕IO+4 ⍝ Distance between eye and display in meters
+  lensSeparationDistance ← ⎕IO+5 ⍝ Lens separation distance in meters
+  interpupillaryDistance ← ⎕IO+6 ⍝ IPD (distance between pupils) in meters
+  lensDistortionValues   ← ⎕IO+7 ⍝ Lens distortion constant parameters
+  chromaAbCorrection     ← ⎕IO+8 ⍝ Chromatic aberration correction parameters
+:EndNamespace
+
+⍝ Load VR stereo config for VR device parameteres (Oculus Rift CV1 parameters)
+config ← rl.LoadVrStereoConfig device
+
+⍝ ⟨ ⟨ 0.9738094806671143 0 0.046392593532800674 0 0 0.876428484916687 0 0 0 0 ¯1.0000200271606445 ¯0.02000020071864128 0 0 ¯1 0 ⟩ ⟨ 0.9738094806671143 0 ¯0.046392593532800674 0 0 0.876428484916687 0 0 0 0 ¯1.0000200271606445 ¯0.02000020071864128 0 0 ¯1 0 ⟩ ⟩
+⍝ ⟨ ⟨ 1 0 0 0.03500000014901161 0 1 0 0.07500000298023224 0 0 1 0.04500000178813934 0 0 0 1 ⟩ ⟨ 1 0 0 ¯0.03500000014901161 0 1 0 0.07500000298023224 0 0 1 0.04500000178813934 0 0 0 1 ⟩ ⟩
+
+⍝ 0.9738094807 0 0.04639259353 0 0 0.8764284849 0 0 0 0 ¯1.000020027 ¯0.02000020072 0 0 ¯1 0
+⍝ 1 0 0 0.03500000015 0 1 0 0.07500000298 0 0 1 0.04500000179 0 0 0 1
+
+:Namespace configIndex
+  projection        ← ⎕IO+0 ⍝ VR projection matrices (per eye)
+  viewOffset        ← ⎕IO+1 ⍝ VR view offset matrices (per eye)
+  leftLensCenter    ← ⎕IO+2 ⍝ VR left lens center
+  rightLensCenter   ← ⎕IO+3 ⍝ VR right lens center
+  leftScreenCenter  ← ⎕IO+4 ⍝ VR left screen center
+  rightScreenCenter ← ⎕IO+5 ⍝ VR right screen center
+  scale             ← ⎕IO+6 ⍝ VR distortion scale
+  scaleIn           ← ⎕IO+7 ⍝ VR distortion scale in
+:EndNamespace
+
+:Namespace renderTextureIndex
+  id      ← ⎕IO+0 ⍝ OpenGL framebuffer object id
+  texture ← ⎕IO+1 ⍝ Color buffer attachment texture
+  depth   ← ⎕IO+2 ⍝ Depth buffer attachment texture
+:EndNamespace
+
+:Namespace textureIndex
+  id      ← ⎕IO+0 ⍝ OpenGL texture id
+  width   ← ⎕IO+1 ⍝ Texture base width
+  height  ← ⎕IO+2 ⍝ Texture base height
+  mipmaps ← ⎕IO+3 ⍝ Mipmap levels, 1 by default
+  format  ← ⎕IO+4 ⍝ Data format (PixelFormat type)
+:EndNamespace
+
+ArrAlloc ← {
+  p ← rl.MemAlloc 4×≢⍵
+  p rl.WriteF4 ⍵
+}
+
+⍝ NOTE: screenWidth/screenHeight should match VR device aspect ratio
+rl.InitWindow 1920 1022 'vr simulator'
+
+  ⍝ Distortion shader (uses device lens distortion and chroma)
+  d ← rl.LoadShader rlDir∘,¨ '../examples/assets/shaders/glsl330/'∘,¨ 'default.vs' 'distortion330.fs'
+
+  v4←rl.ShaderUniformDataType.SHADER_UNIFORM_VEC4
+  v2←rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2
+
+  ⍝ Update distortion shader with lens and distortion-scale parameters
+  a1 ← ⍬
+    F1←{d (rl.GetShaderLocation d ⍺) (ArrAlloc⍵⊃config) v2}
+    a1 ,←⊂ 'leftLensCenter'    F1 configIndex.leftLensCenter
+    a1 ,←⊂ 'rightLensCenter'   F1 configIndex.rightLensCenter
+    a1 ,←⊂ 'leftScreenCenter'  F1 configIndex.leftScreenCenter
+    a1 ,←⊂ 'rightScreenCenter' F1 configIndex.rightScreenCenter
+    a1 ,←⊂ 'scale'             F1 configIndex.scale
+    a1 ,←⊂ 'scaleIn'           F1 configIndex.scaleIn
+
+    F2←{d (rl.GetShaderLocation d ⍺) (ArrAlloc⍵⊃device) v4}
+    a1 ,←⊂ 'deviceWarpParam' F2 deviceIndex.lensDistortionValues
+    a1 ,←⊂ 'chromaAbParam'   F2 deviceIndex.chromaAbCorrection
+
+  rl.SetShaderValue¨a1
+
+  ⍝ Initialize framebuffer for stereo rendering
+  ⍝ NOTE: Screen size should match HMD aspect ratio
+  target ← rl.LoadRenderTexture device[deviceIndex.(hResolution vResolution)]
+
+  ⍝ Define the camera to look into our 3d world
+  camera ← ⍬
+    camera ,←⊂ 5 2 5              ⍝ Camera position
+    camera ,←⊂ 0 2 0              ⍝ Camera looking at point
+    camera ,←⊂ 0 1 0              ⍝ Camera up vector
+    camera ,←⊂ 60                 ⍝ Camera field-of-view Y
+    camera ,←⊂ rl.CameraProjection.CAMERA_PERSPECTIVE ⍝ Camera projection type
+
+  cubePosition ← 0 0 0
+
+  rl.DisableCursor⍬ ⍝ Limit cursor to relative movement inside the window
+
+  ⍝ Main game loop
+  ⍝ Detect window close button or ESC key
+  :While ~rl.WindowShouldClose⍬
+      ⍝ Update
+      ⍝----------------------------------------------------------------------------------
+      camera ← rl.UpdateCamera (camera rl.CameraMode.CAMERA_FIRST_PERSON)
+      ⍝----------------------------------------------------------------------------------
+      ⍝ Draw
+      ⍝----------------------------------------------------------------------------------
+      rl.BeginTextureMode target
+        rl.ClearBackground rl.color.raywhite
+        rl.BeginVrStereoMode config
+          rl.BeginMode3D camera
+            rl.DrawCube (cubePosition 2 2 2 rl.color.red)
+            rl.DrawCubeWires (cubePosition 2 2 2 rl.color.maroon)
+            rl.DrawGrid 40 1
+          rl.EndMode3D⍬
+        rl.EndVrStereoMode⍬
+      rl.EndTextureMode⍬
+
+      rl.BeginDrawing⍬
+        rl.ClearBackground  rl.color.raywhite
+        rl.BeginShaderMode d
+          arr ← ⍬
+          arr ,←⊂ (renderTextureIndex.texture)⊃target
+          arr ,←⊂ 0 0,-@2⊢(renderTextureIndex.texture⊃target)[textureIndex.(width height)] ⍝ source
+          arr ,←⊂ 0 0,rl.((GetScreenWidth⍬)(GetScreenHeight⍬)) ⍝ dest
+          arr ,←⊂ 0 0
+          arr ,←⊂ 0
+          arr ,←⊂ rl.color.white
+          rl.DrawTexturePro arr
+        rl.EndShaderMode⍬
+        rl.DrawFPS 10 10
+      rl.EndDrawing⍬
+      ⍝----------------------------------------------------------------------------------
+  :EndWhile
+
+  ⍝ De-Initialization
+  ⍝--------------------------------------------------------------------------------------
+  rl.UnloadVrStereoConfig config   ⍝ Unload stereo config
+
+  rl.UnloadRenderTexture target    ⍝ Unload stereo render fbo
+  rl.UnloadShader d       ⍝ Unload distortion shader
+
+rl.CloseWindow⍬
