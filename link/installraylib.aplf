@@ -1,6 +1,7 @@
 ∇ installraylib tatin;FullPath;Assert;PlatfromToLibFile;platform;version;libPath;fullLibFile;git_clone_path;PlatformToInstallCmd;FileSize
- FullPath ← ∊1∘⎕NPARTS
+version ← 'v7.0.0'
 
+FullPath ← ∊1∘⎕NPARTS
 Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 
 PlatfromToLibFile ← {
@@ -11,14 +12,15 @@ PlatfromToLibFile ← {
 }
 platform ← '-64'~⍨⊃#⎕WG'APLVersion'
 
-version ← 'v',{⍵↑⍨1-⍨1⍳⍨'"'⍷⍵} {⍵↓⍨1⍳⍨⌽'  version: "'⍷⍥⌽⍵} ⊃ ⎕NGet FullPath TatinVars.HOME,'/apl-package.json'
-⍝ If Tatin, use TatinVars.HOME as prefix for library path
+⍝ If Tatin, use TatinVars.HOME as prefix/currentPath
 :If tatin
-  libPath ← FullPath TatinVars.HOME,'/lib'
+  currentPath ← FullPath TatinVars.HOME
   ⍝libPath ← FullPath 'dependencies/TBD-raylibapl-0.1.0','/lib'
 :Else
-  libPath ← 'lib'
+  currentPath ← '.'
 :EndIf
+
+libPath ← currentPath,'/lib'
 ⎕MkDir⍣(~⎕NExists libPath)⊢libPath
 fullLibFile ← FullPath libPath,'/',libFile←PlatfromToLibFile platform
 
@@ -42,10 +44,10 @@ PlatformToInstallCmd ← {
   0 Assert⍨'Unknown platform (',⍵,')'
 }
 
-⎕CMD PlatformToInstallCmd platform
+⎕CMD ⎕←PlatformToInstallCmd platform
 
 FileSize ← 2∘⎕NINFO
-'Downloading raylib failed from Github failed. Likely due to redirects not being followed.' Assert 0≢FileSize fullLibFile
+'Downloading temp-c-raylib from Github failed. Likely due to no internet, and/or redirects not being followed.' Assert 0≢FileSize fullLibFile
 
 ⎕←'raylib installed successfully'
 ∇
