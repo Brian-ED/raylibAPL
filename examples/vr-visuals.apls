@@ -1,4 +1,4 @@
-⍝!/usr/local/bin/dyalogscript
+#!/usr/local/bin/dyalogscript
 rlDir ← '../link/',⍨⊃1⎕NPARTS''
 rl ← 0⎕Fix rlDir,'raylib.apln'
 rl.Init rlDir
@@ -22,17 +22,16 @@ device ← ⍬
   device ,← ⊂ 1      0.22  0.24  0   ⍝ Lens distortion
   device ,← ⊂ 0.996 ¯0.004 1.014 0   ⍝ Chromatic aberration correction
 
-:Namespace deviceIndex
-  hResolution            ← ⎕IO+0 ⍝ Horizontal resolution in pixels
-  vResolution            ← ⎕IO+1 ⍝ Vertical resolution in pixels
-  hScreenSize            ← ⎕IO+2 ⍝ Horizontal size in meters
-  vScreenSize            ← ⎕IO+3 ⍝ Vertical size in meters
-  eyeToScreenDistance    ← ⎕IO+4 ⍝ Distance between eye and display in meters
-  lensSeparationDistance ← ⎕IO+5 ⍝ Lens separation distance in meters
-  interpupillaryDistance ← ⎕IO+6 ⍝ IPD (distance between pupils) in meters
-  lensDistortionValues   ← ⎕IO+7 ⍝ Lens distortion constant parameters
-  chromaAbCorrection     ← ⎕IO+8 ⍝ Chromatic aberration correction parameters
-:EndNamespace
+deviceIndex←⎕NS⍬
+  deviceIndex.hResolution            ← ⎕IO+0 ⍝ Horizontal resolution in pixels
+  deviceIndex.vResolution            ← ⎕IO+1 ⍝ Vertical resolution in pixels
+  deviceIndex.hScreenSize            ← ⎕IO+2 ⍝ Horizontal size in meters
+  deviceIndex.vScreenSize            ← ⎕IO+3 ⍝ Vertical size in meters
+  deviceIndex.eyeToScreenDistance    ← ⎕IO+4 ⍝ Distance between eye and display in meters
+  deviceIndex.lensSeparationDistance ← ⎕IO+5 ⍝ Lens separation distance in meters
+  deviceIndex.interpupillaryDistance ← ⎕IO+6 ⍝ IPD (distance between pupils) in meters
+  deviceIndex.lensDistortionValues   ← ⎕IO+7 ⍝ Lens distortion constant parameters
+  deviceIndex.chromaAbCorrection     ← ⎕IO+8 ⍝ Chromatic aberration correction parameters
 
 ⍝ Load VR stereo config for VR device parameteres (Oculus Rift CV1 parameters)
 config ← rl.LoadVrStereoConfig device
@@ -43,30 +42,27 @@ config ← rl.LoadVrStereoConfig device
 ⍝ 0.9738094807 0 0.04639259353 0 0 0.8764284849 0 0 0 0 ¯1.000020027 ¯0.02000020072 0 0 ¯1 0
 ⍝ 1 0 0 0.03500000015 0 1 0 0.07500000298 0 0 1 0.04500000179 0 0 0 1
 
-:Namespace configIndex
-  projection        ← ⎕IO+0 ⍝ VR projection matrices (per eye)
-  viewOffset        ← ⎕IO+1 ⍝ VR view offset matrices (per eye)
-  leftLensCenter    ← ⎕IO+2 ⍝ VR left lens center
-  rightLensCenter   ← ⎕IO+3 ⍝ VR right lens center
-  leftScreenCenter  ← ⎕IO+4 ⍝ VR left screen center
-  rightScreenCenter ← ⎕IO+5 ⍝ VR right screen center
-  scale             ← ⎕IO+6 ⍝ VR distortion scale
-  scaleIn           ← ⎕IO+7 ⍝ VR distortion scale in
-:EndNamespace
+configIndex←⎕NS⍬
+  configIndex.projection        ← ⎕IO+0 ⍝ VR projection matrices (per eye)
+  configIndex.viewOffset        ← ⎕IO+1 ⍝ VR view offset matrices (per eye)
+  configIndex.leftLensCenter    ← ⎕IO+2 ⍝ VR left lens center
+  configIndex.rightLensCenter   ← ⎕IO+3 ⍝ VR right lens center
+  configIndex.leftScreenCenter  ← ⎕IO+4 ⍝ VR left screen center
+  configIndex.rightScreenCenter ← ⎕IO+5 ⍝ VR right screen center
+  configIndex.scale             ← ⎕IO+6 ⍝ VR distortion scale
+  configIndex.scaleIn           ← ⎕IO+7 ⍝ VR distortion scale in
 
-:Namespace renderTextureIndex
-  id      ← ⎕IO+0 ⍝ OpenGL framebuffer object id
-  texture ← ⎕IO+1 ⍝ Color buffer attachment texture
-  depth   ← ⎕IO+2 ⍝ Depth buffer attachment texture
-:EndNamespace
+renderTextureIndex←⎕NS⍬
+  renderTextureIndex.id      ← ⎕IO+0 ⍝ OpenGL framebuffer object id
+  renderTextureIndex.texture ← ⎕IO+1 ⍝ Color buffer attachment texture
+  renderTextureIndex.depth   ← ⎕IO+2 ⍝ Depth buffer attachment texture
 
-:Namespace textureIndex
-  id      ← ⎕IO+0 ⍝ OpenGL texture id
-  width   ← ⎕IO+1 ⍝ Texture base width
-  height  ← ⎕IO+2 ⍝ Texture base height
-  mipmaps ← ⎕IO+3 ⍝ Mipmap levels, 1 by default
-  format  ← ⎕IO+4 ⍝ Data format (PixelFormat type)
-:EndNamespace
+textureIndex←⎕NS⍬
+  textureIndex.id      ← ⎕IO+0 ⍝ OpenGL texture id
+  textureIndex.width   ← ⎕IO+1 ⍝ Texture base width
+  textureIndex.height  ← ⎕IO+2 ⍝ Texture base height
+  textureIndex.mipmaps ← ⎕IO+3 ⍝ Mipmap levels, 1 by default
+  textureIndex.format  ← ⎕IO+4 ⍝ Data format (PixelFormat type)
 
 ArrAlloc ← {
   p ← rl.MemAlloc 4×≢⍵
