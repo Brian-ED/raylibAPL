@@ -7,7 +7,7 @@ Features not showcased in examples are crosssed out, since they are untested.
 
 - Supports platforms Windows, Linux, and MacOS.
 - Input-methods: Keyboard, Mouse, ~~Controler~~, and ~~Touchscreen~~.
-- Graphics: 2D, 3D, ~~Sound~~, Text, Vector graphics, Images/Textures, and shaders.
+- Graphics: 2D, 3D, Sound, Text, Vector graphics, Images/Textures, and shaders.
 - Multiple Fonts formats supported (TTF, ~~OTF~~, ~~Image fonts~~, ~~AngelCode fonts~~).
 - Multiple texture formats supported, ~~including compressed formats (DXT, ETC, ASTC).~~
 - Full 3D support, including ~~3D Shapes~~, Models, ~~Billboards~~, ~~Heightmaps~~, and more!
@@ -15,8 +15,8 @@ Features not showcased in examples are crosssed out, since they are untested.
 - ~~Animated 3D models supported (skeletal bones animation) (IQM, M3D, glTF).~~
 - Shaders support, ~~including model shaders and postprocessing shaders~~.
 - ~~Powerful math module for Vector, Matrix, and Quaternion operations: raymath~~.
-- Audio loading and playing with streaming support (~~WAV~~, ~~QOA~~, ~~OGG~~, MP3, ~~FLAC~~, ~~XM~~, ~~MOD~~).
-- ~~VR stereo rendering support with configurable HMD device parameters.~~
+- Audio loading and playing with streaming support (WAV, ~~QOA~~, ~~OGG~~, MP3, ~~FLAC~~, ~~XM~~, ~~MOD~~).
+- VR stereo rendering support with configurable HMD device parameters.
 
 # Warning
 This library interfaces with C code that is prone to crashing Dyalog. If you experience code 999, there was likely a "segfault"/error in raylibAPL or [raylib](<https://github.com/raysan5/raylib/>), and so a bug report would be appreciated.
