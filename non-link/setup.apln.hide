@@ -129,6 +129,7 @@ intVecRefPushGen←{
 pop  ,← ⊂intVecRefPopGen ⍬
 push ,← ⊂intVecRefPushGen⍬
 atomTypes,←⊂'=I4'
+typeByteSize,←8
 
 runAfterFuncDone ← 0/⊂id
 
@@ -150,6 +151,7 @@ intVecPushGen←{
 pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
 push ,← ⊂intVecPushGen⍬
 atomTypes,←⊂'<I4'
+typeByteSize,←8
 
 ⍝ ---------------- ⍝
 ⍝ Stack operations ⍝
@@ -170,8 +172,8 @@ Pop ← {
 
 NameOfStruct ← {
   2>|≡⍵:⍵
-  _← 'NameCheck applied to a non-atomic pointer type, this should be impossible.' Assert ∧/'<=>'≢¨⊂⊃⍵
-  ,'⋄'∘,⍣¯1⊃⍵
+  _← 'INTERNAL: NameCheck applied to a non-atomic pointer type, this should be impossible.' Assert ∧/'<=>'≢¨⊂⊃⍵
+  ,'⋄'∘,⍣¯1⊢(⊃⍵),⍵/⍨⌽∧\⌽0=≡¨⍵
 }
 remPtrInfo ← {⍵/⍨~ (~atomTypes∊⍨⊂⍵)∧ ∧\'<=>'∊⍨⍵}
 
@@ -184,15 +186,68 @@ structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}##.{⍎⍵._Each_(0/⊂,⊂'')⎕
 
 ⎕NA 'I4 ',pathToBinary,'|GetStructNameLength I4'
 ⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
-structNames ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ¯1+⍳StructCount
-
-('Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNames∊⍨NameOfStruct¨structs
+structNamesAll ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ⎕IO-⍨⍳StructCount
+('Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
+rrr←structNamesAll⍳NameOfStruct¨structs
+⎕EX 'structNamesAll' 'r'
 
 ⎕NA 'I4 ',pathToBinary,'|GetStructSize I4'
 'tempAlloc' ⎕NA 'P ',pathToBinary,'|MemAlloc U4'
 'tempFree'  ⎕NA      pathToBinary,'|MemFree P'
+structByteSizes←(GetStructSize¨⎕IO-⍨⍳StructCount)[rrr]
+
 BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
-atomTypes ,← 1↓¨⊃¨structs
+⎕EX 'rrr'
+
+∇r←FormatArrType (t l)
+  r←t,'[',(⍕l),']'
+∇
+PopArrGen←{
+  (t l)←⍵
+
+  O←(t l){ ⍝ pop value
+    (t l)←⍺⍺
+    Popper←⊃pop[atomTypes⍳⊂t]
+    typeLen ← typeByteSize[atomTypes⍳⊂t]
+    eachValueInResultPtr ← (Pop⍬) MovePtr⍤,E._Each_⍬⊢ typeLen×⎕IO-⍨⍳l
+    resultPtrs←Push E._Each_⍬⍳l
+    _←resultPtrs({MemCpy⍺⍵typeLen}E._Each_⍬)eachValueInResultPtr
+    ⌽{Popper∘⊢⍬}E._Each_⍬⌽resultPtrs
+  }
+  ⎕OR 'O'
+}
+PushArrGen←{
+  (t l)←⍵
+
+  O←(t l){ ⍝ push value
+    (t l)←⍺⍺
+    l≢≢⍵:0 Assert⍨'Wrong list length given for ',t,'[',(⍕l),'], (',(⍕l),'≢≢⍵)'
+    Pusher←⊃push[atomTypes⍳⊂t]
+    typeLen ← typeByteSize[atomTypes⍳⊂t]
+    ptr←Push⍬
+    _←{Pusher∘⊢⍵}E._Each_⍬⊢⌽⍵
+    _←(Pop E._Each_⍬⍳l) ({MemCpy (⍵⍺typeLen)}E._Each_⍬) (MovePtr ptr,⊢)E._Each_⍬⊢typeLen×⎕IO-⍨⍳l
+    ⍝_←{_←{⎕←⍵}¨'this '∘,¨⍵⋄⍵≡⍥(⊂100÷⍨(⌊.5∘+)⍤×∘100)⊢⎕←ptr ReadF4 16×l}⍣('Matrix'≡t)⊢⍵
+    ptr
+  }
+
+  ⎕OR'O'
+}
+⍝ TODO: Possible improvement: Automatically read the loaded structs and create these ArrTypes
+arrTypes ← ⍬
+arrTypes ,←⊂ 'F4'     4  ⋄ typeByteSize ,← 4×4
+arrTypes ,←⊂ 'F4'     2  ⋄ typeByteSize ,← 4×2
+arrTypes ,←⊂ 'Matrix' 2  ⋄ typeByteSize ,← (4×4)×4
+arrTypes ,←⊂ 'U1'     32 ⋄ typeByteSize ,← 1×32
+arrTypes ,←⊂ 'I4'     4  ⋄ typeByteSize ,← 4×4
+arrTypes ,←⊂ 'Vector2'2  ⋄ typeByteSize ,← 8×2
+arrTypes ,←⊂ 'F4'     3  ⋄ typeByteSize ,← 4×3
+arrTypes ,←⊂ 'F4'     16 ⋄ typeByteSize ,← 4×16
+arrTypes ,←⊂ 'U4'     4  ⋄ typeByteSize ,← 4×4
+
+atomTypes,←FormatArrType¨arrTypes
+pop ,←  PopArrGen E._Each_(0/⊂id)⊢ arrTypes
+push,← PushArrGen E._Each_(0/⊂id)⊢ arrTypes
 
 PopStructGen←{
   name←NameOfStruct ⍵
@@ -226,9 +281,10 @@ PushStructGen ← {
   }(name cleaned)
   ⎕OR'O'
 }
-
+atomTypes ,← 1↓¨⊃¨structs
 pop ,← PopStructGen  E._Each_(0/⊂id)⊢ structs
 push,← PushStructGen E._Each_(0/⊂id)⊢ structs
+typeByteSize,← structByteSizes
 ⍝ -------------------------------- ⍝
 
 ⍝ --------------------------- ⍝
@@ -244,6 +300,7 @@ equalPtrPushGen←{
 }
 pop ,← equalPtrPopGen  E._Each_(0/⊂id)⊢ pop
 push,← equalPtrPushGen E._Each_(0/⊂id)⊢ push
+typeByteSize,← 8⍨¨atomTypes
 atomTypes,←'=',¨atomTypes
 ⍝ --------------------------- ⍝
 
@@ -251,7 +308,6 @@ atomTypes,←'=',¨atomTypes
 ⍝ --------------------------- ⍝
 ⍝ Handling signed string type ⍝
 ⍝ --------------------------- ⍝
-atomTypes ,←⊂ str ← '=0C1'
 StringPopGen←{
   _←'A'⎕NA pathToBinary,'|strcpy2 >0T1[] P'
   O←(⊃pop[atomTypes⍳⊂,'P']){
@@ -275,6 +331,8 @@ StringPushGen←{
   }M
   ⎕OR 'push'
 }
+atomTypes ,←⊂ str ← '=0C1'
+typeByteSize,← 8
 pop ,←⊂ StringPopGen  ⍬
 push,←⊂ StringPushGen ⍬
 ⍝ --------------------------- ⍝
@@ -329,12 +387,13 @@ _←'MemCpyF4'   ⎕NA pathToBinary,'|memcpy2 P <F4[] U8'
 _←'MemCpyI4'   ⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 _←'MemCpyI4Out'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
 _←'MemCpyF4Out'⎕NA pathToBinary,'|memcpy2 =F4[] P U8'
+_←'MemCpy'     ⎕NA pathToBinary,'|memcpy2 P P U8'
 _←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
 
-∇ptr WriteF4 floats
+∇ptr←ptr WriteF4 floats
   MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
 ∇
-∇ptr WriteI4 ints
+∇ptr←ptr WriteI4 ints
   MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints))
 ∇
 ∇r←ptr ReadI4 amount
