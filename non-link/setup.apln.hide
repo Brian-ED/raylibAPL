@@ -68,7 +68,7 @@ _ ← installAutoForTatin ⎕NEXISTS pathToBinary
 pathToBinary ← '"',pathToBinary,'"'
 
 Read←{
-  _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8' ⍝ MA = Mid After. Means these convert to/from pointer. IF = Into From
+  _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8'
   R (⍺⍴0) ⍵ ⍺
 }
 
