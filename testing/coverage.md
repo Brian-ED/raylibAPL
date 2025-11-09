@@ -76,7 +76,7 @@ A **test** can optionally also specifiy:
 
 ### Windows 10 test
 Environment:
-- [raylibAPL commit](https://github.com/Brian-ED/raylibAPL/commit/2500fe086e41190ed7150cab2d7ccac77cb59e0d).
+- [raylibAPL commit](https://github.com/Brian-ED/raylibAPL/commit/ed61bb167dc9a6beb2bf8004823a928360f8e84e) "Releasing version 1.0.0".
 - Done on Brian's Lenovo-Yoga-C940-14IIL, in Windows 10 Version 10.0.19045 Build 19045, in a non-reproducible environment.
 - Dyalog 19.0.50074 64-bit Unicode, BuildID 09ca43b9.
 
