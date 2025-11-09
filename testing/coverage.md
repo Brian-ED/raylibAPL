@@ -91,9 +91,8 @@ Successful
 
 ### Linux Mint test
 Environment:
-- [raylibAPL commit](https://github.com/Brian-ED/raylibAPL/commit/16d71c88d1eec0ccef0d4d4018a065bbb408f0e5) "Removed wrong comment".
+- [raylibAPL commit](https://github.com/Brian-ED/raylibAPL/commit/ed61bb167dc9a6beb2bf8004823a928360f8e84e) "Releasing version 1.0.0".
 - Dyalog version `Dyalog 19.0.50027 64-bit Unicode, BuildID 58fad6b9`.
 - Done on Brian's Lenovo-Yoga-C940-14IIL, in Linux Mint 21.2 x86_64, in a non-reproducible environment.
-- Replaced `lib/libtemp-c-raylib.so` with [libtemp-c-raylib.so v8.0.0](https://github.com/Brian-ED/temp-c-raylib/releases/tag/v8.0.0) to replace v7.0.0, due to a breaking bug.
 
 Successful
