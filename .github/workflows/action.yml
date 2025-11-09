@@ -15,7 +15,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-22.04
-    container: debian:11
     steps:
       - name: Install Dyalog APL
         run: |
@@ -52,7 +51,6 @@ jobs:
     name: Publish
     needs: build
     runs-on: ubuntu-22.04
-    container: debian:11
     if: ${{ github.event_name == 'release' && github.event.action == 'published' }}
     steps:
       - name: Install Dyalog APL
