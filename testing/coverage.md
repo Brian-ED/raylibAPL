@@ -31,7 +31,7 @@ Environment:
   Current directory: `.`.
 
 Actions:
-  1. Run `nix build ./nix && cd ./result/examples && ../testing/run-all-examples.apls`.
+  1. Run `nix build ./nix && cd ./result/testing && dyalogscript run-all-examples.apls`.
   2. A window opens, close it with the Escape key.
   3. If a new window opens, repeat step 2.
 
@@ -84,8 +84,8 @@ Successful
 
 ### Linux NixOS test
 Environment:
-- [raylibAPL commit](https://github.com/Brian-ED/raylibAPL/commit/bf6300ff686a7d8aab0d8e957b8cfee841e99185) "Minor bug fixes to new examples".
-- Done on Brian's Lenovo-Yoga-C940-14IIL, in NixOS 25.11, in a [reproducible environment](https://github.com/Brian-ED/brian-nixos-config/commit/029752e4cf14ca19aad4cfb6c551663eded07270).
+- [raylibAPL commit](https://github.com/Brian-ED/raylibAPL/commit/d4d38499ae0fba619476a38bf9c827d63b67b06f) "Updated nix flakes to use temp-c-raylib v8.0.0".
+- Done on Brian's Lenovo-Yoga-C940-14IIL, in NixOS 25.11.20251002.7df7ff7, in a [reproducible environment](https://github.com/Brian-ED/brian-nixos-config/commit/029752e4cf14ca19aad4cfb6c551663eded07270).
 
 Successful
 
