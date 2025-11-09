@@ -61,12 +61,14 @@ Intended output:
   One example plays music.
 
 ## Tests
+The following list of tests each describe an environment where the testcases have been done on, aswell as the result.
 
 A **test** needs to specify, if available:
 - raylibAPL commit or version.
 - Whether you're running in a reproducible environment or not. Examples of reproducible would be inside docker or nix.
 - OS, and it's version.
 - Dyalog APL interpreter version.
+- The result, or "success" if the result is exactly as specified in the testcase.
 
 A **test** can optionally also specifiy:
 - Hardware information. For example Lenovo-Yoga-C940-14IIL.
