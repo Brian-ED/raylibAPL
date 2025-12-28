@@ -9,7 +9,7 @@
 :EndNamespace
 
 ⍝ id function used for array-of-functions' prototype
-id←{F←⊢⋄⎕OR'F'}⍬
+id ← {F←⊢⋄⎕OR'F'}⍬
 
 debug ← {
   0:_←⍬
@@ -34,7 +34,7 @@ atomTypes ,←⊂ ptr  ← ,'P'
 atomTypes ,←⊂ f8   ← 'F8'
 atomTypes ,←⊂ i8   ← 'I8'
 atomTypes ,←⊂ u2   ← 'U2'
-atomTypes←∪atomTypes
+atomTypes ← ∪atomTypes
 
 ∇ success←installAutoForTatin fileExists
   :If (~fileExists)
@@ -56,7 +56,7 @@ PlatfromToLibFile ← {
   ('Unknown platform (',platform,')') Assert 0
 }
 
-fixPath←{
+fixPath ← {
   'Windows'≡'-64'~⍨⊃#⎕WG'APLVersion':('\'@('/'∘=))⍵
   ⍵
 }
@@ -67,7 +67,7 @@ pathToBinary ← fixPath ∊1⎕NPARTS pathToBinary
 _ ← installAutoForTatin ⎕NEXISTS pathToBinary
 pathToBinary ← '"',pathToBinary,'"'
 
-Read←{
+Read ← {
   _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8'
   R (⍺⍴0) ⍵ ⍺
 }
@@ -98,7 +98,7 @@ PtrToBytes ← {
 ⍝ --------------------------- ⍝
 LenStack ← ⍬
 popLenStack ← {l←⊃⌽LenStack ⋄ LenStack↓⍨←¯1 ⋄ l}
-intVecRefPopGen←{
+intVecRefPopGen ← {
   _←'A'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
   O←(⊃pop[atomTypes⍳⊂,'P']){
     len←popLenStack⍬
@@ -111,7 +111,7 @@ intVecRefPopGen←{
   }A
   ⎕OR 'O'
 }
-intVecRefPushGen←{
+intVecRefPushGen ← {
   _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
@@ -133,7 +133,7 @@ typeByteSize,←8
 
 runAfterFuncDone ← 0/⊂id
 
-intVecPushGen←{
+intVecPushGen ← {
   _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
@@ -188,13 +188,13 @@ structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}##.{⍎⍵._Each_(0/⊂,⊂'')⎕
 ⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
 structNamesAll ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ⎕IO-⍨⍳StructCount
 ('Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
-rrr←structNamesAll⍳NameOfStruct¨structs
+rrr ← structNamesAll⍳NameOfStruct¨structs
 ⎕EX 'structNamesAll' 'r'
 
 ⎕NA 'I4 ',pathToBinary,'|GetStructSize I4'
 'tempAlloc' ⎕NA 'P ',pathToBinary,'|MemAlloc U4'
 'tempFree'  ⎕NA      pathToBinary,'|MemFree P'
-structByteSizes←(GetStructSize¨⎕IO-⍨⍳StructCount)[rrr]
+structByteSizes ← (GetStructSize¨⎕IO-⍨⍳StructCount)[rrr]
 
 BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
 ⎕EX 'rrr'
@@ -202,7 +202,7 @@ BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
 ∇r←FormatArrType (t l)
   r←t,'[',(⍕l),']'
 ∇
-PopArrGen←{
+PopArrGen ← {
   (t l)←⍵
 
   O←(t l){ ⍝ pop value
@@ -216,7 +216,7 @@ PopArrGen←{
   }
   ⎕OR 'O'
 }
-PushArrGen←{
+PushArrGen ← {
   (t l)←⍵
 
   O←(t l){ ⍝ push value
@@ -249,7 +249,7 @@ atomTypes,←FormatArrType¨arrTypes
 pop ,←  PopArrGen E._Each_(0/⊂id)⊢ arrTypes
 push,← PushArrGen E._Each_(0/⊂id)⊢ arrTypes
 
-PopStructGen←{
+PopStructGen ← {
   name←NameOfStruct ⍵
   cleaned ← {0=≢⍵: ⍵ ⋄ NameOfStruct¨⍵} {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
   _←('Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
@@ -290,11 +290,11 @@ typeByteSize,← structByteSizes
 ⍝ --------------------------- ⍝
 ⍝ Handling all =type versions ⍝
 ⍝ --------------------------- ⍝
-equalPtrPopGen←{
+equalPtrPopGen ← {
   O←⍵{ ⍺⍺⍬⊣⍵⍵⍬ }(⊃pop[atomTypes⍳⊂,'P'])
   ⎕OR'O'
 }
-equalPtrPushGen←{
+equalPtrPushGen ← {
   O←⍵{ ⍵⍵ ⍺⍺ ⍵ }(⊃push[atomTypes⍳⊂,'P'])
   ⎕OR'O'
 }
@@ -308,7 +308,7 @@ atomTypes,←'=',¨atomTypes
 ⍝ --------------------------- ⍝
 ⍝ Handling signed string type ⍝
 ⍝ --------------------------- ⍝
-StringPopGen←{
+StringPopGen ← {
   _←'A'⎕NA pathToBinary,'|strcpy2 >0T1[] P'
   O←(⊃pop[atomTypes⍳⊂,'P']){
     strPtr ← ⍺⍺⍬
@@ -320,7 +320,7 @@ StringPopGen←{
   }A
   ⎕OR 'O'
 }
-StringPushGen←{
+StringPushGen ← {
   _←'M'⎕NA pathToBinary,'|strcpy2 P <0T1[]'
   push←(⊃push[atomTypes⍳⊂,'P']){
     (⍕≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
