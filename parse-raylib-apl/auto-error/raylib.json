@@ -115,7 +115,7 @@
     {"name": "GetScreenToWorld2D"              ,"allowed cases": [],                                                                                                     "disallowed cases": [], "doc":""},
     {"name": "GetWorldToScreenEx"              ,"allowed cases": [],                                                                                                     "disallowed cases": [], "doc":""},
     {"name": "GetWorldToScreen2D"              ,"allowed cases": [],                                                                                                     "disallowed cases": [], "doc":""},
-    {"name": "SetTargetFPS"                    ,"allowed cases": [[ "InitWindow" ]],                                                                                     "disallowed cases": [], "doc":"returns 0"},
+    {"name": "SetTargetFPS"                    ,"allowed cases": [],                                                                                                     "disallowed cases": [], "doc":"returns 0"},
     {"name": "GetFrameTime"                    ,"allowed cases": [[ "InitWindow" ]],                                                                                     "disallowed cases": [], "doc":"returns 0"},
     {"name": "GetTime"                         ,"allowed cases": [[ "InitWindow" ]],                                                                                     "disallowed cases": [], "doc":"returns 0"},
     {"name": "GetFPS"                          ,"allowed cases": [[ "InitWindow" ]],                                                                                     "disallowed cases": [], "doc":"returns 0"},
