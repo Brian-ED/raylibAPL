@@ -375,8 +375,8 @@ push,←⊂ StringPushGen ⍬
 
 ∇AfterNewDefinitions libName
   :if 'raylib'≡libName
-    SetTraceLogLevelRAYLIB TraceLogLevel.LOG_WARNING
-    SetTargetFPSRAYLIB 60
+    _←SetTraceLogLevelRAYLIB TraceLogLevel.LOG_WARNING
+    _←SetTargetFPSRAYLIB 60
   :EndIf
 ∇
 
