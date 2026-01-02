@@ -1787,7 +1787,7 @@ scopeInitAudioDevice ← 0
   _←EndMode2DRAYLIB _
 ∇
 ∇EndMode3D _
-  'EndMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'EndMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeInitWindow ∧ scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   scopeBeginMode3D ← 0
   _←EndMode3DRAYLIB _
 ∇
@@ -2954,7 +2954,6 @@ scopeInitAudioDevice ← 0
   _←SetSoundVolumeRAYLIB(sound volume)
 ∇
 ∇SetTargetFPS fps
-  'SetTargetFPS errored' Assert ∨/(scopeInitWindow)
   _←SetTargetFPSRAYLIB fps
 ∇
 ∇SetTextLineSpacing spacing
