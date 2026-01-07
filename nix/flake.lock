@@ -56,16 +56,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1762498405,
-        "narHash": "sha256-Zg/SCgCaAioc0/SVZQJxuECGPJy+OAeBcGeA5okdYDc=",
+        "lastModified": 1767640445,
+        "narHash": "sha256-UWYqmD7JFBEDBHWYcqE6s6c77pWdcU/i+bwD6XxMb8A=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "6faeb062ee4cf4f105989d490831713cc5a43ee1",
+        "rev": "9f0c42f8bc7151b8e7e5840fb3bd454ad850d8c5",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.05",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -132,11 +132,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1759619842,
-        "narHash": "sha256-G0wCSY6rb9qpQCAaghthNQWSguNMmxvgINhEx6HXdA4=",
+        "lastModified": 1762836080,
+        "narHash": "sha256-mOfS74+SIAaWjdjf0aege9o6QGayxFxs7Xhdscr5OOc=",
         "owner": "Bombardier-C-Kram",
         "repo": "TatinCLI",
-        "rev": "9b9ec06a7a7fde47f5bd6f9c840fdf2ec04a2796",
+        "rev": "72c5be58983562ae5975fb8332f48ccb8bf0982a",
         "type": "github"
       },
       "original": {

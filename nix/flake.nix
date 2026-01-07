@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # Unstable has v20 dyalog
     temp-c-raylib = { url="github:Brian-ED/temp-c-raylib"            ; inputs.nixpkgs.follows="nixpkgs"; };
     tatinCLIPkg   = { url="github:Bombardier-C-Kram/TatinCLI?dir=nix"; inputs.nixpkgs.follows="nixpkgs"; };
   };

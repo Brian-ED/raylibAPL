@@ -42,6 +42,9 @@ Intended output:
 
   One example plays music.
 
+### Linux NixOS testcase after dyalog 20 update
+Same behavior as version 19.0 above.
+
 ### Linux Mint testcase
 Environment:
   `temp-c-raylib` is installed with `dyalogscript install-raylib.apls`.
