@@ -44,7 +44,7 @@ PlatformToInstallCmd ← {
   0 Assert⍨'Unknown platform (',⍵,')'
 }
 
-⎕CMD ⎕←PlatformToInstallCmd platform
+⎕CMD PlatformToInstallCmd platform
 
 FileSize ← 2∘⎕NINFO
 'Downloading temp-c-raylib from Github failed. Likely due to no internet, and/or redirects not being followed.' Assert 0≢FileSize fullLibFile
