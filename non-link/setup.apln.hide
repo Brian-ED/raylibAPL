@@ -65,7 +65,7 @@ binaryFileName ← PlatfromToLibFile '-64'~⍨⊃#⎕WG'APLVersion'
 pathToBinary ← ##.pathToRaylibDotAPLN,'../lib/',binaryFileName
 pathToBinary ← fixPath ∊1⎕NPARTS pathToBinary
 _ ← installAutoForTatin ⎕NEXISTS pathToBinary
-pathToBinary ← '"',pathToBinary,'"'
+pathToBinary ← '"',pathToBinary,'"' ⍝ This is so that paths including spaces don't non-conform inside ⎕NA calls
 
 Read ← {
   _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8'
