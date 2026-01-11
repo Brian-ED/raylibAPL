@@ -61,7 +61,7 @@ pathFromThisFileToRaylibAPLRoot←{
   ('Unknown platform (',platform,')') Assert validPlatforms∊⍨⊂platform
   relativePathToBinary ← platformLibName⊃⍨validPlatforms⍳⊂platform
   pathToBinary ← '\'@('/'∘=)⍣('Windows'≡platform)∊1⎕NPARTS (pathFromThisFileToRaylibAPLRoot⍬),'/lib/',relativePathToBinary
-  {0::0 Assert⍨'Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
+  _←{0::0 Assert⍨'Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
 ∇
 
 pathToBinary ← GetPathToBinary⍬
