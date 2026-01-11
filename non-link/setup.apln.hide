@@ -36,35 +36,36 @@ atomTypes ,←⊂ i8   ← 'I8'
 atomTypes ,←⊂ u2   ← 'U2'
 atomTypes ← ∪atomTypes
 
-∇ success←installAutoForTatin fileExists
-  :If (~fileExists)
+pathFromThisFileToRaylibAPLRoot←{
+  9≡40⎕ATX'##.##.TatinVars': ##.##.TatinVars.HOME
+  '..'
+}
+
+∇success←installAutoForTatin libPath
+  :If (~⎕NEXISTS libPath)
     :If 9≡40⎕ATX '##.##.TatinVars'
       ##.##.installraylib 1
     :Else
-      0 Assert⍨ 'File ',pathToBinary,' was not found'
+      0 Assert⍨ 'File ',libPath,' was not found'
     :EndIf
   :EndIf
   success←1
 ∇
 
-⍝ Optain path to lib file for the current platform
-PlatfromToLibFile ← {
-  platform←⍵
-  'Windows'≡platform:'temp-c-raylib.dll'
-  'Mac'    ≡platform:'libtemp-c-raylib.dylib'
-  'Linux'  ≡platform:'libtemp-c-raylib.so'
-  ('Unknown platform (',platform,')') Assert 0
-}
+∇pathToBinary←GetPathToBinary _
+  ;validPlatforms ;platformLibName ;platform ;relativePathToBinary
+  validPlatforms ← 'Windows' 'Mac' 'Linux'
+  platformLibName ← '@'⎕R'temp-c-raylib'⊢'@.dll' 'lib@.dylib' 'lib@.so'
 
-fixPath ← {
-  'Windows'≡'-64'~⍨⊃#⎕WG'APLVersion':('\'@('/'∘=))⍵
-  ⍵
-}
+  platform ← '-64'~⍨⊃#⎕WG'APLVersion'
+  ('Unknown platform (',platform,')') Assert validPlatforms∊⍨⊂platform
+  relativePathToBinary ← platformLibName⊃⍨validPlatforms⍳⊂platform
+  pathToBinary ← '\'@('/'∘=)⍣('Windows'≡platform)∊1⎕NPARTS (pathFromThisFileToRaylibAPLRoot⍬),'/lib/',relativePathToBinary
+  {0::0 Assert⍨'Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
+∇
 
-binaryFileName ← PlatfromToLibFile '-64'~⍨⊃#⎕WG'APLVersion'
-pathToBinary ← ##.pathToRaylibDotAPLN,'../lib/',binaryFileName
-pathToBinary ← fixPath ∊1⎕NPARTS pathToBinary
-_ ← installAutoForTatin ⎕NEXISTS pathToBinary
+pathToBinary ← GetPathToBinary⍬
+_ ← installAutoForTatin pathToBinary
 pathToBinary ← '"',pathToBinary,'"' ⍝ This is so that paths including spaces don't non-conform inside ⎕NA calls
 
 Read ← {
