@@ -293,7 +293,8 @@ rlRenderBatch ← ⊂'⋄rlRenderBatch' ⍝ rlRenderBatch type
 
 
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
-∇Init pathToRaylibDotAPLN ;import
+∇{r}←Init pathToRaylibDotAPLN ;import
+r←⍬
 
 pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN
 import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'
@@ -458,194 +459,194 @@ AfterNewDefinitions 'rlgl'
 Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 
 
-∇rlActiveDrawBuffers count
-  _←rlActiveDrawBuffersRAYLIB count
+∇{r}←rlActiveDrawBuffers count
+  r←⍬⊣rlActiveDrawBuffersRAYLIB count
 ∇
-∇rlActiveTextureSlot slot
-  _←rlActiveTextureSlotRAYLIB slot
+∇{r}←rlActiveTextureSlot slot
+  r←⍬⊣rlActiveTextureSlotRAYLIB slot
 ∇
-∇rlBegin mode
-  _←rlBeginRAYLIB mode
+∇{r}←rlBegin mode
+  r←⍬⊣rlBeginRAYLIB mode
 ∇
-∇rlBindFramebuffer(target framebuffer)
-  _←rlBindFramebufferRAYLIB(target framebuffer)
+∇{r}←rlBindFramebuffer(target framebuffer)
+  r←⍬⊣rlBindFramebufferRAYLIB(target framebuffer)
 ∇
-∇rlBindImageTexture(id index format readonly)
-  _←rlBindImageTextureRAYLIB(id index format readonly)
+∇{r}←rlBindImageTexture(id index format readonly)
+  r←⍬⊣rlBindImageTextureRAYLIB(id index format readonly)
 ∇
-∇rlBindShaderBuffer(id index)
-  _←rlBindShaderBufferRAYLIB(id index)
+∇{r}←rlBindShaderBuffer(id index)
+  r←⍬⊣rlBindShaderBufferRAYLIB(id index)
 ∇
-∇rlBlitFramebuffer(srcX srcY srcWidth srcHeight dstX dstY dstWidth dstHeight bufferMask)
-  _←rlBlitFramebufferRAYLIB(srcX srcY srcWidth srcHeight dstX dstY dstWidth dstHeight bufferMask)
+∇{r}←rlBlitFramebuffer(srcX srcY srcWidth srcHeight dstX dstY dstWidth dstHeight bufferMask)
+  r←⍬⊣rlBlitFramebufferRAYLIB(srcX srcY srcWidth srcHeight dstX dstY dstWidth dstHeight bufferMask)
 ∇
-∇rlCheckErrors _
-  _←rlCheckErrorsRAYLIB _
+∇{r}←rlCheckErrors _
+  r←⍬⊣rlCheckErrorsRAYLIB _
 ∇
 ∇r←rlCheckRenderBatchLimit vCount
   r←rlCheckRenderBatchLimitRAYLIB vCount
 ∇
-∇rlClearColor(r g b a)
-  _←rlClearColorRAYLIB(r g b a)
+∇{r}←rlClearColor(r g b a)
+  r←⍬⊣rlClearColorRAYLIB(r g b a)
 ∇
-∇rlClearScreenBuffers _
-  _←rlClearScreenBuffersRAYLIB _
+∇{r}←rlClearScreenBuffers _
+  r←⍬⊣rlClearScreenBuffersRAYLIB _
 ∇
-∇rlColor3f(x y z)
-  _←rlColor3fRAYLIB(x y z)
+∇{r}←rlColor3f(x y z)
+  r←⍬⊣rlColor3fRAYLIB(x y z)
 ∇
-∇rlColor4f(x y z w)
-  _←rlColor4fRAYLIB(x y z w)
+∇{r}←rlColor4f(x y z w)
+  r←⍬⊣rlColor4fRAYLIB(x y z w)
 ∇
-∇rlColor4ub(r g b a)
-  _←rlColor4ubRAYLIB(r g b a)
+∇{r}←rlColor4ub(r g b a)
+  r←⍬⊣rlColor4ubRAYLIB(r g b a)
 ∇
-∇rlColorMask(r g b a)
-  _←rlColorMaskRAYLIB(r g b a)
+∇{r}←rlColorMask(r g b a)
+  r←⍬⊣rlColorMaskRAYLIB(r g b a)
 ∇
 ∇r←rlCompileShader(shaderCode type)
   r←rlCompileShaderRAYLIB(shaderCode type)
 ∇
-∇rlComputeShaderDispatch(groupX groupY groupZ)
-  _←rlComputeShaderDispatchRAYLIB(groupX groupY groupZ)
+∇{r}←rlComputeShaderDispatch(groupX groupY groupZ)
+  r←⍬⊣rlComputeShaderDispatchRAYLIB(groupX groupY groupZ)
 ∇
-∇rlCopyShaderBuffer(destId srcId destOffset srcOffset count)
-  _←rlCopyShaderBufferRAYLIB(destId srcId destOffset srcOffset count)
+∇{r}←rlCopyShaderBuffer(destId srcId destOffset srcOffset count)
+  r←⍬⊣rlCopyShaderBufferRAYLIB(destId srcId destOffset srcOffset count)
 ∇
-∇rlCubemapParameters(id param value)
-  _←rlCubemapParametersRAYLIB(id param value)
+∇{r}←rlCubemapParameters(id param value)
+  r←⍬⊣rlCubemapParametersRAYLIB(id param value)
 ∇
-∇rlDisableBackfaceCulling _
-  _←rlDisableBackfaceCullingRAYLIB _
+∇{r}←rlDisableBackfaceCulling _
+  r←⍬⊣rlDisableBackfaceCullingRAYLIB _
 ∇
-∇rlDisableColorBlend _
-  _←rlDisableColorBlendRAYLIB _
+∇{r}←rlDisableColorBlend _
+  r←⍬⊣rlDisableColorBlendRAYLIB _
 ∇
-∇rlDisableDepthMask _
-  _←rlDisableDepthMaskRAYLIB _
+∇{r}←rlDisableDepthMask _
+  r←⍬⊣rlDisableDepthMaskRAYLIB _
 ∇
-∇rlDisableDepthTest _
-  _←rlDisableDepthTestRAYLIB _
+∇{r}←rlDisableDepthTest _
+  r←⍬⊣rlDisableDepthTestRAYLIB _
 ∇
-∇rlDisableFramebuffer _
-  _←rlDisableFramebufferRAYLIB _
+∇{r}←rlDisableFramebuffer _
+  r←⍬⊣rlDisableFramebufferRAYLIB _
 ∇
-∇rlDisableScissorTest _
-  _←rlDisableScissorTestRAYLIB _
+∇{r}←rlDisableScissorTest _
+  r←⍬⊣rlDisableScissorTestRAYLIB _
 ∇
-∇rlDisableShader _
-  _←rlDisableShaderRAYLIB _
+∇{r}←rlDisableShader _
+  r←⍬⊣rlDisableShaderRAYLIB _
 ∇
-∇rlDisableSmoothLines _
-  _←rlDisableSmoothLinesRAYLIB _
+∇{r}←rlDisableSmoothLines _
+  r←⍬⊣rlDisableSmoothLinesRAYLIB _
 ∇
-∇rlDisableStereoRender _
-  _←rlDisableStereoRenderRAYLIB _
+∇{r}←rlDisableStereoRender _
+  r←⍬⊣rlDisableStereoRenderRAYLIB _
 ∇
-∇rlDisableTexture _
-  _←rlDisableTextureRAYLIB _
+∇{r}←rlDisableTexture _
+  r←⍬⊣rlDisableTextureRAYLIB _
 ∇
-∇rlDisableTextureCubemap _
-  _←rlDisableTextureCubemapRAYLIB _
+∇{r}←rlDisableTextureCubemap _
+  r←⍬⊣rlDisableTextureCubemapRAYLIB _
 ∇
-∇rlDisableVertexArray _
-  _←rlDisableVertexArrayRAYLIB _
+∇{r}←rlDisableVertexArray _
+  r←⍬⊣rlDisableVertexArrayRAYLIB _
 ∇
-∇rlDisableVertexAttribute index
-  _←rlDisableVertexAttributeRAYLIB index
+∇{r}←rlDisableVertexAttribute index
+  r←⍬⊣rlDisableVertexAttributeRAYLIB index
 ∇
-∇rlDisableVertexBuffer _
-  _←rlDisableVertexBufferRAYLIB _
+∇{r}←rlDisableVertexBuffer _
+  r←⍬⊣rlDisableVertexBufferRAYLIB _
 ∇
-∇rlDisableVertexBufferElement _
-  _←rlDisableVertexBufferElementRAYLIB _
+∇{r}←rlDisableVertexBufferElement _
+  r←⍬⊣rlDisableVertexBufferElementRAYLIB _
 ∇
-∇rlDisableWireMode _
-  _←rlDisableWireModeRAYLIB _
+∇{r}←rlDisableWireMode _
+  r←⍬⊣rlDisableWireModeRAYLIB _
 ∇
 ∇r←rlDrawRenderBatch batch
   r←rlDrawRenderBatchRAYLIB batch
 ∇
-∇rlDrawRenderBatchActive _
-  _←rlDrawRenderBatchActiveRAYLIB _
+∇{r}←rlDrawRenderBatchActive _
+  r←⍬⊣rlDrawRenderBatchActiveRAYLIB _
 ∇
-∇rlDrawVertexArray(offset count)
-  _←rlDrawVertexArrayRAYLIB(offset count)
+∇{r}←rlDrawVertexArray(offset count)
+  r←⍬⊣rlDrawVertexArrayRAYLIB(offset count)
 ∇
-∇rlDrawVertexArrayElements(offset count buffer)
-  _←rlDrawVertexArrayElementsRAYLIB(offset count buffer)
+∇{r}←rlDrawVertexArrayElements(offset count buffer)
+  r←⍬⊣rlDrawVertexArrayElementsRAYLIB(offset count buffer)
 ∇
-∇rlDrawVertexArrayElementsInstanced(offset count buffer instances)
-  _←rlDrawVertexArrayElementsInstancedRAYLIB(offset count buffer instances)
+∇{r}←rlDrawVertexArrayElementsInstanced(offset count buffer instances)
+  r←⍬⊣rlDrawVertexArrayElementsInstancedRAYLIB(offset count buffer instances)
 ∇
-∇rlDrawVertexArrayInstanced(offset count instances)
-  _←rlDrawVertexArrayInstancedRAYLIB(offset count instances)
+∇{r}←rlDrawVertexArrayInstanced(offset count instances)
+  r←⍬⊣rlDrawVertexArrayInstancedRAYLIB(offset count instances)
 ∇
-∇rlEnableBackfaceCulling _
-  _←rlEnableBackfaceCullingRAYLIB _
+∇{r}←rlEnableBackfaceCulling _
+  r←⍬⊣rlEnableBackfaceCullingRAYLIB _
 ∇
-∇rlEnableColorBlend _
-  _←rlEnableColorBlendRAYLIB _
+∇{r}←rlEnableColorBlend _
+  r←⍬⊣rlEnableColorBlendRAYLIB _
 ∇
-∇rlEnableDepthMask _
-  _←rlEnableDepthMaskRAYLIB _
+∇{r}←rlEnableDepthMask _
+  r←⍬⊣rlEnableDepthMaskRAYLIB _
 ∇
-∇rlEnableDepthTest _
-  _←rlEnableDepthTestRAYLIB _
+∇{r}←rlEnableDepthTest _
+  r←⍬⊣rlEnableDepthTestRAYLIB _
 ∇
-∇rlEnableFramebuffer id
-  _←rlEnableFramebufferRAYLIB id
+∇{r}←rlEnableFramebuffer id
+  r←⍬⊣rlEnableFramebufferRAYLIB id
 ∇
-∇rlEnablePointMode _
-  _←rlEnablePointModeRAYLIB _
+∇{r}←rlEnablePointMode _
+  r←⍬⊣rlEnablePointModeRAYLIB _
 ∇
-∇rlEnableScissorTest _
-  _←rlEnableScissorTestRAYLIB _
+∇{r}←rlEnableScissorTest _
+  r←⍬⊣rlEnableScissorTestRAYLIB _
 ∇
-∇rlEnableShader id
-  _←rlEnableShaderRAYLIB id
+∇{r}←rlEnableShader id
+  r←⍬⊣rlEnableShaderRAYLIB id
 ∇
-∇rlEnableSmoothLines _
-  _←rlEnableSmoothLinesRAYLIB _
+∇{r}←rlEnableSmoothLines _
+  r←⍬⊣rlEnableSmoothLinesRAYLIB _
 ∇
-∇rlEnableStereoRender _
-  _←rlEnableStereoRenderRAYLIB _
+∇{r}←rlEnableStereoRender _
+  r←⍬⊣rlEnableStereoRenderRAYLIB _
 ∇
-∇rlEnableTexture id
-  _←rlEnableTextureRAYLIB id
+∇{r}←rlEnableTexture id
+  r←⍬⊣rlEnableTextureRAYLIB id
 ∇
-∇rlEnableTextureCubemap id
-  _←rlEnableTextureCubemapRAYLIB id
+∇{r}←rlEnableTextureCubemap id
+  r←⍬⊣rlEnableTextureCubemapRAYLIB id
 ∇
 ∇r←rlEnableVertexArray vaoId
   r←rlEnableVertexArrayRAYLIB vaoId
 ∇
-∇rlEnableVertexAttribute index
-  _←rlEnableVertexAttributeRAYLIB index
+∇{r}←rlEnableVertexAttribute index
+  r←⍬⊣rlEnableVertexAttributeRAYLIB index
 ∇
-∇rlEnableVertexBuffer id
-  _←rlEnableVertexBufferRAYLIB id
+∇{r}←rlEnableVertexBuffer id
+  r←⍬⊣rlEnableVertexBufferRAYLIB id
 ∇
-∇rlEnableVertexBufferElement id
-  _←rlEnableVertexBufferElementRAYLIB id
+∇{r}←rlEnableVertexBufferElement id
+  r←⍬⊣rlEnableVertexBufferElementRAYLIB id
 ∇
-∇rlEnableWireMode _
-  _←rlEnableWireModeRAYLIB _
+∇{r}←rlEnableWireMode _
+  r←⍬⊣rlEnableWireModeRAYLIB _
 ∇
-∇rlEnd _
-  _←rlEndRAYLIB _
+∇{r}←rlEnd _
+  r←⍬⊣rlEndRAYLIB _
 ∇
-∇rlFramebufferAttach(fboId texId attachType texType mipLevel)
-  _←rlFramebufferAttachRAYLIB(fboId texId attachType texType mipLevel)
+∇{r}←rlFramebufferAttach(fboId texId attachType texType mipLevel)
+  r←⍬⊣rlFramebufferAttachRAYLIB(fboId texId attachType texType mipLevel)
 ∇
 ∇r←rlFramebufferComplete id
   r←rlFramebufferCompleteRAYLIB id
 ∇
-∇rlFrustum(left right bottom top znear zfar)
-  _←rlFrustumRAYLIB(left right bottom top znear zfar)
+∇{r}←rlFrustum(left right bottom top znear zfar)
+  r←⍬⊣rlFrustumRAYLIB(left right bottom top znear zfar)
 ∇
-∇rlGenTextureMipmaps(id width height format mipmaps)
-  _←rlGenTextureMipmapsRAYLIB(id width height format mipmaps)
+∇r←rlGenTextureMipmaps(id width height format mipmaps)
+  r←rlGenTextureMipmapsRAYLIB(id width height format mipmaps)
 ∇
 ∇r←rlGetActiveFramebuffer _
   r←rlGetActiveFramebufferRAYLIB _
@@ -662,8 +663,8 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←rlGetFramebufferWidth _
   r←rlGetFramebufferWidthRAYLIB _
 ∇
-∇rlGetGlTextureFormats(format glInternalFormat glFormat glType)
-  _←rlGetGlTextureFormatsRAYLIB(format glInternalFormat glFormat glType)
+∇r←rlGetGlTextureFormats(format glInternalFormat glFormat glType)
+  r←rlGetGlTextureFormatsRAYLIB(format glInternalFormat glFormat glType)
 ∇
 ∇r←rlGetLineWidth _
   r←rlGetLineWidthRAYLIB _
@@ -713,11 +714,11 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←rlLoadComputeShaderProgram shaderId
   r←rlLoadComputeShaderProgramRAYLIB shaderId
 ∇
-∇rlLoadDrawCube _
-  _←rlLoadDrawCubeRAYLIB _
+∇{r}←rlLoadDrawCube _
+  r←⍬⊣rlLoadDrawCubeRAYLIB _
 ∇
-∇rlLoadDrawQuad _
-  _←rlLoadDrawQuadRAYLIB _
+∇{r}←rlLoadDrawQuad _
+  r←⍬⊣rlLoadDrawQuadRAYLIB _
 ∇
 ∇r←rlLoadExtensions loader
   r←rlLoadExtensionsRAYLIB loader
@@ -725,8 +726,8 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←rlLoadFramebuffer _
   r←rlLoadFramebufferRAYLIB _
 ∇
-∇rlLoadIdentity _
-  _←rlLoadIdentityRAYLIB _
+∇{r}←rlLoadIdentity _
+  r←⍬⊣rlLoadIdentityRAYLIB _
 ∇
 ∇r←rlLoadRenderBatch(numBuffers bufferElements)
   r←rlLoadRenderBatchRAYLIB(numBuffers bufferElements)
@@ -758,167 +759,167 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←rlLoadVertexBufferElement(buffer size dynamic)
   r←rlLoadVertexBufferElementRAYLIB(buffer size dynamic)
 ∇
-∇rlMatrixMode mode
-  _←rlMatrixModeRAYLIB mode
+∇{r}←rlMatrixMode mode
+  r←⍬⊣rlMatrixModeRAYLIB mode
 ∇
-∇r←rlMultMatrixf matf
-  r←rlMultMatrixfRAYLIB matf
+∇{r}←rlMultMatrixf matf
+  r←⍬⊣rlMultMatrixfRAYLIB matf
 ∇
-∇rlNormal3f(x y z)
-  _←rlNormal3fRAYLIB(x y z)
+∇{r}←rlNormal3f(x y z)
+  r←⍬⊣rlNormal3fRAYLIB(x y z)
 ∇
-∇rlOrtho(left right bottom top znear zfar)
-  _←rlOrthoRAYLIB(left right bottom top znear zfar)
+∇{r}←rlOrtho(left right bottom top znear zfar)
+  r←⍬⊣rlOrthoRAYLIB(left right bottom top znear zfar)
 ∇
-∇rlPopMatrix _
-  _←rlPopMatrixRAYLIB _
+∇{r}←rlPopMatrix _
+  r←⍬⊣rlPopMatrixRAYLIB _
 ∇
-∇rlPushMatrix _
-  _←rlPushMatrixRAYLIB _
+∇{r}←rlPushMatrix _
+  r←⍬⊣rlPushMatrixRAYLIB _
 ∇
 ∇r←rlReadScreenPixels(width height)
   r←rlReadScreenPixelsRAYLIB(width height)
 ∇
-∇rlReadShaderBuffer(id dest count offset)
-  _←rlReadShaderBufferRAYLIB(id dest count offset)
+∇r←rlReadShaderBuffer(id dest count offset)
+  r←rlReadShaderBufferRAYLIB(id dest count offset)
 ∇
 ∇r←rlReadTexturePixels(id width height format)
   r←rlReadTexturePixelsRAYLIB(id width height format)
 ∇
-∇rlRotatef(angle x y z)
-  _←rlRotatefRAYLIB(angle x y z)
+∇{r}←rlRotatef(angle x y z)
+  r←⍬⊣rlRotatefRAYLIB(angle x y z)
 ∇
-∇rlScalef(x y z)
-  _←rlScalefRAYLIB(x y z)
+∇{r}←rlScalef(x y z)
+  r←⍬⊣rlScalefRAYLIB(x y z)
 ∇
-∇rlScissor(x y width height)
-  _←rlScissorRAYLIB(x y width height)
+∇{r}←rlScissor(x y width height)
+  r←⍬⊣rlScissorRAYLIB(x y width height)
 ∇
-∇rlSetBlendFactors(glSrcFactor glDstFactor glEquation)
-  _←rlSetBlendFactorsRAYLIB(glSrcFactor glDstFactor glEquation)
+∇{r}←rlSetBlendFactors(glSrcFactor glDstFactor glEquation)
+  r←⍬⊣rlSetBlendFactorsRAYLIB(glSrcFactor glDstFactor glEquation)
 ∇
-∇rlSetBlendFactorsSeparate(glSrcRGB glDstRGB glSrcAlpha glDstAlpha glEqRGB glEqAlpha)
-  _←rlSetBlendFactorsSeparateRAYLIB(glSrcRGB glDstRGB glSrcAlpha glDstAlpha glEqRGB glEqAlpha)
+∇{r}←rlSetBlendFactorsSeparate(glSrcRGB glDstRGB glSrcAlpha glDstAlpha glEqRGB glEqAlpha)
+  r←⍬⊣rlSetBlendFactorsSeparateRAYLIB(glSrcRGB glDstRGB glSrcAlpha glDstAlpha glEqRGB glEqAlpha)
 ∇
-∇rlSetBlendMode mode
-  _←rlSetBlendModeRAYLIB mode
+∇{r}←rlSetBlendMode mode
+  r←⍬⊣rlSetBlendModeRAYLIB mode
 ∇
-∇rlSetClipPlanes(nearPlane farPlane)
-  _←rlSetClipPlanesRAYLIB(nearPlane farPlane)
+∇{r}←rlSetClipPlanes(nearPlane farPlane)
+  r←⍬⊣rlSetClipPlanesRAYLIB(nearPlane farPlane)
 ∇
-∇rlSetCullFace mode
-  _←rlSetCullFaceRAYLIB mode
+∇{r}←rlSetCullFace mode
+  r←⍬⊣rlSetCullFaceRAYLIB mode
 ∇
-∇rlSetFramebufferHeight height
-  _←rlSetFramebufferHeightRAYLIB height
+∇{r}←rlSetFramebufferHeight height
+  r←⍬⊣rlSetFramebufferHeightRAYLIB height
 ∇
-∇rlSetFramebufferWidth width
-  _←rlSetFramebufferWidthRAYLIB width
+∇{r}←rlSetFramebufferWidth width
+  r←⍬⊣rlSetFramebufferWidthRAYLIB width
 ∇
-∇rlSetLineWidth width
-  _←rlSetLineWidthRAYLIB width
+∇{r}←rlSetLineWidth width
+  r←⍬⊣rlSetLineWidthRAYLIB width
 ∇
-∇rlSetMatrixModelview view
-  _←rlSetMatrixModelviewRAYLIB view
+∇{r}←rlSetMatrixModelview view
+  r←⍬⊣rlSetMatrixModelviewRAYLIB view
 ∇
-∇rlSetMatrixProjection proj
-  _←rlSetMatrixProjectionRAYLIB proj
+∇{r}←rlSetMatrixProjection proj
+  r←⍬⊣rlSetMatrixProjectionRAYLIB proj
 ∇
-∇rlSetMatrixProjectionStereo(right left)
-  _←rlSetMatrixProjectionStereoRAYLIB(right left)
+∇{r}←rlSetMatrixProjectionStereo(right left)
+  r←⍬⊣rlSetMatrixProjectionStereoRAYLIB(right left)
 ∇
-∇rlSetMatrixViewOffsetStereo(right left)
-  _←rlSetMatrixViewOffsetStereoRAYLIB(right left)
+∇{r}←rlSetMatrixViewOffsetStereo(right left)
+  r←⍬⊣rlSetMatrixViewOffsetStereoRAYLIB(right left)
 ∇
 ∇r←rlSetRenderBatchActive batch
   r←rlSetRenderBatchActiveRAYLIB batch
 ∇
-∇rlSetShader(id locs)
-  _←rlSetShaderRAYLIB(id locs)
+∇r←rlSetShader(id locs)
+  r←rlSetShaderRAYLIB(id locs)
 ∇
-∇rlSetTexture id
-  _←rlSetTextureRAYLIB id
+∇{r}←rlSetTexture id
+  r←⍬⊣rlSetTextureRAYLIB id
 ∇
-∇rlSetUniform(locIndex value uniformType count)
-  _←rlSetUniformRAYLIB(locIndex value uniformType count)
+∇{r}←rlSetUniform(locIndex value uniformType count)
+  r←⍬⊣rlSetUniformRAYLIB(locIndex value uniformType count)
 ∇
-∇rlSetUniformMatrices(locIndex mat count)
-  _←rlSetUniformMatricesRAYLIB(locIndex mat count)
+∇{r}←rlSetUniformMatrices(locIndex mat count)
+  r←⍬⊣rlSetUniformMatricesRAYLIB(locIndex mat count)
 ∇
-∇rlSetUniformMatrix(locIndex mat)
-  _←rlSetUniformMatrixRAYLIB(locIndex mat)
+∇{r}←rlSetUniformMatrix(locIndex mat)
+  r←⍬⊣rlSetUniformMatrixRAYLIB(locIndex mat)
 ∇
-∇rlSetUniformSampler(locIndex textureId)
-  _←rlSetUniformSamplerRAYLIB(locIndex textureId)
+∇{r}←rlSetUniformSampler(locIndex textureId)
+  r←⍬⊣rlSetUniformSamplerRAYLIB(locIndex textureId)
 ∇
-∇rlSetVertexAttribute(index compSize type normalized stride offset)
-  _←rlSetVertexAttributeRAYLIB(index compSize type normalized stride offset)
+∇{r}←rlSetVertexAttribute(index compSize type normalized stride offset)
+  r←⍬⊣rlSetVertexAttributeRAYLIB(index compSize type normalized stride offset)
 ∇
-∇rlSetVertexAttributeDefault(locIndex value attribType count)
-  _←rlSetVertexAttributeDefaultRAYLIB(locIndex value attribType count)
+∇{r}←rlSetVertexAttributeDefault(locIndex value attribType count)
+  r←⍬⊣rlSetVertexAttributeDefaultRAYLIB(locIndex value attribType count)
 ∇
-∇rlSetVertexAttributeDivisor(index divisor)
-  _←rlSetVertexAttributeDivisorRAYLIB(index divisor)
+∇{r}←rlSetVertexAttributeDivisor(index divisor)
+  r←⍬⊣rlSetVertexAttributeDivisorRAYLIB(index divisor)
 ∇
-∇rlTexCoord2f(x y)
-  _←rlTexCoord2fRAYLIB(x y)
+∇{r}←rlTexCoord2f(x y)
+  r←⍬⊣rlTexCoord2fRAYLIB(x y)
 ∇
-∇rlTextureParameters(id param value)
-  _←rlTextureParametersRAYLIB(id param value)
+∇{r}←rlTextureParameters(id param value)
+  r←⍬⊣rlTextureParametersRAYLIB(id param value)
 ∇
-∇rlTranslatef(x y z)
-  _←rlTranslatefRAYLIB(x y z)
+∇{r}←rlTranslatef(x y z)
+  r←⍬⊣rlTranslatefRAYLIB(x y z)
 ∇
-∇rlUnloadFramebuffer id
-  _←rlUnloadFramebufferRAYLIB id
+∇{r}←rlUnloadFramebuffer id
+  r←⍬⊣rlUnloadFramebufferRAYLIB id
 ∇
-∇rlUnloadRenderBatch batch
-  _←rlUnloadRenderBatchRAYLIB batch
+∇{r}←rlUnloadRenderBatch batch
+  r←⍬⊣rlUnloadRenderBatchRAYLIB batch
 ∇
-∇rlUnloadShaderBuffer ssboId
-  _←rlUnloadShaderBufferRAYLIB ssboId
+∇{r}←rlUnloadShaderBuffer ssboId
+  r←⍬⊣rlUnloadShaderBufferRAYLIB ssboId
 ∇
-∇rlUnloadShaderProgram id
-  _←rlUnloadShaderProgramRAYLIB id
+∇{r}←rlUnloadShaderProgram id
+  r←⍬⊣rlUnloadShaderProgramRAYLIB id
 ∇
-∇rlUnloadTexture id
-  _←rlUnloadTextureRAYLIB id
+∇{r}←rlUnloadTexture id
+  r←⍬⊣rlUnloadTextureRAYLIB id
 ∇
-∇rlUnloadVertexArray vaoId
-  _←rlUnloadVertexArrayRAYLIB vaoId
+∇{r}←rlUnloadVertexArray vaoId
+  r←⍬⊣rlUnloadVertexArrayRAYLIB vaoId
 ∇
-∇rlUnloadVertexBuffer vboId
-  _←rlUnloadVertexBufferRAYLIB vboId
+∇{r}←rlUnloadVertexBuffer vboId
+  r←⍬⊣rlUnloadVertexBufferRAYLIB vboId
 ∇
-∇rlUpdateShaderBuffer(id data dataSize offset)
-  _←rlUpdateShaderBufferRAYLIB(id data dataSize offset)
+∇{r}←rlUpdateShaderBuffer(id data dataSize offset)
+  r←⍬⊣rlUpdateShaderBufferRAYLIB(id data dataSize offset)
 ∇
-∇rlUpdateTexture(id offsetX offsetY width height format data)
-  _←rlUpdateTextureRAYLIB(id offsetX offsetY width height format data)
+∇{r}←rlUpdateTexture(id offsetX offsetY width height format data)
+  r←⍬⊣rlUpdateTextureRAYLIB(id offsetX offsetY width height format data)
 ∇
-∇rlUpdateVertexBuffer(bufferId data dataSize offset)
-  _←rlUpdateVertexBufferRAYLIB(bufferId data dataSize offset)
+∇{r}←rlUpdateVertexBuffer(bufferId data dataSize offset)
+  r←⍬⊣rlUpdateVertexBufferRAYLIB(bufferId data dataSize offset)
 ∇
-∇rlUpdateVertexBufferElements(id data dataSize offset)
-  _←rlUpdateVertexBufferElementsRAYLIB(id data dataSize offset)
+∇{r}←rlUpdateVertexBufferElements(id data dataSize offset)
+  r←⍬⊣rlUpdateVertexBufferElementsRAYLIB(id data dataSize offset)
 ∇
-∇rlVertex2f(x y)
-  _←rlVertex2fRAYLIB(x y)
+∇{r}←rlVertex2f(x y)
+  r←⍬⊣rlVertex2fRAYLIB(x y)
 ∇
-∇rlVertex2i(x y)
-  _←rlVertex2iRAYLIB(x y)
+∇{r}←rlVertex2i(x y)
+  r←⍬⊣rlVertex2iRAYLIB(x y)
 ∇
-∇rlVertex3f(x y z)
-  _←rlVertex3fRAYLIB(x y z)
+∇{r}←rlVertex3f(x y z)
+  r←⍬⊣rlVertex3fRAYLIB(x y z)
 ∇
-∇rlViewport(x y width height)
-  _←rlViewportRAYLIB(x y width height)
+∇{r}←rlViewport(x y width height)
+  r←⍬⊣rlViewportRAYLIB(x y width height)
 ∇
-∇rlglClose _
-  _←rlglCloseRAYLIB _
+∇{r}←rlglClose _
+  r←⍬⊣rlglCloseRAYLIB _
 ∇
-∇rlglInit(width height)
-  _←rlglInitRAYLIB(width height)
+∇{r}←rlglInit(width height)
+  r←⍬⊣rlglInitRAYLIB(width height)
 ∇
 
 :EndNamespace

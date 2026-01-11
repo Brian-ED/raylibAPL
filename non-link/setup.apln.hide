@@ -373,7 +373,8 @@ push,←⊂ StringPushGen ⍬
 ∇
 
 
-∇AfterNewDefinitions libName
+∇{r}←AfterNewDefinitions libName
+  r←⍬
   :if 'raylib'≡libName
     _←SetTraceLogLevelRAYLIB TraceLogLevel.LOG_WARNING
     _←SetTargetFPSRAYLIB 60
@@ -390,11 +391,11 @@ _←'MemCpyF4Out'⎕NA pathToBinary,'|memcpy2 =F4[] P U8'
 _←'MemCpy'     ⎕NA pathToBinary,'|memcpy2 P P U8'
 _←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
 
-∇ptr←ptr WriteF4 floats
-  MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
+∇{r}←ptr WriteF4 floats
+  r←⍬⊣MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
 ∇
-∇ptr←ptr WriteI4 ints
-  MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints))
+∇{r}←ptr WriteI4 ints
+  r←⍬⊣_←MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints))
 ∇
 ∇r←ptr ReadI4 amount
   r←MemCpyI4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))

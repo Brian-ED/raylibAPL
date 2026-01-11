@@ -19,7 +19,7 @@ topLen ← ≢topLines
   scriptText←⊃⎕NGet example 1
   errMsgTopIncorrect ← 'Filepath does not point to a valid example. Top ',(⍕topLen),' lines did not match the standard'
   errMsgTopIncorrect Assert topLines≡2↑scriptText
-  'Example cannot include ∇s'Assert∧/'∇'≠⊃,/4↓scriptText
+  'Example cannot include ∇'Assert∧/'∇'≠⊃,/4↓scriptText
   pathToMe←⊃1⎕NPARTS''
   pathToEx←⊃1⎕NParts example
   ⎕SE.Dyalog.Utils.CD pathToEx

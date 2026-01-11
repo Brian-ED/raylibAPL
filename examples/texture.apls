@@ -29,7 +29,7 @@ frame ← 0
         rl.ClearBackground rl.color.black
         rl.DrawFPS 10 10
         {rl.DrawTextureEx (tex mousePos ⍵ 0.2 rl.color.white)}¨rot+90×⍳4 ⍝ Draw texture 4 times as 4 different rotations around mouse position
-        Memcpy (ptr img (4×≢img)) ⍝ Sends image data to pointer
+        _←Memcpy (ptr img (4×≢img)) ⍝ Sends image data to pointer
         rl.UpdateTexture (tex ptr) ⍝ Write image data from pointer to texture
     rl.EndDrawing⍬
 :EndWhile

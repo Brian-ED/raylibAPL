@@ -146,7 +146,8 @@ ToFFI ← {𝕨𝕊data: nameMapping ← 𝕨⊣↕2‿0
   ⟩
   initTradFnHeader ← ⟨
     "⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes"
-    "∇Init pathToRaylibDotAPLN ;import"
+    "∇{r}←Init pathToRaylibDotAPLN ;import"
+    "r←⍬"
     ""
     "pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN"
     "import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'"
@@ -269,18 +270,18 @@ MakeReplacement ← {libName‿jsonFile𝕊[names⋄comment⋄outType⋄argNames
 
   # When the first argument is a pointer, it's usually a reference as return value.
   # Useful since if first arg is a pointer, the function has a return value.
-  returnViaRef ← '*'={⊢´⊑𝕩∾<" "}¨argTypes
+  returnViaRef ← ∨´¨{ ('*'=@⊣´⌽𝕩)∧"const"≢5↑𝕩 }¨¨argTypes
 
   # Adding Tradfns with assertions
   @∘{𝕊⟨n,aw,daw,an,r⟩:
     arg ← "_"⍟(0=≠)1↓∾' '∾¨an
-    out∾↩<'∇'∾"r←"⊸∾⍟r n∾(' '⊸∾"("∾⁼∾⟜")"⁼)⍟(×∘≠∧∧´∘≠⟜' ') ('('∾∾⟜')')⍟(×≠) arg
+    out∾↩<'∇'∾(r⊑"{r}←"‿"r←")∾ n∾(' '⊸∾"("∾⁼∾⟜")"⁼)⍟(×∘≠∧∧´∘≠⟜' ') ('('∾∾⟜')')⍟(×≠) arg
     {𝕊:out∾↩<"  '"∾n∾" errored' Assert ∨/"∾𝕩}⍟(¬"()"⊸≡) "("∾")"∾˜3↓∾{") ("∾3↓∾" ∧ scope"⊸∾¨𝕩}¨aw
     {𝕊:out∾↩<"  '"∾n∾" errored' Assert ∧/"∾𝕩}⍟(¬"()"⊸≡) "("∾")"∾˜3↓∾{") ("∾3↓∾" ∨ scope"⊸∾¨𝕩}¨daw
     {𝕊:out∾↩<"  '"∾n∾" errored' Assert ~scope"∾⊑1⊑𝕩⋄!1≡≠1⊑𝕩}⍟(¬∧´∘⊑)(n⊸≡¨begin)⊸/¨nested‿begin
     {𝕊:out∾↩<"  scope"∾𝕩∾" ← 1"}∘⊑⍟(×≠) begin/˜n⊸≡¨begin
     {𝕊:out∾↩<"  scope"∾𝕩∾" ← 0"}∘⊑⍟(×≠) begin/˜n⊸≡¨end
-    out∾↩"∇"⋈˜"  "∾(r⊑"_←"‿"r←")∾ (n∾"RAYLIB")∾ (¬×∘≠∧∧´∘≠⟜' ')◶⟨' '⊸∾⋄'('∾∾⟜')'⟩ arg
+    out∾↩"∇"⋈˜"  "∾(r⊑"r←⍬⊣"‿"r←")∾ (n∾"RAYLIB")∾ (¬×∘≠∧∧´∘≠⟜' ')◶⟨' '⊸∾⋄'('∾∾⟜')'⟩ arg
 
   }˘⍉ [
     name

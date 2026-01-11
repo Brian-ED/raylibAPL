@@ -1,0 +1,5 @@
+ArrAlloc←{
+     p←rl.MemAlloc 4×≢⍵
+     _ap←{⍎'⍺ ⍺⍺ ⍵ ⋄ ⍵' ⋄ ⍺⍺}
+     p⊣p rl.WriteF4 _ap ⍵
+ }

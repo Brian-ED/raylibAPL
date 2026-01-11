@@ -83,7 +83,8 @@ PhysicsManifoldData ← ⊂'⋄PhysicsManifoldData' ⍝
 
 
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
-∇Init pathToRaylibDotAPLN ;import
+∇{r}←Init pathToRaylibDotAPLN ;import
+r←⍬
 
 pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN
 import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'
@@ -113,8 +114,8 @@ AfterNewDefinitions 'physac'
 Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 
 
-∇ClosePhysics _
-  _←ClosePhysicsRAYLIB _
+∇{r}←ClosePhysics _
+  r←⍬⊣ClosePhysicsRAYLIB _
 ∇
 ∇r←CreatePhysicsBodyCircle(pos radius density)
   r←CreatePhysicsBodyCircleRAYLIB(pos radius density)
@@ -125,8 +126,8 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←CreatePhysicsBodyRectangle(pos width height density)
   r←CreatePhysicsBodyRectangleRAYLIB(pos width height density)
 ∇
-∇DestroyPhysicsBody body
-  _←DestroyPhysicsBodyRAYLIB body
+∇{r}←DestroyPhysicsBody body
+  r←⍬⊣DestroyPhysicsBodyRAYLIB body
 ∇
 ∇r←GetPhysicsBodiesCount _
   r←GetPhysicsBodiesCountRAYLIB _
@@ -143,32 +144,32 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←GetPhysicsShapeVerticesCount index
   r←GetPhysicsShapeVerticesCountRAYLIB index
 ∇
-∇InitPhysics _
-  _←InitPhysicsRAYLIB _
+∇{r}←InitPhysics _
+  r←⍬⊣InitPhysicsRAYLIB _
 ∇
 ∇r←IsPhysicsEnabled _
   r←IsPhysicsEnabledRAYLIB _
 ∇
-∇PhysicsAddForce(body force)
-  _←PhysicsAddForceRAYLIB(body force)
+∇{r}←PhysicsAddForce(body force)
+  r←⍬⊣PhysicsAddForceRAYLIB(body force)
 ∇
-∇PhysicsAddTorque(body amount)
-  _←PhysicsAddTorqueRAYLIB(body amount)
+∇{r}←PhysicsAddTorque(body amount)
+  r←⍬⊣PhysicsAddTorqueRAYLIB(body amount)
 ∇
-∇PhysicsShatter(body position force)
-  _←PhysicsShatterRAYLIB(body position force)
+∇{r}←PhysicsShatter(body position force)
+  r←⍬⊣PhysicsShatterRAYLIB(body position force)
 ∇
-∇RunPhysicsStep _
-  _←RunPhysicsStepRAYLIB _
+∇{r}←RunPhysicsStep _
+  r←⍬⊣RunPhysicsStepRAYLIB _
 ∇
-∇SetPhysicsBodyRotation(body radians)
-  _←SetPhysicsBodyRotationRAYLIB(body radians)
+∇{r}←SetPhysicsBodyRotation(body radians)
+  r←⍬⊣SetPhysicsBodyRotationRAYLIB(body radians)
 ∇
-∇SetPhysicsGravity(x y)
-  _←SetPhysicsGravityRAYLIB(x y)
+∇{r}←SetPhysicsGravity(x y)
+  r←⍬⊣SetPhysicsGravityRAYLIB(x y)
 ∇
-∇SetPhysicsTimeStep delta
-  _←SetPhysicsTimeStepRAYLIB delta
+∇{r}←SetPhysicsTimeStep delta
+  r←⍬⊣SetPhysicsTimeStepRAYLIB delta
 ∇
 
 :EndNamespace

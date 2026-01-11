@@ -472,7 +472,8 @@ GuiStyleProp ← ⊂'⋄GuiStyleProp' ⍝ NOTE: Used when exporting style as cod
 
 
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
-∇Init pathToRaylibDotAPLN ;import
+∇{r}←Init pathToRaylibDotAPLN ;import
+r←⍬
 
 pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN
 import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'
@@ -566,14 +567,14 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←GuiComboBox(bounds text active)
   r←GuiComboBoxRAYLIB(bounds text active)
 ∇
-∇GuiDisable _
-  _←GuiDisableRAYLIB _
+∇{r}←GuiDisable _
+  r←⍬⊣GuiDisableRAYLIB _
 ∇
-∇GuiDisableTooltip _
-  _←GuiDisableTooltipRAYLIB _
+∇{r}←GuiDisableTooltip _
+  r←⍬⊣GuiDisableTooltipRAYLIB _
 ∇
-∇GuiDrawIcon(iconId posX posY pixelSize color)
-  _←GuiDrawIconRAYLIB(iconId posX posY pixelSize color)
+∇{r}←GuiDrawIcon(iconId posX posY pixelSize color)
+  r←⍬⊣GuiDrawIconRAYLIB(iconId posX posY pixelSize color)
 ∇
 ∇r←GuiDropdownBox(bounds text active editMode)
   r←GuiDropdownBoxRAYLIB(bounds text active editMode)
@@ -581,11 +582,11 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←GuiDummyRec(bounds text)
   r←GuiDummyRecRAYLIB(bounds text)
 ∇
-∇GuiEnable _
-  _←GuiEnableRAYLIB _
+∇{r}←GuiEnable _
+  r←⍬⊣GuiEnableRAYLIB _
 ∇
-∇GuiEnableTooltip _
-  _←GuiEnableTooltipRAYLIB _
+∇{r}←GuiEnableTooltip _
+  r←⍬⊣GuiEnableTooltipRAYLIB _
 ∇
 ∇r←GuiGetFont _
   r←GuiGetFontRAYLIB _
@@ -629,14 +630,14 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←GuiLoadIcons(fileName loadIconsName)
   r←GuiLoadIconsRAYLIB(fileName loadIconsName)
 ∇
-∇r←GuiLoadStyle fileName
-  r←GuiLoadStyleRAYLIB fileName
+∇{r}←GuiLoadStyle fileName
+  r←⍬⊣GuiLoadStyleRAYLIB fileName
 ∇
-∇GuiLoadStyleDefault _
-  _←GuiLoadStyleDefaultRAYLIB _
+∇{r}←GuiLoadStyleDefault _
+  r←⍬⊣GuiLoadStyleDefaultRAYLIB _
 ∇
-∇GuiLock _
-  _←GuiLockRAYLIB _
+∇{r}←GuiLock _
+  r←⍬⊣GuiLockRAYLIB _
 ∇
 ∇r←GuiMessageBox(bounds title message buttons)
   r←GuiMessageBoxRAYLIB(bounds title message buttons)
@@ -650,23 +651,23 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←GuiScrollPanel(bounds text content scroll view)
   r←GuiScrollPanelRAYLIB(bounds text content scroll view)
 ∇
-∇GuiSetAlpha alpha
-  _←GuiSetAlphaRAYLIB alpha
+∇{r}←GuiSetAlpha alpha
+  r←⍬⊣GuiSetAlphaRAYLIB alpha
 ∇
-∇GuiSetFont font
-  _←GuiSetFontRAYLIB font
+∇{r}←GuiSetFont font
+  r←⍬⊣GuiSetFontRAYLIB font
 ∇
-∇GuiSetIconScale scale
-  _←GuiSetIconScaleRAYLIB scale
+∇{r}←GuiSetIconScale scale
+  r←⍬⊣GuiSetIconScaleRAYLIB scale
 ∇
-∇GuiSetState state
-  _←GuiSetStateRAYLIB state
+∇{r}←GuiSetState state
+  r←⍬⊣GuiSetStateRAYLIB state
 ∇
-∇GuiSetStyle(control property value)
-  _←GuiSetStyleRAYLIB(control property value)
+∇{r}←GuiSetStyle(control property value)
+  r←⍬⊣GuiSetStyleRAYLIB(control property value)
 ∇
-∇r←GuiSetTooltip tooltip
-  r←GuiSetTooltipRAYLIB tooltip
+∇{r}←GuiSetTooltip tooltip
+  r←⍬⊣GuiSetTooltipRAYLIB tooltip
 ∇
 ∇r←GuiSlider(bounds textLeft textRight value minValue maxValue)
   r←GuiSliderRAYLIB(bounds textLeft textRight value minValue maxValue)
@@ -698,8 +699,8 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←GuiToggleSlider(bounds text active)
   r←GuiToggleSliderRAYLIB(bounds text active)
 ∇
-∇GuiUnlock _
-  _←GuiUnlockRAYLIB _
+∇{r}←GuiUnlock _
+  r←⍬⊣GuiUnlockRAYLIB _
 ∇
 ∇r←GuiValueBox(bounds text value minValue maxValue editMode)
   r←GuiValueBoxRAYLIB(bounds text value minValue maxValue editMode)

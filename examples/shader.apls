@@ -86,7 +86,7 @@ showControls ← 1   ⍝ Show controls
     rl.SetShaderValue(shader zoomLoc   zoomFloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
     rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
-  FG⍣(rl.IsKeyPressed key.KEY_R)⊢⍬
+  _←FG⍣(rl.IsKeyPressed key.KEY_R)⊢⍬
 
   incrementSpeed ×← ~rl.IsKeyPressed key.KEY_SPACE ⍝ Pause animation (c change)
   showControls   ≠←  rl.IsKeyPressed key.KEY_F1    ⍝ Toggle whether or not to show controls
@@ -113,7 +113,7 @@ showControls ← 1   ⍝ Show controls
     rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
 
-  FH⍣(rl.IsMouseButtonDown rl.MouseButton.MOUSE_BUTTON_RIGHT)⊢⍬
+  _←FH⍣(rl.IsMouseButtonDown rl.MouseButton.MOUSE_BUTTON_RIGHT)⊢⍬
 
   ⍝ Increment c value with time
   c +← (rl.GetFrameTime⍬)×incrementSpeed×0.0005
@@ -150,6 +150,6 @@ showControls ← 1   ⍝ Show controls
 ⍝--------------------------------------------------------------------------------------
 rl.UnloadShader shader              ⍝ Unload shader
 rl.UnloadRenderTexture target       ⍝ Unload render texture
-rl.MemFree¨(cv2 zoomFloat offsetV2)
+_←rl.MemFree¨(cv2 zoomFloat offsetV2)
 
 rl.CloseWindow⍬

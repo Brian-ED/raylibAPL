@@ -61,7 +61,8 @@ float16 ← ⊂'⋄float16' ⍝
 
 
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
-∇Init pathToRaylibDotAPLN ;import
+∇{r}←Init pathToRaylibDotAPLN ;import
+r←⍬
 
 pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN
 import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'
@@ -227,8 +228,8 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←MatrixAdd(left right)
   r←MatrixAddRAYLIB(left right)
 ∇
-∇MatrixDecompose(mat translation rotation scale)
-  _←MatrixDecomposeRAYLIB(mat translation rotation scale)
+∇r←MatrixDecompose(mat translation rotation scale)
+  r←MatrixDecomposeRAYLIB(mat translation rotation scale)
 ∇
 ∇r←MatrixDeterminant mat
   r←MatrixDeterminantRAYLIB mat
@@ -353,8 +354,8 @@ Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 ∇r←QuaternionSubtractValue(q sub)
   r←QuaternionSubtractValueRAYLIB(q sub)
 ∇
-∇QuaternionToAxisAngle(q outAxis outAngle)
-  _←QuaternionToAxisAngleRAYLIB(q outAxis outAngle)
+∇r←QuaternionToAxisAngle(q outAxis outAngle)
+  r←QuaternionToAxisAngleRAYLIB(q outAxis outAngle)
 ∇
 ∇r←QuaternionToEuler q
   r←QuaternionToEulerRAYLIB q

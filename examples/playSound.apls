@@ -15,11 +15,11 @@ sounds ← rl.LoadSound¨ rlDir∘,¨'../examples/assets/testSound'∘,¨'1.wav'
 :While ~rl.WindowShouldClose⍬
     rl.BeginDrawing⍬
         rl.ClearBackground rl.color.gray
-        sounds {rl.PlaySound     ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_A KEY_B)
-        sounds {rl.PauseSound    ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_C KEY_D)
-        sounds {rl.ResumeSound   ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_E KEY_F)
-        sounds {rl.StopSound     ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_G KEY_H)
-        sounds {rl.IsSoundPlaying⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_I KEY_J)
+        _←sounds {rl.PlaySound     ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_A KEY_B)
+        _←sounds {rl.PauseSound    ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_C KEY_D)
+        _←sounds {rl.ResumeSound   ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_E KEY_F)
+        _←sounds {rl.StopSound     ⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_G KEY_H)
+        _←sounds {rl.IsSoundPlaying⍣⍵⊢⍺}¨rl.IsKeyPressed¨ rl.KeyboardKey.(KEY_I KEY_J)
     rl.EndDrawing⍬
 :EndWhile
 
