@@ -21,9 +21,14 @@ rl.DisableCursor⍬
 
 ⍝ For every frame till user closes the window
 :While ~rl.WindowShouldClose⍬
+    ⍝ Update
+    ⍝----------------------------------------------------------------------------------
     ⍝ Look for keystrokes from user, move the camera
     camera ← rl.UpdateCamera (camera rl.CameraMode.CAMERA_THIRD_PERSON)
+    ⍝----------------------------------------------------------------------------------
 
+    ⍝ Draw
+    ⍝----------------------------------------------------------------------------------
     ⍝ Preparing another buffer to draw the new frame, with white background
     rl.BeginDrawing⍬
         rl.ClearBackground rl.color.black
@@ -74,6 +79,11 @@ rl.DisableCursor⍬
 
     ⍝ wait till next frame is needed, then switch to this new buffer we've drawn
     rl.EndDrawing⍬
+    ⍝----------------------------------------------------------------------------------
 :EndWhile
+
+⍝ De-Initialization
+⍝--------------------------------------------------------------------------------------
+rl.EnableCursor⍬     ⍝ Enable cursor again, since on Intel Mac and with raylib 5.5, the cursor doesn't get freed automatically on rl.CloseWindow. (It does get freed if dyalog stops)
 
 rl.CloseWindow⍬

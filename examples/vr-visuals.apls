@@ -72,6 +72,7 @@ ArrAlloc ← {
 
 ⍝ NOTE: screenWidth/screenHeight should match VR device aspect ratio
 rl.InitWindow 1920 1022 'vr simulator'
+  rl.DisableCursor⍬ ⍝ Limit cursor to relative movement inside the window
 
   ⍝ Distortion shader (uses device lens distortion and chroma)
   d ← rl.LoadShader rlDir∘,¨ '../examples/assets/shaders/glsl330/'∘,¨ 'default.vs' 'distortion330.fs'
@@ -109,8 +110,6 @@ rl.InitWindow 1920 1022 'vr simulator'
 
   cubePosition ← 0 0 0
 
-  rl.DisableCursor⍬ ⍝ Limit cursor to relative movement inside the window
-
   ⍝ Main game loop
   ⍝ Detect window close button or ESC key
   :While ~rl.WindowShouldClose⍬
@@ -118,6 +117,7 @@ rl.InitWindow 1920 1022 'vr simulator'
       ⍝----------------------------------------------------------------------------------
       camera ← rl.UpdateCamera (camera rl.CameraMode.CAMERA_FIRST_PERSON)
       ⍝----------------------------------------------------------------------------------
+
       ⍝ Draw
       ⍝----------------------------------------------------------------------------------
       rl.BeginTextureMode target
@@ -151,8 +151,8 @@ rl.InitWindow 1920 1022 'vr simulator'
   ⍝ De-Initialization
   ⍝--------------------------------------------------------------------------------------
   rl.UnloadVrStereoConfig config   ⍝ Unload stereo config
-
   rl.UnloadRenderTexture target    ⍝ Unload stereo render fbo
-  rl.UnloadShader d       ⍝ Unload distortion shader
+  rl.UnloadShader d                ⍝ Unload distortion shader
+  rl.EnableCursor⍬                 ⍝ Enable cursor again, since on Intel Mac and with raylib 5.5, the cursor doesn't get freed automatically on rl.CloseWindow. (It does get freed if dyalog stops)
 
 rl.CloseWindow⍬

@@ -19,9 +19,15 @@ model ← rl.LoadModel 'assets/DyalogDuck/RubberDuck_LOD0.obj'
 frame←0
 ⍝ For every frame till user closes the window
 :While ~rl.WindowShouldClose⍬
+    ⍝ Update
+    ⍝----------------------------------------------------------------------------------
     frame+←1
     ⍝ Look for keystrokes from user, move the camera
     camera ← rl.UpdateCamera (camera rl.CameraMode.CAMERA_THIRD_PERSON)
+    ⍝----------------------------------------------------------------------------------
+
+    ⍝ Draw
+    ⍝----------------------------------------------------------------------------------
     ⍝ Preparing another buffer to draw the new frame, with white background
     rl.BeginDrawing⍬
         rl.ClearBackground rl.color.white
@@ -44,8 +50,12 @@ frame←0
 
     ⍝ wait till next frame is needed, then switch to this new buffer we've drawn
     rl.EndDrawing⍬
+    ⍝----------------------------------------------------------------------------------
 :EndWhile
 
-⍝ Unloading model, freeing it's memory.
-rl.UnloadModel model
+⍝ De-Initialization
+⍝--------------------------------------------------------------------------------------
+rl.UnloadModel model ⍝ Unloading model, freeing it's memory.
+rl.EnableCursor⍬     ⍝ Enable cursor again, since on Intel Mac and with raylib 5.5, the cursor doesn't get freed automatically on rl.CloseWindow. (It does get freed if dyalog stops)
+
 rl.CloseWindow⍬
