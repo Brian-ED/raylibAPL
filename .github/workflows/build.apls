@@ -2,7 +2,7 @@
 ⎕←'BUILD!'
 ⎕PW←500
 ⎕SE.(⍎⊃2⎕FIX'/StartupSession.aplf',⍨2⎕NQ#'GetEnvironment' 'DYALOG')
-⎕ML ⎕IO←1 0 ⍝ ⎕IO delana est
+⎕ML ⎕IO←1 0
 ⎕←⎕SE.UCMD 'ureset'
 ⎕←⎕SE.UCMD 'Tatin.Version'
 parms←⎕ns ''
