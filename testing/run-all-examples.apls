@@ -8,7 +8,7 @@ platform ← '-64'~⍨⊃#⎕WG'APLVersion'
 cmd←''
 :If 'Windows'≡platform ⋄ cmd←'Powershell.exe -Command "dyalogscript" ' ⋄ :EndIf
 :If 'Linux'  ≡platform ⋄ cmd←'dyalogscript '                           ⋄ :EndIf
-:If 'Mac'    ≡platform ⋄ cmd←'dyalogscript ENABLE_CEF=0'               ⋄ :EndIf
+:If 'Mac'    ≡platform ⋄ cmd←'dyalogscript ENABLE_CEF=0 '              ⋄ :EndIf
 →0⍴⍨''≡cmd
 ]cd ../examples
 ⎕SH¨cmd∘,¨exs
