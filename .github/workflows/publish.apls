@@ -1,7 +1,7 @@
 #!/usr/bin/dyalogscript DYALOG_INITSESSION=1
 ⎕PW←500
 ⎕SE.(⍎⊃2⎕FIX'/StartupSession.aplf',⍨2⎕NQ#'GetEnvironment' 'DYALOG')
-⎕ML ⎕IO←1 0 ⍝ ⎕IO delana est
+⎕ML ⎕IO←1 0
 package←∊⊃1 ⎕NPARTS⊃(⎕ninfo⍠('Wildcard' 1))'*.zip'
 ⎕←'publishing: ',package
 apikey←(⊢2⎕NQ#'GetEnvironment',⊂)'TATIN_API_KEY'
