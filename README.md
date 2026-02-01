@@ -82,6 +82,11 @@ rl.Init ''
 > ```bash
 > ENABLE_CEF=0 dyalog
 > ```
+> It is also possible with dyalogscript, but dyalogscript ignores environment variables so add `ENABLE_CEF=0` as an argument:
+> ```bash
+> dyalogscript ENABLE_CEF=0 path/to/file.apls
+> ```
+
 
 Try running the following after importing raylib as rl:
 ```
