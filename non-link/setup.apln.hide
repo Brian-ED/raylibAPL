@@ -38,7 +38,7 @@ atomTypes ← ∪atomTypes
 
 pathFromThisFileToRaylibAPLRoot←{
   9≡40⎕ATX'##.##.TatinVars': ##.##.TatinVars.HOME
-  '..'
+  ##.pathToRaylibDotAPLN,'..'
 }
 
 ∇success←installAutoForTatin libPath
