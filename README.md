@@ -82,7 +82,7 @@ rl.Init ''
 > ```bash
 > ENABLE_CEF=0 dyalog
 > ```
-> It is also possible with dyalogscript, but dyalogscript ignores environment variables so add `ENABLE_CEF=0` as an argument:
+> dyalogscript [ignores environment variables](https://docs.dyalog.com/20.0/windows-installation-and-configuration-guide/shell-scripts/#configuration-parameters) so add `ENABLE_CEF=0` as an argument instead:
 > ```bash
 > dyalogscript ENABLE_CEF=0 path/to/file.apls
 > ```
