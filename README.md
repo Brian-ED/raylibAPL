@@ -100,7 +100,7 @@ raylibAPL is a direct, low-level interface to the raylib C library, providing ap
 
 ### Core Concept: Scopes
 Some raylib functions start and end scopes, like `rl.InitWindow`  `rl.CloseWindow`.
-During different scopes, different functions can run. For example, `rl.GetWindowPosition⍬` can only be run after a window scope. There are many different scopes, `InitWindow`→`CloseWindow`, `BeginDrawing`→`EndDrawing`, `BeginMode3D`→`EndMode3D`, and so on. The naming convention for scopes is that they are either `Begin...`→`End...`, or `Init...`→`Close...`. I refer to the `...` part when speaking of a scope. All scope information can be found in [this JSON file](https://github.com/Brian-ED/raylibAPL/blob/master/parse-raylib-apl/auto-error/raylib.json), which is used to generate [replicas of raylib functions](https://github.com/Brian-ED/raylibAPL/blob/master/non-link/raylibReplacement.apln.hide) that error instead of crashing.
+During different scopes, different functions can run. For example, `rl.GetWindowPosition⍬` can only be run after a window scope. There are many different scopes, `InitWindow`→`CloseWindow`, `BeginDrawing`→`EndDrawing`, `BeginMode3D`→`EndMode3D`, and so on. The naming convention for scopes is that they are either `Begin...`→`End...`, or `Init...`→`Close...`. All scope information can be found in [this JSON file](https://github.com/Brian-ED/raylibAPL/blob/master/parse-raylib-apl/auto-error/raylib.json), which is used to generate [replicas of raylib functions](https://github.com/Brian-ED/raylibAPL/blob/master/non-link/raylibReplacement.apln.hide) that error instead of crashing.
 
 #### Example 1: The InitWindow scope
 Here is a raylibAPL application, that creates a window and gets window position:
@@ -113,7 +113,7 @@ rl.CloseWindow⍬
 ⍝ Window scope is now closed
 ```
 
-#### Example 2: The Drawing scope
+#### Example 2: The BeginDrawing scope
 Most rendering must occur within a drawing scope, which is nested inside the window scope:
 
 ```apl
