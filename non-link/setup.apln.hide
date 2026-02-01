@@ -46,7 +46,7 @@ pathFromThisFileToRaylibAPLRoot←{
     :If 9≡40⎕ATX '##.##.TatinVars'
       ##.##.installraylib 1
     :Else
-      0 Assert⍨ 'File ',libPath,' was not found'
+      0 Assert⍨ 'ERROR: File ',libPath,' was not found'
     :EndIf
   :EndIf
   success←1
@@ -58,7 +58,7 @@ pathFromThisFileToRaylibAPLRoot←{
   platformLibName ← '@'⎕R'temp-c-raylib'⊢'@.dll' 'lib@.dylib' 'lib@.so'
 
   platform ← '-64'~⍨⊃#⎕WG'APLVersion'
-  ('Unknown platform (',platform,')') Assert validPlatforms∊⍨⊂platform
+  ('ERROR: Unknown platform (',platform,')') Assert validPlatforms∊⍨⊂platform
   relativePathToBinary ← platformLibName⊃⍨validPlatforms⍳⊂platform
   pathToBinary ← '\'@('/'∘=)⍣('Windows'≡platform)∊1⎕NPARTS (pathFromThisFileToRaylibAPLRoot⍬),'/lib/',relativePathToBinary
 ∇
@@ -81,7 +81,7 @@ unitPopGen ← {
 unitPushGen ← {
   _←'CpyPush'⎕NA pathToBinary,'|memcpy2 P <',⍵,' U8'
   o ← CpyPush{ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
-  i ← CpyPush{_←'DOMAIN ERROR: Expected a whole number, got a non-whole number' Assert ⍵≡⌊⍵ ⋄ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
+  i ← CpyPush{_←'ERROR: Expected a whole number, got a non-whole number' Assert ⍵≡⌊⍵ ⋄ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
   'I'≡⊃⍵: ⎕OR'i'
   ⎕OR'o'
 }
@@ -105,7 +105,7 @@ intVecRefPopGen ← {
     len←popLenStack⍬
     intVecPtr ← ⍺⍺⍬
     ptrToIntVec←(topRuntime+1)⊃stack
-    _←'Internal error, the string pointer popped was Null' Assert 0≢intVecPtr
+    _←'INTERNAL ERROR: the string pointer popped was Null' Assert 0≢intVecPtr
     r ← ⍵⍵((len⍴0) ptrToIntVec (len×4))
     _←tempFree intVecPtr
     r
@@ -117,9 +117,9 @@ intVecRefPushGen ← {
 
   push←(⊃push[atomTypes⍳⊂,'P']){
     LenStack,←≢⍵
-    (⌊≢⊢)⍵:0 Assert⍨'Expected int vector, got: ',⍕⍵
+    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected int vector, got: ',⍕⍵
     intVecPtr ← tempAlloc 4×≢⍵
-    _←'Internal error, pointer allocated for int vector was Null'Assert 0≢intVecPtr
+    _←'INTERNAL ERROR: pointer allocated for int vector was Null'Assert 0≢intVecPtr
     _←⍵⍵(intVecPtr ⍵ (4×≢⍵))
     ⍺⍺ intVecPtr
   }M
@@ -138,9 +138,9 @@ intVecPushGen ← {
   _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
-    (⌊≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
+    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
     intVecPtr ← tempAlloc 4×≢⍵
-    _←'Internal error, string pointer allocated for string to push was Null'Assert 0≢intVecPtr
+    _←'INTERNAL ERROR: string pointer allocated for string to push was Null'Assert 0≢intVecPtr
     _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
     r←⍺⍺ intVecPtr
     F←intVecPtr{tempFree ⍺⍺}
@@ -167,13 +167,13 @@ Push ← {
 }
 Pop ← {
   topRuntime-←1
-  _←'Stack underflow' Assert 0≤topRuntime
+  _←'INTERNAL ERROR: Stack underflow' Assert 0≤topRuntime
   (topRuntime+1)⊃stack
 }
 
 NameOfStruct ← {
   2>|≡⍵:⍵
-  _← 'INTERNAL: NameCheck applied to a non-atomic pointer type, this should be impossible.' Assert ∧/'<=>'≢¨⊂⊃⍵
+  _← 'INTERNAL ERROR: NameCheck applied to a non-atomic pointer type, this should be impossible.' Assert ∧/'<=>'≢¨⊂⊃⍵
   ,'⋄'∘,⍣¯1⊢(⊃⍵),⍵/⍨⌽∧\⌽0=≡¨⍵
 }
 remPtrInfo ← {⍵/⍨~ (~atomTypes∊⍨⊂⍵)∧ ∧\'<=>'∊⍨⍵}
@@ -188,7 +188,7 @@ structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}##.{⍎⍵._Each_(0/⊂,⊂'')⎕
 ⎕NA 'I4 ',pathToBinary,'|GetStructNameLength I4'
 ⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
 structNamesAll ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ⎕IO-⍨⍳StructCount
-('Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
+('ERROR: Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
 rrr ← structNamesAll⍳NameOfStruct¨structs
 ⎕EX 'structNamesAll' 'r'
 
@@ -222,7 +222,7 @@ PushArrGen ← {
 
   O←(t l){ ⍝ push value
     (t l)←⍺⍺
-    l≢≢⍵:0 Assert⍨'Wrong list length given for ',t,'[',(⍕l),'], (',(⍕l),'≢≢⍵)'
+    l≢≢⍵:0 Assert⍨'ERROR: Wrong list length given for ',t,'[',(⍕l),'], (',(⍕l),'≢≢⍵)'
     Pusher←⊃push[atomTypes⍳⊂t]
     typeLen ← typeByteSize[atomTypes⍳⊂t]
     ptr←Push⍬
@@ -253,7 +253,7 @@ push,← PushArrGen E._Each_(0/⊂id)⊢ arrTypes
 PopStructGen ← {
   name←NameOfStruct ⍵
   cleaned ← {0=≢⍵: ⍵ ⋄ NameOfStruct¨⍵} {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
-  _←('Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
+  _←('INTERNAL ERROR: Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
   args←' P'⍴⍨2×1+≢cleaned   ⍝ Includes result
   _←'F'⎕NA pathToBinary,'|',name,'FROM',args
 
@@ -267,14 +267,14 @@ PopStructGen ← {
 PushStructGen ← {
   name←NameOfStruct ⍵
   cleaned ← NameOfStruct E._Each_ (0/⊂'') {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
-  _←('Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
+  _←('INTERNAL ERROR: Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
   args←' P'⍴⍨2×1+≢cleaned   ⍝ Includes result
   _←'I'⎕NA pathToBinary,'|',name,'INTO',args
 
   O←I{ ⍝ push value
     (name cleaned)←⍵⍵
     i←atomTypes⍳cleaned
-    i≢⍥≢⍵:0 Assert⍨ 'Wrong struct length given for ',name,', (',(⍕≢i),'≢≢⍵)'
+    i≢⍥≢⍵:0 Assert⍨ 'ERROR: Wrong struct length given for ',name,', (',(⍕≢i),'≢≢⍵)'
     ptr←Push⍬
     _←push[i] {⍺∘⊢⍵}E._Each_⍬⊢ ⍵
     _←⍺⍺ ptr,⌽Pop E._Each_⍬⊢i
@@ -314,7 +314,7 @@ StringPopGen ← {
   O←(⊃pop[atomTypes⍳⊂,'P']){
     strPtr ← ⍺⍺⍬
     ptrToStr←(topRuntime+1)⊃stack
-    _←'Internal error, the string pointer popped was Null' Assert 0≢strPtr
+    _←'INTERNAL ERROR: the string pointer popped was Null' Assert 0≢strPtr
     r←⍵⍵ (⍬ ptrToStr)
     _←tempFree strPtr
     r
@@ -324,9 +324,9 @@ StringPopGen ← {
 StringPushGen ← {
   _←'M'⎕NA pathToBinary,'|strcpy2 P <0T1[]'
   push←(⊃push[atomTypes⍳⊂,'P']){
-    (⍕≢⊢)⍵:0 Assert⍨'Expected string, got: ',⍕⍵
+    (⍕≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
     strPtr ← tempAlloc 1+≢⍵
-    _←'Internal error, string pointer allocated for string to push was Null'Assert 0≢strPtr
+    _←'INTERNAL ERROR: String pointer allocated for string to push was Null'Assert 0≢strPtr
     _←⍵⍵ (strPtr ⍵)
     ⍺⍺ strPtr
   }M
@@ -349,7 +349,7 @@ push,←⊂ StringPushGen ⍬
   out ← ,¨'>'∘,⍣¯1 E._Each_ (0/⊂'') FF¨ GG E._Each_ (0/⊂'')⊢ t/⍨~bm ⍝ ~atomTypes∊⍨⊂⍵ is for mainly checking if something is a string
   F←(io bm in out name){(io bm in out name)←⍺⍺
     inArgsList ← {1≡≢in:,⊂⍵⋄⍵}⍵
-    in≢⍥≢inArgsList:0 Assert⍨'Wrong amount of arguments given to ',name,': ','≢≢⍵',⍨⍕≢in
+    in≢⍥≢inArgsList:0 Assert⍨'ERROR: Wrong amount of arguments given to ',name,': ','≢≢⍵',⍨⍕≢in
 
     ⍝ all elements in args will be replaced by pointers
     ⍝ which will be arguments given to the called function
