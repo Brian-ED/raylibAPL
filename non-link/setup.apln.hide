@@ -46,7 +46,7 @@ pathFromThisFileToRaylibAPLRoot←{
     :If 9≡40⎕ATX '##.##.TatinVars'
       ##.##.installraylib 1
     :Else
-      0 Assert⍨ 'ERROR: File ',libPath,' was not found'
+      0 Assert⍨'ERROR: File ',libPath,' was not found'
     :EndIf
   :EndIf
   success←1
@@ -119,7 +119,7 @@ intVecRefPushGen ← {
     LenStack,←≢⍵
     (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected int vector, got: ',⍕⍵
     intVecPtr ← tempAlloc 4×≢⍵
-    _←'INTERNAL ERROR: pointer allocated for int vector was Null'Assert 0≢intVecPtr
+    _←'INTERNAL ERROR: pointer allocated for int vector was Null' Assert 0≢intVecPtr
     _←⍵⍵(intVecPtr ⍵ (4×≢⍵))
     ⍺⍺ intVecPtr
   }M
@@ -140,7 +140,7 @@ intVecPushGen ← {
   push←(⊃push[atomTypes⍳⊂,'P']){
     (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
     intVecPtr ← tempAlloc 4×≢⍵
-    _←'INTERNAL ERROR: string pointer allocated for string to push was Null'Assert 0≢intVecPtr
+    _←'INTERNAL ERROR: string pointer allocated for string to push was Null' Assert 0≢intVecPtr
     _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
     r←⍺⍺ intVecPtr
     F←intVecPtr{tempFree ⍺⍺}
@@ -274,7 +274,7 @@ PushStructGen ← {
   O←I{ ⍝ push value
     (name cleaned)←⍵⍵
     i←atomTypes⍳cleaned
-    i≢⍥≢⍵:0 Assert⍨ 'ERROR: Wrong struct length given for ',name,', (',(⍕≢i),'≢≢⍵)'
+    i≢⍥≢⍵:0 Assert⍨'ERROR: Wrong struct length given for ',name,', (',(⍕≢i),'≢≢⍵)'
     ptr←Push⍬
     _←push[i] {⍺∘⊢⍵}E._Each_⍬⊢ ⍵
     _←⍺⍺ ptr,⌽Pop E._Each_⍬⊢i
@@ -326,7 +326,7 @@ StringPushGen ← {
   push←(⊃push[atomTypes⍳⊂,'P']){
     (⍕≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
     strPtr ← tempAlloc 1+≢⍵
-    _←'INTERNAL ERROR: String pointer allocated for string to push was Null'Assert 0≢strPtr
+    _←'INTERNAL ERROR: String pointer allocated for string to push was Null' Assert 0≢strPtr
     _←⍵⍵ (strPtr ⍵)
     ⍺⍺ strPtr
   }M

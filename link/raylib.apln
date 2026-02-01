@@ -1237,45 +1237,45 @@ scopeInitAudioDevice ← 0
   r←⍬⊣AttachAudioStreamProcessorRAYLIB(stream processor)
 ∇
 ∇{r}←BeginBlendMode mode
-  'BeginBlendMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: BeginBlendMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   scopeBeginBlendMode ← 1
   r←⍬⊣BeginBlendModeRAYLIB mode
 ∇
 ∇{r}←BeginDrawing _
-  'BeginDrawing errored' Assert ∨/(scopeInitWindow)
-  'BeginDrawing errored' Assert ~scopeBeginDrawing
+  'ERROR: BeginDrawing errored' Assert ∨/(scopeInitWindow)
+  'ERROR: BeginDrawing errored' Assert ~scopeBeginDrawing
   scopeBeginDrawing ← 1
   r←⍬⊣BeginDrawingRAYLIB _
 ∇
 ∇{r}←BeginMode2D camera
-  'BeginMode2D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
-  'BeginMode2D errored' Assert ~scopeBeginMode2D
+  'ERROR: BeginMode2D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: BeginMode2D errored' Assert ~scopeBeginMode2D
   scopeBeginMode2D ← 1
   r←⍬⊣BeginMode2DRAYLIB camera
 ∇
 ∇{r}←BeginMode3D camera
-  'BeginMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode)
-  'BeginMode3D errored' Assert ~scopeBeginMode3D
+  'ERROR: BeginMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode)
+  'ERROR: BeginMode3D errored' Assert ~scopeBeginMode3D
   scopeBeginMode3D ← 1
   r←⍬⊣BeginMode3DRAYLIB camera
 ∇
 ∇{r}←BeginScissorMode(x y width height)
-  'BeginScissorMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: BeginScissorMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   scopeBeginScissorMode ← 1
   r←⍬⊣BeginScissorModeRAYLIB(x y width height)
 ∇
 ∇{r}←BeginShaderMode shader
-  'BeginShaderMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: BeginShaderMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   scopeBeginShaderMode ← 1
   r←⍬⊣BeginShaderModeRAYLIB shader
 ∇
 ∇{r}←BeginTextureMode target
-  'BeginTextureMode errored' Assert ∨/(scopeInitWindow)
+  'ERROR: BeginTextureMode errored' Assert ∨/(scopeInitWindow)
   scopeBeginTextureMode ← 1
   r←⍬⊣BeginTextureModeRAYLIB target
 ∇
 ∇{r}←BeginVrStereoMode config
-  'BeginVrStereoMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode)
+  'ERROR: BeginVrStereoMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode)
   scopeBeginVrStereoMode ← 1
   r←⍬⊣BeginVrStereoModeRAYLIB config
 ∇
@@ -1322,20 +1322,20 @@ scopeInitAudioDevice ← 0
   r←CheckCollisionSpheresRAYLIB(center1 radius1 center2 radius2)
 ∇
 ∇{r}←ClearBackground color
-  'ClearBackground errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing) (scopeInitWindow ∧ scopeBeginTextureMode)
+  'ERROR: ClearBackground errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing) (scopeInitWindow ∧ scopeBeginTextureMode)
   r←⍬⊣ClearBackgroundRAYLIB color
 ∇
 ∇{r}←ClearWindowState flags
-  'ClearWindowState errored' Assert ∨/(scopeInitWindow)
+  'ERROR: ClearWindowState errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣ClearWindowStateRAYLIB flags
 ∇
 ∇{r}←CloseAudioDevice _
-  'CloseAudioDevice errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: CloseAudioDevice errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   scopeInitAudioDevice ← 0
   r←⍬⊣CloseAudioDeviceRAYLIB _
 ∇
 ∇{r}←CloseWindow _
-  'CloseWindow errored' Assert ∨/(scopeInitWindow)
+  'ERROR: CloseWindow errored' Assert ∨/(scopeInitWindow)
   scopeInitWindow ← 0
   r←⍬⊣CloseWindowRAYLIB _
 ∇
@@ -1406,7 +1406,7 @@ scopeInitAudioDevice ← 0
   r←DirectoryExistsRAYLIB dirPath
 ∇
 ∇{r}←DisableCursor _
-  'DisableCursor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: DisableCursor errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣DisableCursorRAYLIB _
 ∇
 ∇{r}←DisableEventWaiting _
@@ -1425,114 +1425,114 @@ scopeInitAudioDevice ← 0
   r←⍬⊣DrawBoundingBoxRAYLIB(box color)
 ∇
 ∇{r}←DrawCapsule(startPos endPos radius slices rings color)
-  'DrawCapsule errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCapsule errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCapsuleRAYLIB(startPos endPos radius slices rings color)
 ∇
 ∇{r}←DrawCapsuleWires(startPos endPos radius slices rings color)
-  'DrawCapsuleWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCapsuleWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCapsuleWiresRAYLIB(startPos endPos radius slices rings color)
 ∇
 ∇{r}←DrawCircle(centerX centerY radius color)
-  'DrawCircle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleRAYLIB(centerX centerY radius color)
 ∇
 ∇{r}←DrawCircle3D(center radius rotationAxis rotationAngle color)
-  'DrawCircle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCircle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCircle3DRAYLIB(center radius rotationAxis rotationAngle color)
 ∇
 ∇{r}←DrawCircleGradient(centerX centerY radius inner outer)
-  'DrawCircleGradient errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircleGradient errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleGradientRAYLIB(centerX centerY radius inner outer)
 ∇
 ∇{r}←DrawCircleLines(centerX centerY radius color)
-  'DrawCircleLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircleLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleLinesRAYLIB(centerX centerY radius color)
 ∇
 ∇{r}←DrawCircleLinesV(center radius color)
-  'DrawCircleLinesV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircleLinesV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleLinesVRAYLIB(center radius color)
 ∇
 ∇{r}←DrawCircleSector(center radius startAngle endAngle segments color)
-  'DrawCircleSector errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircleSector errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleSectorRAYLIB(center radius startAngle endAngle segments color)
 ∇
 ∇{r}←DrawCircleSectorLines(center radius startAngle endAngle segments color)
-  'DrawCircleSectorLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircleSectorLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleSectorLinesRAYLIB(center radius startAngle endAngle segments color)
 ∇
 ∇{r}←DrawCircleV(center radius color)
-  'DrawCircleV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawCircleV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawCircleVRAYLIB(center radius color)
 ∇
 ∇{r}←DrawCube(position width height length color)
-  'DrawCube errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCube errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCubeRAYLIB(position width height length color)
 ∇
 ∇{r}←DrawCubeV(position size color)
-  'DrawCubeV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCubeV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCubeVRAYLIB(position size color)
 ∇
 ∇{r}←DrawCubeWires(position width height length color)
-  'DrawCubeWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCubeWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCubeWiresRAYLIB(position width height length color)
 ∇
 ∇{r}←DrawCubeWiresV(position size color)
-  'DrawCubeWiresV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCubeWiresV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCubeWiresVRAYLIB(position size color)
 ∇
 ∇{r}←DrawCylinder(position radiusTop radiusBottom height slices color)
-  'DrawCylinder errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCylinder errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCylinderRAYLIB(position radiusTop radiusBottom height slices color)
 ∇
 ∇{r}←DrawCylinderEx(startPos endPos startRadius endRadius sides color)
-  'DrawCylinderEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCylinderEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCylinderExRAYLIB(startPos endPos startRadius endRadius sides color)
 ∇
 ∇{r}←DrawCylinderWires(position radiusTop radiusBottom height slices color)
-  'DrawCylinderWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCylinderWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCylinderWiresRAYLIB(position radiusTop radiusBottom height slices color)
 ∇
 ∇{r}←DrawCylinderWiresEx(startPos endPos startRadius endRadius sides color)
-  'DrawCylinderWiresEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawCylinderWiresEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawCylinderWiresExRAYLIB(startPos endPos startRadius endRadius sides color)
 ∇
 ∇{r}←DrawEllipse(centerX centerY radiusH radiusV color)
-  'DrawEllipse errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawEllipse errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawEllipseRAYLIB(centerX centerY radiusH radiusV color)
 ∇
 ∇{r}←DrawEllipseLines(centerX centerY radiusH radiusV color)
-  'DrawEllipseLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawEllipseLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawEllipseLinesRAYLIB(centerX centerY radiusH radiusV color)
 ∇
 ∇{r}←DrawFPS(posX posY)
   r←⍬⊣DrawFPSRAYLIB(posX posY)
 ∇
 ∇{r}←DrawGrid(slices spacing)
-  'DrawGrid errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawGrid errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawGridRAYLIB(slices spacing)
 ∇
 ∇{r}←DrawLine(startPosX startPosY endPosX endPosY color)
-  'DrawLine errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawLine errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawLineRAYLIB(startPosX startPosY endPosX endPosY color)
 ∇
 ∇{r}←DrawLine3D(startPos endPos color)
-  'DrawLine3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawLine3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawLine3DRAYLIB(startPos endPos color)
 ∇
 ∇{r}←DrawLineBezier(startPos endPos thick color)
-  'DrawLineBezier errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawLineBezier errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawLineBezierRAYLIB(startPos endPos thick color)
 ∇
 ∇{r}←DrawLineEx(startPos endPos thick color)
-  'DrawLineEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawLineEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawLineExRAYLIB(startPos endPos thick color)
 ∇
 ∇{r}←DrawLineStrip(points pointCount color)
-  'DrawLineStrip errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawLineStrip errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawLineStripRAYLIB(points pointCount color)
 ∇
 ∇{r}←DrawLineV(startPos endPos color)
-  'DrawLineV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawLineV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawLineVRAYLIB(startPos endPos color)
 ∇
 ∇{r}←DrawMesh(mesh material transform)
@@ -1560,143 +1560,143 @@ scopeInitAudioDevice ← 0
   r←⍬⊣DrawModelWiresExRAYLIB(model position rotationAxis rotationAngle scale tint)
 ∇
 ∇{r}←DrawPixel(posX posY color)
-  'DrawPixel errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawPixel errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawPixelRAYLIB(posX posY color)
 ∇
 ∇{r}←DrawPixelV(position color)
-  'DrawPixelV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawPixelV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawPixelVRAYLIB(position color)
 ∇
 ∇{r}←DrawPlane(centerPos size color)
-  'DrawPlane errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawPlane errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawPlaneRAYLIB(centerPos size color)
 ∇
 ∇{r}←DrawPoint3D(position color)
-  'DrawPoint3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawPoint3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawPoint3DRAYLIB(position color)
 ∇
 ∇{r}←DrawPoly(center sides radius rotation color)
-  'DrawPoly errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawPoly errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawPolyRAYLIB(center sides radius rotation color)
 ∇
 ∇{r}←DrawPolyLines(center sides radius rotation color)
-  'DrawPolyLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawPolyLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawPolyLinesRAYLIB(center sides radius rotation color)
 ∇
 ∇{r}←DrawPolyLinesEx(center sides radius rotation lineThick color)
-  'DrawPolyLinesEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawPolyLinesEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawPolyLinesExRAYLIB(center sides radius rotation lineThick color)
 ∇
 ∇{r}←DrawRay(ray color)
-  'DrawRay errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawRay errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawRayRAYLIB(ray color)
 ∇
 ∇{r}←DrawRectangle(posX posY width height color)
-  'DrawRectangle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleRAYLIB(posX posY width height color)
 ∇
 ∇{r}←DrawRectangleGradientEx(rec topLeft bottomLeft topRight bottomRight)
-  'DrawRectangleGradientEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleGradientEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleGradientExRAYLIB(rec topLeft bottomLeft topRight bottomRight)
 ∇
 ∇{r}←DrawRectangleGradientH(posX posY width height left right)
-  'DrawRectangleGradientH errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleGradientH errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleGradientHRAYLIB(posX posY width height left right)
 ∇
 ∇{r}←DrawRectangleGradientV(posX posY width height top bottom)
-  'DrawRectangleGradientV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleGradientV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleGradientVRAYLIB(posX posY width height top bottom)
 ∇
 ∇{r}←DrawRectangleLines(posX posY width height color)
-  'DrawRectangleLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleLinesRAYLIB(posX posY width height color)
 ∇
 ∇{r}←DrawRectangleLinesEx(rec lineThick color)
-  'DrawRectangleLinesEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleLinesEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleLinesExRAYLIB(rec lineThick color)
 ∇
 ∇{r}←DrawRectanglePro(rec origin rotation color)
-  'DrawRectanglePro errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectanglePro errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleProRAYLIB(rec origin rotation color)
 ∇
 ∇{r}←DrawRectangleRec(rec color)
-  'DrawRectangleRec errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleRec errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleRecRAYLIB(rec color)
 ∇
 ∇{r}←DrawRectangleRounded(rec roundness segments color)
-  'DrawRectangleRounded errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleRounded errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleRoundedRAYLIB(rec roundness segments color)
 ∇
 ∇{r}←DrawRectangleRoundedLines(rec roundness segments color)
-  'DrawRectangleRoundedLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleRoundedLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleRoundedLinesRAYLIB(rec roundness segments color)
 ∇
 ∇{r}←DrawRectangleRoundedLinesEx(rec roundness segments lineThick color)
-  'DrawRectangleRoundedLinesEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleRoundedLinesEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleRoundedLinesExRAYLIB(rec roundness segments lineThick color)
 ∇
 ∇{r}←DrawRectangleV(position size color)
-  'DrawRectangleV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRectangleV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRectangleVRAYLIB(position size color)
 ∇
 ∇{r}←DrawRing(center innerRadius outerRadius startAngle endAngle segments color)
-  'DrawRing errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRing errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRingRAYLIB(center innerRadius outerRadius startAngle endAngle segments color)
 ∇
 ∇{r}←DrawRingLines(center innerRadius outerRadius startAngle endAngle segments color)
-  'DrawRingLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawRingLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawRingLinesRAYLIB(center innerRadius outerRadius startAngle endAngle segments color)
 ∇
 ∇{r}←DrawSphere(centerPos radius color)
-  'DrawSphere errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawSphere errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawSphereRAYLIB(centerPos radius color)
 ∇
 ∇{r}←DrawSphereEx(centerPos radius rings slices color)
-  'DrawSphereEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawSphereEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawSphereExRAYLIB(centerPos radius rings slices color)
 ∇
 ∇{r}←DrawSphereWires(centerPos radius rings slices color)
-  'DrawSphereWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawSphereWires errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawSphereWiresRAYLIB(centerPos radius rings slices color)
 ∇
 ∇{r}←DrawSplineBasis(points pointCount thick color)
-  'DrawSplineBasis errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineBasis errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineBasisRAYLIB(points pointCount thick color)
 ∇
 ∇{r}←DrawSplineBezierCubic(points pointCount thick color)
-  'DrawSplineBezierCubic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineBezierCubic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineBezierCubicRAYLIB(points pointCount thick color)
 ∇
 ∇{r}←DrawSplineBezierQuadratic(points pointCount thick color)
-  'DrawSplineBezierQuadratic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineBezierQuadratic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineBezierQuadraticRAYLIB(points pointCount thick color)
 ∇
 ∇{r}←DrawSplineCatmullRom(points pointCount thick color)
-  'DrawSplineCatmullRom errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineCatmullRom errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineCatmullRomRAYLIB(points pointCount thick color)
 ∇
 ∇{r}←DrawSplineLinear(points pointCount thick color)
-  'DrawSplineLinear errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineLinear errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineLinearRAYLIB(points pointCount thick color)
 ∇
 ∇{r}←DrawSplineSegmentBasis(p1 p2 p3 p4 thick color)
-  'DrawSplineSegmentBasis errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineSegmentBasis errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineSegmentBasisRAYLIB(p1 p2 p3 p4 thick color)
 ∇
 ∇{r}←DrawSplineSegmentBezierCubic(p1 c2 c3 p4 thick color)
-  'DrawSplineSegmentBezierCubic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineSegmentBezierCubic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineSegmentBezierCubicRAYLIB(p1 c2 c3 p4 thick color)
 ∇
 ∇{r}←DrawSplineSegmentBezierQuadratic(p1 c2 p3 thick color)
-  'DrawSplineSegmentBezierQuadratic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineSegmentBezierQuadratic errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineSegmentBezierQuadraticRAYLIB(p1 c2 p3 thick color)
 ∇
 ∇{r}←DrawSplineSegmentCatmullRom(p1 p2 p3 p4 thick color)
-  'DrawSplineSegmentCatmullRom errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineSegmentCatmullRom errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineSegmentCatmullRomRAYLIB(p1 p2 p3 p4 thick color)
 ∇
 ∇{r}←DrawSplineSegmentLinear(p1 p2 thick color)
-  'DrawSplineSegmentLinear errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawSplineSegmentLinear errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawSplineSegmentLinearRAYLIB(p1 p2 thick color)
 ∇
 ∇{r}←DrawText(text posX posY fontSize color)
@@ -1715,55 +1715,55 @@ scopeInitAudioDevice ← 0
   r←⍬⊣DrawTextProRAYLIB(font text position origin rotation fontSize spacing tint)
 ∇
 ∇{r}←DrawTexture(texture posX posY tint)
-  'DrawTexture errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTexture errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTextureRAYLIB(texture posX posY tint)
 ∇
 ∇{r}←DrawTextureEx(texture position rotation scale tint)
-  'DrawTextureEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTextureEx errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTextureExRAYLIB(texture position rotation scale tint)
 ∇
 ∇{r}←DrawTextureNPatch(texture nPatchInfo dest origin rotation tint)
-  'DrawTextureNPatch errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTextureNPatch errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTextureNPatchRAYLIB(texture nPatchInfo dest origin rotation tint)
 ∇
 ∇{r}←DrawTexturePro(texture source dest origin rotation tint)
-  'DrawTexturePro errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTexturePro errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTextureProRAYLIB(texture source dest origin rotation tint)
 ∇
 ∇{r}←DrawTextureRec(texture source position tint)
-  'DrawTextureRec errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTextureRec errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTextureRecRAYLIB(texture source position tint)
 ∇
 ∇{r}←DrawTextureV(texture position tint)
-  'DrawTextureV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTextureV errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTextureVRAYLIB(texture position tint)
 ∇
 ∇{r}←DrawTriangle(v1 v2 v3 color)
-  'DrawTriangle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTriangle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTriangleRAYLIB(v1 v2 v3 color)
 ∇
 ∇{r}←DrawTriangle3D(v1 v2 v3 color)
-  'DrawTriangle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawTriangle3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawTriangle3DRAYLIB(v1 v2 v3 color)
 ∇
 ∇{r}←DrawTriangleFan(points pointCount color)
-  'DrawTriangleFan errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTriangleFan errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTriangleFanRAYLIB(points pointCount color)
 ∇
 ∇{r}←DrawTriangleLines(v1 v2 v3 color)
-  'DrawTriangleLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTriangleLines errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTriangleLinesRAYLIB(v1 v2 v3 color)
 ∇
 ∇{r}←DrawTriangleStrip(points pointCount color)
-  'DrawTriangleStrip errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: DrawTriangleStrip errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣DrawTriangleStripRAYLIB(points pointCount color)
 ∇
 ∇{r}←DrawTriangleStrip3D(points pointCount color)
-  'DrawTriangleStrip3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: DrawTriangleStrip3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   r←⍬⊣DrawTriangleStrip3DRAYLIB(points pointCount color)
 ∇
 ∇{r}←EnableCursor _
-  'EnableCursor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: EnableCursor errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣EnableCursorRAYLIB _
 ∇
 ∇{r}←EnableEventWaiting _
@@ -1773,42 +1773,42 @@ scopeInitAudioDevice ← 0
   r←EncodeDataBase64RAYLIB(data dataSize outputSize)
 ∇
 ∇{r}←EndBlendMode _
-  'EndBlendMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginBlendMode)
+  'ERROR: EndBlendMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginBlendMode)
   scopeBeginBlendMode ← 0
   r←⍬⊣EndBlendModeRAYLIB _
 ∇
 ∇{r}←EndDrawing _
-  'EndDrawing errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: EndDrawing errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   scopeBeginDrawing ← 0
   r←⍬⊣EndDrawingRAYLIB _
 ∇
 ∇{r}←EndMode2D _
-  'EndMode2D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode2D)
+  'ERROR: EndMode2D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode2D)
   scopeBeginMode2D ← 0
   r←⍬⊣EndMode2DRAYLIB _
 ∇
 ∇{r}←EndMode3D _
-  'EndMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeInitWindow ∧ scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
+  'ERROR: EndMode3D errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginMode3D) (scopeInitWindow ∧ scopeBeginTextureMode ∧ scopeBeginVrStereoMode ∧ scopeBeginMode3D)
   scopeBeginMode3D ← 0
   r←⍬⊣EndMode3DRAYLIB _
 ∇
 ∇{r}←EndScissorMode _
-  'EndScissorMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginScissorMode)
+  'ERROR: EndScissorMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginScissorMode)
   scopeBeginScissorMode ← 0
   r←⍬⊣EndScissorModeRAYLIB _
 ∇
 ∇{r}←EndShaderMode _
-  'EndShaderMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginShaderMode)
+  'ERROR: EndShaderMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing ∧ scopeBeginShaderMode)
   scopeBeginShaderMode ← 0
   r←⍬⊣EndShaderModeRAYLIB _
 ∇
 ∇{r}←EndTextureMode _
-  'EndTextureMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode)
+  'ERROR: EndTextureMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode)
   scopeBeginTextureMode ← 0
   r←⍬⊣EndTextureModeRAYLIB _
 ∇
 ∇{r}←EndVrStereoMode _
-  'EndVrStereoMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode ∧ scopeBeginVrStereoMode)
+  'ERROR: EndVrStereoMode errored' Assert ∨/(scopeInitWindow ∧ scopeBeginTextureMode ∧ scopeBeginVrStereoMode)
   scopeBeginVrStereoMode ← 0
   r←⍬⊣EndVrStereoModeRAYLIB _
 ∇
@@ -1831,11 +1831,11 @@ scopeInitAudioDevice ← 0
   r←ExportImageToMemoryRAYLIB(image fileType fileSize)
 ∇
 ∇r←ExportMesh(mesh fileName)
-  'ExportMesh errored' Assert ∨/(scopeInitWindow)
+  'ERROR: ExportMesh errored' Assert ∨/(scopeInitWindow)
   r←ExportMeshRAYLIB(mesh fileName)
 ∇
 ∇r←ExportMeshAsCode(mesh fileName)
-  'ExportMeshAsCode errored' Assert ∨/(scopeInitWindow)
+  'ERROR: ExportMeshAsCode errored' Assert ∨/(scopeInitWindow)
   r←ExportMeshAsCodeRAYLIB(mesh fileName)
 ∇
 ∇r←ExportWave(wave fileName)
@@ -1881,51 +1881,51 @@ scopeInitAudioDevice ← 0
   r←GenImageWhiteNoiseRAYLIB(width height factor)
 ∇
 ∇r←GenMeshCone(radius height slices)
-  'GenMeshCone errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshCone errored' Assert ∨/(scopeInitWindow)
   r←GenMeshConeRAYLIB(radius height slices)
 ∇
 ∇r←GenMeshCube(width height length)
-  'GenMeshCube errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshCube errored' Assert ∨/(scopeInitWindow)
   r←GenMeshCubeRAYLIB(width height length)
 ∇
 ∇r←GenMeshCubicmap(cubicmap cubeSize)
-  'GenMeshCubicmap errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshCubicmap errored' Assert ∨/(scopeInitWindow)
   r←GenMeshCubicmapRAYLIB(cubicmap cubeSize)
 ∇
 ∇r←GenMeshCylinder(radius height slices)
-  'GenMeshCylinder errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshCylinder errored' Assert ∨/(scopeInitWindow)
   r←GenMeshCylinderRAYLIB(radius height slices)
 ∇
 ∇r←GenMeshHeightmap(heightmap size)
-  'GenMeshHeightmap errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshHeightmap errored' Assert ∨/(scopeInitWindow)
   r←GenMeshHeightmapRAYLIB(heightmap size)
 ∇
 ∇r←GenMeshHemiSphere(radius rings slices)
-  'GenMeshHemiSphere errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshHemiSphere errored' Assert ∨/(scopeInitWindow)
   r←GenMeshHemiSphereRAYLIB(radius rings slices)
 ∇
 ∇r←GenMeshKnot(radius size radSeg sides)
-  'GenMeshKnot errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshKnot errored' Assert ∨/(scopeInitWindow)
   r←GenMeshKnotRAYLIB(radius size radSeg sides)
 ∇
 ∇r←GenMeshPlane(width length resX resZ)
-  'GenMeshPlane errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshPlane errored' Assert ∨/(scopeInitWindow)
   r←GenMeshPlaneRAYLIB(width length resX resZ)
 ∇
 ∇r←GenMeshPoly(sides radius)
-  'GenMeshPoly errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshPoly errored' Assert ∨/(scopeInitWindow)
   r←GenMeshPolyRAYLIB(sides radius)
 ∇
 ∇r←GenMeshSphere(radius rings slices)
-  'GenMeshSphere errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshSphere errored' Assert ∨/(scopeInitWindow)
   r←GenMeshSphereRAYLIB(radius rings slices)
 ∇
 ∇r←GenMeshTangents mesh
-  'GenMeshTangents errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshTangents errored' Assert ∨/(scopeInitWindow)
   r←GenMeshTangentsRAYLIB mesh
 ∇
 ∇r←GenMeshTorus(radius size radSeg sides)
-  'GenMeshTorus errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GenMeshTorus errored' Assert ∨/(scopeInitWindow)
   r←GenMeshTorusRAYLIB(radius size radSeg sides)
 ∇
 ∇r←GenTextureMipmaps texture
@@ -1935,23 +1935,23 @@ scopeInitAudioDevice ← 0
   r←GetApplicationDirectoryRAYLIB _
 ∇
 ∇r←GetCameraMatrix camera
-  'GetCameraMatrix errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetCameraMatrix errored' Assert ∨/(scopeInitWindow)
   r←GetCameraMatrixRAYLIB camera
 ∇
 ∇r←GetCameraMatrix2D camera
-  'GetCameraMatrix2D errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetCameraMatrix2D errored' Assert ∨/(scopeInitWindow)
   r←GetCameraMatrix2DRAYLIB camera
 ∇
 ∇r←GetCharPressed _
-  'GetCharPressed errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetCharPressed errored' Assert ∨/(scopeInitWindow)
   r←GetCharPressedRAYLIB _
 ∇
 ∇r←GetClipboardImage _
-  'GetClipboardImage errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetClipboardImage errored' Assert ∨/(scopeInitWindow)
   r←GetClipboardImageRAYLIB _
 ∇
 ∇r←GetClipboardText _
-  'GetClipboardText errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetClipboardText errored' Assert ∨/(scopeInitWindow)
   r←GetClipboardTextRAYLIB _
 ∇
 ∇r←GetCodepoint(text codepointSize)
@@ -1973,14 +1973,14 @@ scopeInitAudioDevice ← 0
   r←GetColorRAYLIB hexValue
 ∇
 ∇r←GetCurrentMonitor _
-  'GetCurrentMonitor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetCurrentMonitor errored' Assert ∨/(scopeInitWindow)
   r←GetCurrentMonitorRAYLIB _
 ∇
 ∇r←GetDirectoryPath filePath
   r←GetDirectoryPathRAYLIB filePath
 ∇
 ∇r←GetFPS _
-  'GetFPS errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetFPS errored' Assert ∨/(scopeInitWindow)
   r←GetFPSRAYLIB _
 ∇
 ∇r←GetFileExtension fileName
@@ -2002,7 +2002,7 @@ scopeInitAudioDevice ← 0
   r←GetFontDefaultRAYLIB _
 ∇
 ∇r←GetFrameTime _
-  'GetFrameTime errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetFrameTime errored' Assert ∨/(scopeInitWindow)
   r←GetFrameTimeRAYLIB _
 ∇
 ∇r←GetGamepadAxisCount gamepad
@@ -2018,27 +2018,27 @@ scopeInitAudioDevice ← 0
   r←GetGamepadNameRAYLIB gamepad
 ∇
 ∇r←GetGestureDetected _
-  'GetGestureDetected errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetGestureDetected errored' Assert ∨/(scopeInitWindow)
   r←GetGestureDetectedRAYLIB _
 ∇
 ∇r←GetGestureDragAngle _
-  'GetGestureDragAngle errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetGestureDragAngle errored' Assert ∨/(scopeInitWindow)
   r←GetGestureDragAngleRAYLIB _
 ∇
 ∇r←GetGestureDragVector _
-  'GetGestureDragVector errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetGestureDragVector errored' Assert ∨/(scopeInitWindow)
   r←GetGestureDragVectorRAYLIB _
 ∇
 ∇r←GetGestureHoldDuration _
-  'GetGestureHoldDuration errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetGestureHoldDuration errored' Assert ∨/(scopeInitWindow)
   r←GetGestureHoldDurationRAYLIB _
 ∇
 ∇r←GetGesturePinchAngle _
-  'GetGesturePinchAngle errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetGesturePinchAngle errored' Assert ∨/(scopeInitWindow)
   r←GetGesturePinchAngleRAYLIB _
 ∇
 ∇r←GetGesturePinchVector _
-  'GetGesturePinchVector errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetGesturePinchVector errored' Assert ∨/(scopeInitWindow)
   r←GetGesturePinchVectorRAYLIB _
 ∇
 ∇r←GetGlyphAtlasRec(font codepoint)
@@ -2057,7 +2057,7 @@ scopeInitAudioDevice ← 0
   r←GetImageColorRAYLIB(image x y)
 ∇
 ∇r←GetKeyPressed _
-  'GetKeyPressed errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetKeyPressed errored' Assert ∨/(scopeInitWindow)
   r←GetKeyPressedRAYLIB _
 ∇
 ∇r←GetMasterVolume _
@@ -2070,59 +2070,59 @@ scopeInitAudioDevice ← 0
   r←GetModelBoundingBoxRAYLIB model
 ∇
 ∇r←GetMonitorCount _
-  'GetMonitorCount errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorCount errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorCountRAYLIB _
 ∇
 ∇r←GetMonitorHeight monitor
-  'GetMonitorHeight errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorHeight errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorHeightRAYLIB monitor
 ∇
 ∇r←GetMonitorName monitor
-  'GetMonitorName errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorName errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorNameRAYLIB monitor
 ∇
 ∇r←GetMonitorPhysicalHeight monitor
-  'GetMonitorPhysicalHeight errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorPhysicalHeight errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorPhysicalHeightRAYLIB monitor
 ∇
 ∇r←GetMonitorPhysicalWidth monitor
-  'GetMonitorPhysicalWidth errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorPhysicalWidth errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorPhysicalWidthRAYLIB monitor
 ∇
 ∇r←GetMonitorPosition monitor
-  'GetMonitorPosition errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorPosition errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorPositionRAYLIB monitor
 ∇
 ∇r←GetMonitorRefreshRate monitor
-  'GetMonitorRefreshRate errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorRefreshRate errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorRefreshRateRAYLIB monitor
 ∇
 ∇r←GetMonitorWidth monitor
-  'GetMonitorWidth errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMonitorWidth errored' Assert ∨/(scopeInitWindow)
   r←GetMonitorWidthRAYLIB monitor
 ∇
 ∇r←GetMouseDelta _
-  'GetMouseDelta errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMouseDelta errored' Assert ∨/(scopeInitWindow)
   r←GetMouseDeltaRAYLIB _
 ∇
 ∇r←GetMousePosition _
-  'GetMousePosition errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMousePosition errored' Assert ∨/(scopeInitWindow)
   r←GetMousePositionRAYLIB _
 ∇
 ∇r←GetMouseWheelMove _
-  'GetMouseWheelMove errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMouseWheelMove errored' Assert ∨/(scopeInitWindow)
   r←GetMouseWheelMoveRAYLIB _
 ∇
 ∇r←GetMouseWheelMoveV _
-  'GetMouseWheelMoveV errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMouseWheelMoveV errored' Assert ∨/(scopeInitWindow)
   r←GetMouseWheelMoveVRAYLIB _
 ∇
 ∇r←GetMouseX _
-  'GetMouseX errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMouseX errored' Assert ∨/(scopeInitWindow)
   r←GetMouseXRAYLIB _
 ∇
 ∇r←GetMouseY _
-  'GetMouseY errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetMouseY errored' Assert ∨/(scopeInitWindow)
   r←GetMouseYRAYLIB _
 ∇
 ∇r←GetMusicTimeLength music
@@ -2141,7 +2141,7 @@ scopeInitAudioDevice ← 0
   r←GetPrevDirectoryPathRAYLIB dirPath
 ∇
 ∇r←GetRandomValue(min max)
-  'GetRandomValue errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetRandomValue errored' Assert ∨/(scopeInitWindow)
   r←GetRandomValueRAYLIB(min max)
 ∇
 ∇r←GetRayCollisionBox(ray box)
@@ -2160,46 +2160,46 @@ scopeInitAudioDevice ← 0
   r←GetRayCollisionTriangleRAYLIB(ray p1 p2 p3)
 ∇
 ∇r←GetRenderHeight _
-  'GetRenderHeight errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetRenderHeight errored' Assert ∨/(scopeInitWindow)
   r←GetRenderHeightRAYLIB _
 ∇
 ∇r←GetRenderWidth _
-  'GetRenderWidth errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetRenderWidth errored' Assert ∨/(scopeInitWindow)
   r←GetRenderWidthRAYLIB _
 ∇
 ∇r←GetScreenHeight _
-  'GetScreenHeight errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetScreenHeight errored' Assert ∨/(scopeInitWindow)
   r←GetScreenHeightRAYLIB _
 ∇
 ∇r←GetScreenToWorld2D(position camera)
   r←GetScreenToWorld2DRAYLIB(position camera)
 ∇
 ∇r←GetScreenToWorldRay(position camera)
-  'GetScreenToWorldRay errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetScreenToWorldRay errored' Assert ∨/(scopeInitWindow)
   r←GetScreenToWorldRayRAYLIB(position camera)
 ∇
 ∇r←GetScreenToWorldRayEx(position camera width height)
-  'GetScreenToWorldRayEx errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetScreenToWorldRayEx errored' Assert ∨/(scopeInitWindow)
   r←GetScreenToWorldRayExRAYLIB(position camera width height)
 ∇
 ∇r←GetScreenWidth _
-  'GetScreenWidth errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetScreenWidth errored' Assert ∨/(scopeInitWindow)
   r←GetScreenWidthRAYLIB _
 ∇
 ∇r←GetShaderLocation(shader uniformName)
-  'GetShaderLocation errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetShaderLocation errored' Assert ∨/(scopeInitWindow)
   r←GetShaderLocationRAYLIB(shader uniformName)
 ∇
 ∇r←GetShaderLocationAttrib(shader attribName)
-  'GetShaderLocationAttrib errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetShaderLocationAttrib errored' Assert ∨/(scopeInitWindow)
   r←GetShaderLocationAttribRAYLIB(shader attribName)
 ∇
 ∇r←GetShapesTexture _
-  'GetShapesTexture errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: GetShapesTexture errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←GetShapesTextureRAYLIB _
 ∇
 ∇r←GetShapesTextureRectangle _
-  'GetShapesTextureRectangle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: GetShapesTextureRectangle errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←GetShapesTextureRectangleRAYLIB _
 ∇
 ∇r←GetSplinePointBasis(p1 p2 p3 p4 t)
@@ -2218,39 +2218,39 @@ scopeInitAudioDevice ← 0
   r←GetSplinePointLinearRAYLIB(startPos endPos t)
 ∇
 ∇r←GetTime _
-  'GetTime errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetTime errored' Assert ∨/(scopeInitWindow)
   r←GetTimeRAYLIB _
 ∇
 ∇r←GetTouchPointCount _
-  'GetTouchPointCount errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetTouchPointCount errored' Assert ∨/(scopeInitWindow)
   r←GetTouchPointCountRAYLIB _
 ∇
 ∇r←GetTouchPointId index
-  'GetTouchPointId errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetTouchPointId errored' Assert ∨/(scopeInitWindow)
   r←GetTouchPointIdRAYLIB index
 ∇
 ∇r←GetTouchPosition index
-  'GetTouchPosition errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetTouchPosition errored' Assert ∨/(scopeInitWindow)
   r←GetTouchPositionRAYLIB index
 ∇
 ∇r←GetTouchX _
-  'GetTouchX errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetTouchX errored' Assert ∨/(scopeInitWindow)
   r←GetTouchXRAYLIB _
 ∇
 ∇r←GetTouchY _
-  'GetTouchY errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetTouchY errored' Assert ∨/(scopeInitWindow)
   r←GetTouchYRAYLIB _
 ∇
 ∇r←GetWindowHandle _
-  'GetWindowHandle errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetWindowHandle errored' Assert ∨/(scopeInitWindow)
   r←GetWindowHandleRAYLIB _
 ∇
 ∇r←GetWindowPosition _
-  'GetWindowPosition errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetWindowPosition errored' Assert ∨/(scopeInitWindow)
   r←GetWindowPositionRAYLIB _
 ∇
 ∇r←GetWindowScaleDPI _
-  'GetWindowScaleDPI errored' Assert ∨/(scopeInitWindow)
+  'ERROR: GetWindowScaleDPI errored' Assert ∨/(scopeInitWindow)
   r←GetWindowScaleDPIRAYLIB _
 ∇
 ∇r←GetWorkingDirectory _
@@ -2266,7 +2266,7 @@ scopeInitAudioDevice ← 0
   r←GetWorldToScreenExRAYLIB(position camera width height)
 ∇
 ∇{r}←HideCursor _
-  'HideCursor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: HideCursor errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣HideCursorRAYLIB _
 ∇
 ∇r←ImageAlphaClear(image color threshold)
@@ -2426,12 +2426,12 @@ scopeInitAudioDevice ← 0
   r←ImageToPOTRAYLIB(image fill)
 ∇
 ∇{r}←InitAudioDevice _
-  'InitAudioDevice errored' Assert ∨/(scopeInitWindow)
+  'ERROR: InitAudioDevice errored' Assert ∨/(scopeInitWindow)
   scopeInitAudioDevice ← 1
   r←⍬⊣InitAudioDeviceRAYLIB _
 ∇
 ∇{r}←InitWindow(width height title)
-  'InitWindow errored' Assert ~scopeInitWindow
+  'ERROR: InitWindow errored' Assert ~scopeInitWindow
   scopeInitWindow ← 1
   r←⍬⊣InitWindowRAYLIB(width height title)
 ∇
@@ -2448,15 +2448,15 @@ scopeInitAudioDevice ← 0
   r←IsAudioStreamValidRAYLIB stream
 ∇
 ∇r←IsCursorHidden _
-  'IsCursorHidden errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsCursorHidden errored' Assert ∨/(scopeInitWindow)
   r←IsCursorHiddenRAYLIB _
 ∇
 ∇r←IsCursorOnScreen _
-  'IsCursorOnScreen errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsCursorOnScreen errored' Assert ∨/(scopeInitWindow)
   r←IsCursorOnScreenRAYLIB _
 ∇
 ∇r←IsFileDropped _
-  'IsFileDropped errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsFileDropped errored' Assert ∨/(scopeInitWindow)
   r←IsFileDroppedRAYLIB _
 ∇
 ∇r←IsFileExtension(fileName ext)
@@ -2484,34 +2484,34 @@ scopeInitAudioDevice ← 0
   r←IsGamepadButtonUpRAYLIB(gamepad button)
 ∇
 ∇r←IsGestureDetected gesture
-  'IsGestureDetected errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsGestureDetected errored' Assert ∨/(scopeInitWindow)
   r←IsGestureDetectedRAYLIB gesture
 ∇
 ∇r←IsImageValid image
   r←IsImageValidRAYLIB image
 ∇
 ∇r←IsKeyDown key
-  'IsKeyDown errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsKeyDown errored' Assert ∨/(scopeInitWindow)
   r←IsKeyDownRAYLIB key
 ∇
 ∇r←IsKeyPressed key
-  'IsKeyPressed errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsKeyPressed errored' Assert ∨/(scopeInitWindow)
   r←IsKeyPressedRAYLIB key
 ∇
 ∇r←IsKeyPressedRepeat key
-  'IsKeyPressedRepeat errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsKeyPressedRepeat errored' Assert ∨/(scopeInitWindow)
   r←IsKeyPressedRepeatRAYLIB key
 ∇
 ∇r←IsKeyReleased key
-  'IsKeyReleased errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsKeyReleased errored' Assert ∨/(scopeInitWindow)
   r←IsKeyReleasedRAYLIB key
 ∇
 ∇r←IsKeyUp key
-  'IsKeyUp errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsKeyUp errored' Assert ∨/(scopeInitWindow)
   r←IsKeyUpRAYLIB key
 ∇
 ∇r←IsMaterialValid material
-  'IsMaterialValid errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsMaterialValid errored' Assert ∨/(scopeInitWindow)
   r←IsMaterialValidRAYLIB material
 ∇
 ∇r←IsModelAnimationValid(model anim)
@@ -2521,19 +2521,19 @@ scopeInitAudioDevice ← 0
   r←IsModelValidRAYLIB model
 ∇
 ∇r←IsMouseButtonDown button
-  'IsMouseButtonDown errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsMouseButtonDown errored' Assert ∨/(scopeInitWindow)
   r←IsMouseButtonDownRAYLIB button
 ∇
 ∇r←IsMouseButtonPressed button
-  'IsMouseButtonPressed errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsMouseButtonPressed errored' Assert ∨/(scopeInitWindow)
   r←IsMouseButtonPressedRAYLIB button
 ∇
 ∇r←IsMouseButtonReleased button
-  'IsMouseButtonReleased errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsMouseButtonReleased errored' Assert ∨/(scopeInitWindow)
   r←IsMouseButtonReleasedRAYLIB button
 ∇
 ∇r←IsMouseButtonUp button
-  'IsMouseButtonUp errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsMouseButtonUp errored' Assert ∨/(scopeInitWindow)
   r←IsMouseButtonUpRAYLIB button
 ∇
 ∇r←IsMusicStreamPlaying music
@@ -2552,7 +2552,7 @@ scopeInitAudioDevice ← 0
   r←IsShaderValidRAYLIB shader
 ∇
 ∇r←IsSoundPlaying sound
-  'IsSoundPlaying errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: IsSoundPlaying errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←IsSoundPlayingRAYLIB sound
 ∇
 ∇r←IsSoundValid sound
@@ -2565,34 +2565,34 @@ scopeInitAudioDevice ← 0
   r←IsWaveValidRAYLIB wave
 ∇
 ∇r←IsWindowFocused _
-  'IsWindowFocused errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowFocused errored' Assert ∨/(scopeInitWindow)
   r←IsWindowFocusedRAYLIB _
 ∇
 ∇r←IsWindowFullscreen _
-  'IsWindowFullscreen errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowFullscreen errored' Assert ∨/(scopeInitWindow)
   r←IsWindowFullscreenRAYLIB _
 ∇
 ∇r←IsWindowHidden _
-  'IsWindowHidden errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowHidden errored' Assert ∨/(scopeInitWindow)
   r←IsWindowHiddenRAYLIB _
 ∇
 ∇r←IsWindowMaximized _
-  'IsWindowMaximized errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowMaximized errored' Assert ∨/(scopeInitWindow)
   r←IsWindowMaximizedRAYLIB _
 ∇
 ∇r←IsWindowMinimized _
-  'IsWindowMinimized errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowMinimized errored' Assert ∨/(scopeInitWindow)
   r←IsWindowMinimizedRAYLIB _
 ∇
 ∇r←IsWindowReady _
   r←IsWindowReadyRAYLIB _
 ∇
 ∇r←IsWindowResized _
-  'IsWindowResized errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowResized errored' Assert ∨/(scopeInitWindow)
   r←IsWindowResizedRAYLIB _
 ∇
 ∇r←IsWindowState flag
-  'IsWindowState errored' Assert ∨/(scopeInitWindow)
+  'ERROR: IsWindowState errored' Assert ∨/(scopeInitWindow)
   r←IsWindowStateRAYLIB flag
 ∇
 ∇r←LoadAudioStream(sampleRate sampleSize channels)
@@ -2611,7 +2611,7 @@ scopeInitAudioDevice ← 0
   r←LoadDirectoryFilesExRAYLIB(basePath filter scanSubdirs)
 ∇
 ∇r←LoadDroppedFiles _
-  'LoadDroppedFiles errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadDroppedFiles errored' Assert ∨/(scopeInitWindow)
   r←LoadDroppedFilesRAYLIB _
 ∇
 ∇r←LoadFileData(fileName dataSize)
@@ -2621,64 +2621,64 @@ scopeInitAudioDevice ← 0
   r←LoadFileTextRAYLIB fileName
 ∇
 ∇r←LoadFont fileName
-  'LoadFont errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadFont errored' Assert ∨/(scopeInitWindow)
   r←LoadFontRAYLIB fileName
 ∇
 ∇r←LoadFontData(fileData dataSize fontSize codepoints codepointCount type)
   r←LoadFontDataRAYLIB(fileData dataSize fontSize codepoints codepointCount type)
 ∇
 ∇r←LoadFontEx(fileName fontSize codepoints codepointCount)
-  'LoadFontEx errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadFontEx errored' Assert ∨/(scopeInitWindow)
   r←LoadFontExRAYLIB(fileName fontSize codepoints codepointCount)
 ∇
 ∇r←LoadFontFromImage(image key firstChar)
-  'LoadFontFromImage errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadFontFromImage errored' Assert ∨/(scopeInitWindow)
   r←LoadFontFromImageRAYLIB(image key firstChar)
 ∇
 ∇r←LoadFontFromMemory(fileType fileData dataSize fontSize codepoints codepointCount)
-  'LoadFontFromMemory errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadFontFromMemory errored' Assert ∨/(scopeInitWindow)
   r←LoadFontFromMemoryRAYLIB(fileType fileData dataSize fontSize codepoints codepointCount)
 ∇
 ∇r←LoadImage fileName
-  'LoadImage errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImage errored' Assert ∨/(scopeInitWindow)
   r←LoadImageRAYLIB fileName
 ∇
 ∇r←LoadImageAnim(fileName frames)
-  'LoadImageAnim errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImageAnim errored' Assert ∨/(scopeInitWindow)
   r←LoadImageAnimRAYLIB(fileName frames)
 ∇
 ∇r←LoadImageAnimFromMemory(fileType fileData dataSize frames)
-  'LoadImageAnimFromMemory errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImageAnimFromMemory errored' Assert ∨/(scopeInitWindow)
   r←LoadImageAnimFromMemoryRAYLIB(fileType fileData dataSize frames)
 ∇
 ∇r←LoadImageColors image
   r←LoadImageColorsRAYLIB image
 ∇
 ∇r←LoadImageFromMemory(fileType fileData dataSize)
-  'LoadImageFromMemory errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImageFromMemory errored' Assert ∨/(scopeInitWindow)
   r←LoadImageFromMemoryRAYLIB(fileType fileData dataSize)
 ∇
 ∇r←LoadImageFromScreen _
-  'LoadImageFromScreen errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImageFromScreen errored' Assert ∨/(scopeInitWindow)
   r←LoadImageFromScreenRAYLIB _
 ∇
 ∇r←LoadImageFromTexture texture
-  'LoadImageFromTexture errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImageFromTexture errored' Assert ∨/(scopeInitWindow)
   r←LoadImageFromTextureRAYLIB texture
 ∇
 ∇r←LoadImagePalette(image maxPaletteSize colorCount)
   r←LoadImagePaletteRAYLIB(image maxPaletteSize colorCount)
 ∇
 ∇r←LoadImageRaw(fileName width height format headerSize)
-  'LoadImageRaw errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadImageRaw errored' Assert ∨/(scopeInitWindow)
   r←LoadImageRawRAYLIB(fileName width height format headerSize)
 ∇
 ∇r←LoadMaterialDefault _
-  'LoadMaterialDefault errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadMaterialDefault errored' Assert ∨/(scopeInitWindow)
   r←LoadMaterialDefaultRAYLIB _
 ∇
 ∇r←LoadMaterials(fileName materialCount)
-  'LoadMaterials errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadMaterials errored' Assert ∨/(scopeInitWindow)
   r←LoadMaterialsRAYLIB(fileName materialCount)
 ∇
 ∇r←LoadModel fileName
@@ -2688,7 +2688,7 @@ scopeInitAudioDevice ← 0
   r←LoadModelAnimationsRAYLIB(fileName animCount)
 ∇
 ∇r←LoadModelFromMesh mesh
-  'LoadModelFromMesh errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadModelFromMesh errored' Assert ∨/(scopeInitWindow)
   r←LoadModelFromMeshRAYLIB mesh
 ∇
 ∇r←LoadMusicStream fileName
@@ -2698,41 +2698,41 @@ scopeInitAudioDevice ← 0
   r←LoadMusicStreamFromMemoryRAYLIB(fileType data dataSize)
 ∇
 ∇r←LoadRandomSequence(count min max)
-  'LoadRandomSequence errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadRandomSequence errored' Assert ∨/(scopeInitWindow)
   r←LoadRandomSequenceRAYLIB(count min max)
 ∇
 ∇r←LoadRenderTexture(width height)
   r←LoadRenderTextureRAYLIB(width height)
 ∇
 ∇r←LoadShader(vsFileName fsFileName)
-  'LoadShader errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadShader errored' Assert ∨/(scopeInitWindow)
   r←LoadShaderRAYLIB(vsFileName fsFileName)
 ∇
 ∇r←LoadShaderFromMemory(vsCode fsCode)
-  'LoadShaderFromMemory errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadShaderFromMemory errored' Assert ∨/(scopeInitWindow)
   r←LoadShaderFromMemoryRAYLIB(vsCode fsCode)
 ∇
 ∇r←LoadSound fileName
-  'LoadSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: LoadSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←LoadSoundRAYLIB fileName
 ∇
 ∇r←LoadSoundAlias source
-  'LoadSoundAlias errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: LoadSoundAlias errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←LoadSoundAliasRAYLIB source
 ∇
 ∇r←LoadSoundFromWave wave
-  'LoadSoundFromWave errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: LoadSoundFromWave errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←LoadSoundFromWaveRAYLIB wave
 ∇
 ∇r←LoadTexture fileName
-  'LoadTexture errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadTexture errored' Assert ∨/(scopeInitWindow)
   r←LoadTextureRAYLIB fileName
 ∇
 ∇r←LoadTextureCubemap(image layout)
   r←LoadTextureCubemapRAYLIB(image layout)
 ∇
 ∇r←LoadTextureFromImage image
-  'LoadTextureFromImage errored' Assert ∨/(scopeInitWindow)
+  'ERROR: LoadTextureFromImage errored' Assert ∨/(scopeInitWindow)
   r←LoadTextureFromImageRAYLIB image
 ∇
 ∇r←LoadUTF8(codepoints length)
@@ -2754,7 +2754,7 @@ scopeInitAudioDevice ← 0
   r←MakeDirectoryRAYLIB dirPath
 ∇
 ∇{r}←MaximizeWindow _
-  'MaximizeWindow errored' Assert ∨/(scopeInitWindow)
+  'ERROR: MaximizeWindow errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣MaximizeWindowRAYLIB _
 ∇
 ∇r←MeasureText(text fontSize)
@@ -2773,7 +2773,7 @@ scopeInitAudioDevice ← 0
   r←MemReallocRAYLIB(ptr size)
 ∇
 ∇{r}←MinimizeWindow _
-  'MinimizeWindow errored' Assert ∨/(scopeInitWindow)
+  'ERROR: MinimizeWindow errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣MinimizeWindowRAYLIB _
 ∇
 ∇{r}←OpenURL url
@@ -2786,7 +2786,7 @@ scopeInitAudioDevice ← 0
   r←⍬⊣PauseMusicStreamRAYLIB music
 ∇
 ∇{r}←PauseSound sound
-  'PauseSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: PauseSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←⍬⊣PauseSoundRAYLIB sound
 ∇
 ∇{r}←PlayAudioStream stream
@@ -2799,15 +2799,15 @@ scopeInitAudioDevice ← 0
   r←⍬⊣PlayMusicStreamRAYLIB music
 ∇
 ∇{r}←PlaySound sound
-  'PlaySound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: PlaySound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←⍬⊣PlaySoundRAYLIB sound
 ∇
 ∇{r}←PollInputEvents _
-  'PollInputEvents errored' Assert ∨/(scopeInitWindow)
+  'ERROR: PollInputEvents errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣PollInputEventsRAYLIB _
 ∇
 ∇{r}←RestoreWindow _
-  'RestoreWindow errored' Assert ∨/(scopeInitWindow)
+  'ERROR: RestoreWindow errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣RestoreWindowRAYLIB _
 ∇
 ∇{r}←ResumeAudioStream stream
@@ -2817,7 +2817,7 @@ scopeInitAudioDevice ← 0
   r←⍬⊣ResumeMusicStreamRAYLIB music
 ∇
 ∇{r}←ResumeSound sound
-  'ResumeSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: ResumeSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←⍬⊣ResumeSoundRAYLIB sound
 ∇
 ∇r←SaveFileData(fileName data dataSize)
@@ -2851,15 +2851,15 @@ scopeInitAudioDevice ← 0
   r←SetAutomationEventListRAYLIB list
 ∇
 ∇{r}←SetClipboardText text
-  'SetClipboardText errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetClipboardText errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetClipboardTextRAYLIB text
 ∇
 ∇{r}←SetConfigFlags flags
-  'SetConfigFlags errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetConfigFlags errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetConfigFlagsRAYLIB flags
 ∇
 ∇{r}←SetExitKey key
-  'SetExitKey errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetExitKey errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetExitKeyRAYLIB key
 ∇
 ∇r←SetGamepadMappings mappings
@@ -2869,7 +2869,7 @@ scopeInitAudioDevice ← 0
   r←⍬⊣SetGamepadVibrationRAYLIB(gamepad leftMotor rightMotor duration)
 ∇
 ∇{r}←SetGesturesEnabled flags
-  'SetGesturesEnabled errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetGesturesEnabled errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetGesturesEnabledRAYLIB flags
 ∇
 ∇{r}←SetLoadFileDataCallback callback
@@ -2888,19 +2888,19 @@ scopeInitAudioDevice ← 0
   r←SetModelMeshMaterialRAYLIB(model meshId materialId)
 ∇
 ∇{r}←SetMouseCursor cursor
-  'SetMouseCursor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetMouseCursor errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetMouseCursorRAYLIB cursor
 ∇
 ∇{r}←SetMouseOffset(offsetX offsetY)
-  'SetMouseOffset errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetMouseOffset errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetMouseOffsetRAYLIB(offsetX offsetY)
 ∇
 ∇{r}←SetMousePosition(x y)
-  'SetMousePosition errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetMousePosition errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetMousePositionRAYLIB(x y)
 ∇
 ∇{r}←SetMouseScale(scaleX scaleY)
-  'SetMouseScale errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetMouseScale errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetMouseScaleRAYLIB(scaleX scaleY)
 ∇
 ∇{r}←SetMusicPan(music pan)
@@ -2916,7 +2916,7 @@ scopeInitAudioDevice ← 0
   r←SetPixelColorRAYLIB(dstPtr color format)
 ∇
 ∇{r}←SetRandomSeed seed
-  'SetRandomSeed errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetRandomSeed errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetRandomSeedRAYLIB seed
 ∇
 ∇{r}←SetSaveFileDataCallback callback
@@ -2926,23 +2926,23 @@ scopeInitAudioDevice ← 0
   r←⍬⊣SetSaveFileTextCallbackRAYLIB callback
 ∇
 ∇{r}←SetShaderValue(shader locIndex value uniformType)
-  'SetShaderValue errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetShaderValue errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetShaderValueRAYLIB(shader locIndex value uniformType)
 ∇
 ∇{r}←SetShaderValueMatrix(shader locIndex mat)
-  'SetShaderValueMatrix errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetShaderValueMatrix errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetShaderValueMatrixRAYLIB(shader locIndex mat)
 ∇
 ∇{r}←SetShaderValueTexture(shader locIndex texture)
-  'SetShaderValueTexture errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetShaderValueTexture errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetShaderValueTextureRAYLIB(shader locIndex texture)
 ∇
 ∇{r}←SetShaderValueV(shader locIndex value uniformType count)
-  'SetShaderValueV errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetShaderValueV errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetShaderValueVRAYLIB(shader locIndex value uniformType count)
 ∇
 ∇{r}←SetShapesTexture(texture source)
-  'SetShapesTexture errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
+  'ERROR: SetShapesTexture errored' Assert ∨/(scopeInitWindow ∧ scopeBeginDrawing)
   r←⍬⊣SetShapesTextureRAYLIB(texture source)
 ∇
 ∇{r}←SetSoundPan(sound pan)
@@ -2973,51 +2973,51 @@ scopeInitAudioDevice ← 0
   r←⍬⊣SetTraceLogLevelRAYLIB logLevel
 ∇
 ∇{r}←SetWindowFocused _
-  'SetWindowFocused errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowFocused errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowFocusedRAYLIB _
 ∇
 ∇{r}←SetWindowIcon image
-  'SetWindowIcon errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowIcon errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowIconRAYLIB image
 ∇
 ∇r←SetWindowIcons(images count)
-  'SetWindowIcons errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowIcons errored' Assert ∨/(scopeInitWindow)
   r←SetWindowIconsRAYLIB(images count)
 ∇
 ∇{r}←SetWindowMaxSize(width height)
-  'SetWindowMaxSize errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowMaxSize errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowMaxSizeRAYLIB(width height)
 ∇
 ∇{r}←SetWindowMinSize(width height)
-  'SetWindowMinSize errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowMinSize errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowMinSizeRAYLIB(width height)
 ∇
 ∇{r}←SetWindowMonitor monitor
-  'SetWindowMonitor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowMonitor errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowMonitorRAYLIB monitor
 ∇
 ∇{r}←SetWindowOpacity opacity
-  'SetWindowOpacity errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowOpacity errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowOpacityRAYLIB opacity
 ∇
 ∇{r}←SetWindowPosition(x y)
-  'SetWindowPosition errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowPosition errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowPositionRAYLIB(x y)
 ∇
 ∇{r}←SetWindowSize(width height)
-  'SetWindowSize errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowSize errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowSizeRAYLIB(width height)
 ∇
 ∇{r}←SetWindowState flags
-  'SetWindowState errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowState errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowStateRAYLIB flags
 ∇
 ∇{r}←SetWindowTitle title
-  'SetWindowTitle errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SetWindowTitle errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SetWindowTitleRAYLIB title
 ∇
 ∇{r}←ShowCursor _
-  'ShowCursor errored' Assert ∨/(scopeInitWindow)
+  'ERROR: ShowCursor errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣ShowCursorRAYLIB _
 ∇
 ∇{r}←StartAutomationEventRecording _
@@ -3033,15 +3033,15 @@ scopeInitAudioDevice ← 0
   r←⍬⊣StopMusicStreamRAYLIB music
 ∇
 ∇{r}←StopSound sound
-  'StopSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: StopSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←⍬⊣StopSoundRAYLIB sound
 ∇
 ∇{r}←SwapScreenBuffer _
-  'SwapScreenBuffer errored' Assert ∨/(scopeInitWindow)
+  'ERROR: SwapScreenBuffer errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣SwapScreenBufferRAYLIB _
 ∇
 ∇{r}←TakeScreenshot fileName
-  'TakeScreenshot errored' Assert ∨/(scopeInitWindow)
+  'ERROR: TakeScreenshot errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣TakeScreenshotRAYLIB fileName
 ∇
 ∇r←TextAppend(text append position)
@@ -3099,11 +3099,11 @@ scopeInitAudioDevice ← 0
   r←TextToUpperRAYLIB text
 ∇
 ∇{r}←ToggleBorderlessWindowed _
-  'ToggleBorderlessWindowed errored' Assert ∨/(scopeInitWindow)
+  'ERROR: ToggleBorderlessWindowed errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣ToggleBorderlessWindowedRAYLIB _
 ∇
 ∇{r}←ToggleFullscreen _
-  'ToggleFullscreen errored' Assert ∨/(scopeInitWindow)
+  'ERROR: ToggleFullscreen errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣ToggleFullscreenRAYLIB _
 ∇
 ∇{r}←TraceLog(logLevel text args)
@@ -3122,7 +3122,7 @@ scopeInitAudioDevice ← 0
   r←⍬⊣UnloadDirectoryFilesRAYLIB files
 ∇
 ∇{r}←UnloadDroppedFiles files
-  'UnloadDroppedFiles errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UnloadDroppedFiles errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣UnloadDroppedFilesRAYLIB files
 ∇
 ∇r←UnloadFileData data
@@ -3147,7 +3147,7 @@ scopeInitAudioDevice ← 0
   r←UnloadImagePaletteRAYLIB colors
 ∇
 ∇{r}←UnloadMaterial material
-  'UnloadMaterial errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UnloadMaterial errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣UnloadMaterialRAYLIB material
 ∇
 ∇{r}←UnloadMesh mesh
@@ -3166,14 +3166,14 @@ scopeInitAudioDevice ← 0
   r←⍬⊣UnloadMusicStreamRAYLIB music
 ∇
 ∇r←UnloadRandomSequence sequence
-  'UnloadRandomSequence errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UnloadRandomSequence errored' Assert ∨/(scopeInitWindow)
   r←UnloadRandomSequenceRAYLIB sequence
 ∇
 ∇{r}←UnloadRenderTexture target
   r←⍬⊣UnloadRenderTextureRAYLIB target
 ∇
 ∇{r}←UnloadShader shader
-  'UnloadShader errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UnloadShader errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣UnloadShaderRAYLIB shader
 ∇
 ∇{r}←UnloadSound sound
@@ -3183,7 +3183,7 @@ scopeInitAudioDevice ← 0
   r←⍬⊣UnloadSoundAliasRAYLIB alias
 ∇
 ∇{r}←UnloadTexture texture
-  'UnloadTexture errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UnloadTexture errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣UnloadTextureRAYLIB texture
 ∇
 ∇r←UnloadUTF8 text
@@ -3202,11 +3202,11 @@ scopeInitAudioDevice ← 0
   r←⍬⊣UpdateAudioStreamRAYLIB(stream data frameCount)
 ∇
 ∇r←UpdateCamera(camera mode)
-  'UpdateCamera errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UpdateCamera errored' Assert ∨/(scopeInitWindow)
   r←UpdateCameraRAYLIB(camera mode)
 ∇
 ∇r←UpdateCameraPro(camera movement rotation zoom)
-  'UpdateCameraPro errored' Assert ∨/(scopeInitWindow)
+  'ERROR: UpdateCameraPro errored' Assert ∨/(scopeInitWindow)
   r←UpdateCameraProRAYLIB(camera movement rotation zoom)
 ∇
 ∇{r}←UpdateMeshBuffer(mesh index data dataSize offset)
@@ -3222,7 +3222,7 @@ scopeInitAudioDevice ← 0
   r←⍬⊣UpdateMusicStreamRAYLIB music
 ∇
 ∇{r}←UpdateSound(sound data sampleCount)
-  'UpdateSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
+  'ERROR: UpdateSound errored' Assert ∨/(scopeInitWindow ∧ scopeInitAudioDevice)
   r←⍬⊣UpdateSoundRAYLIB(sound data sampleCount)
 ∇
 ∇{r}←UpdateTexture(texture pixels)
@@ -3235,7 +3235,7 @@ scopeInitAudioDevice ← 0
   r←UploadMeshRAYLIB(mesh dynamic)
 ∇
 ∇{r}←WaitTime seconds
-  'WaitTime errored' Assert ∨/(scopeInitWindow)
+  'ERROR: WaitTime errored' Assert ∨/(scopeInitWindow)
   r←⍬⊣WaitTimeRAYLIB seconds
 ∇
 ∇r←WaveCopy wave

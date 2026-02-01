@@ -9,7 +9,7 @@ PlatfromToLibFile ← {
   'Windows'≡⍵:'temp-c-raylib.dll'
   'Linux'  ≡⍵:'libtemp-c-raylib.so'
   'Mac'    ≡⍵:'libtemp-c-raylib.dylib'
-  0 Assert⍨'Unknown platform (',⍵,')'
+  0 Assert⍨'ERROR: Unknown platform (',⍵,')'
 }
 platform ← '-64'~⍨⊃#⎕WG'APLVersion'
 
@@ -42,13 +42,13 @@ PlatformToInstallCmd ← {
   'Windows'≡⍵:'Powershell.exe -Command "Invoke-WebRequest -Uri ''',git_clone_path,''' -OutFile ''',fullLibFile,'''"' ⍝ If errors: Curl was likely not found
   'Linux'  ≡⍵:'curl -o "',fullLibFile,'" ',git_clone_path,' -L'
   'Mac'    ≡⍵:'curl -o "',fullLibFile,'" ',git_clone_path,' -L'
-  0 Assert⍨'Unknown platform (',⍵,')'
+  0 Assert⍨'ERROR: Unknown platform (',⍵,')'
 }
 
 ⎕CMD PlatformToInstallCmd platform
 
 FileSize ← 2∘⎕NINFO
-'Downloading temp-c-raylib from Github failed. Likely due to no internet, and/or redirects not being followed.' Assert 0≢FileSize fullLibFile
+'ERROR: Downloading temp-c-raylib from Github failed. Likely due to no internet, and/or redirects not being followed.' Assert 0≢FileSize fullLibFile
 
 ⎕←'raylib installed successfully'
 ∇
