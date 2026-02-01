@@ -61,12 +61,12 @@ pathFromThisFileToRaylibAPLRoot←{
   ('Unknown platform (',platform,')') Assert validPlatforms∊⍨⊂platform
   relativePathToBinary ← platformLibName⊃⍨validPlatforms⍳⊂platform
   pathToBinary ← '\'@('/'∘=)⍣('Windows'≡platform)∊1⎕NPARTS (pathFromThisFileToRaylibAPLRoot⍬),'/lib/',relativePathToBinary
-  _←{0::0 Assert⍨'Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
 ∇
 
 pathToBinary ← GetPathToBinary⍬
 _ ← installAutoForTatin pathToBinary
-pathToBinary ← '"',pathToBinary,'"' ⍝ This is so that paths including spaces don't non-conform inside ⎕NA calls
+_ ← {0::0 Assert⍨'ERROR: Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
+pathToBinary ← '"',pathToBinary,'"' ⍝ Wrapped in quotes so that paths including spaces conform inside ⎕NA calls
 
 Read ← {
   _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8'
