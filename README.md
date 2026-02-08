@@ -43,7 +43,7 @@ Install Tatin via `]Activate tatin` if not already installed, then install rayli
 ]Tatin.InstallPackages raylibAPL
 ```
 
-If you experience the error `Invalid user command;`, please install without Tatin.
+If you experience the error `Invalid user command;`, please install without Tatin. Otherwise, you will get asked where to install raylibAPL. I suggest you install to a folder, because otherwise your project will get littered with around 4 files/folders. The conventional folder name is "packages".
 
 ## Importing
 Importing with Tatin assumes you have installed raylibAPL with Tatin. Both of the other methods work with and without Tatin.
@@ -58,6 +58,7 @@ rl.Init rlDir
 When making a script file like the raylibAPL's examples, I would recommend the `.apls` file extension and adding this line at the top of the script `#!/usr/bin/dyalogscript`. Remember to run `.apls` files from the containing folder/directory.
 
 ### Importing With Tatin
+Replace "packages" in the below code with wherever raylibAPL is installed. The install location was selected in the installation step.
 ```apl
 ⍝ Load the package
 ⎕SE.Tatin.LoadDependencies ('packages' '#')
