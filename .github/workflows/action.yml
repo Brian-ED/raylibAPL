@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Install Dyalog APL
         run: |
-          DEBFILE=$(curl -s https://www.dyalog.com/uploads/php/download.dyalog.com/download.php?file=docker.metafile | awk -v v="19.0" '$0~v && /deb/ {print $3}')
+          DEBFILE=$(curl -s https://www.dyalog.com/uploads/php/download.dyalog.com/download.php?file=docker.metafile | awk -v v="20.0" '$0~v && /deb/ {print $3}')
           curl -o /tmp/dyalog.deb "${DEBFILE}"
           sudo apt install -y /tmp/dyalog.deb
       - name: Setup .NET
@@ -55,7 +55,7 @@ jobs:
     steps:
       - name: Install Dyalog APL
         run: |
-          DEBFILE=$(curl -s https://www.dyalog.com/uploads/php/download.dyalog.com/download.php?file=docker.metafile | awk -v v="19.0" '$0~v && /deb/ {print $3}')
+          DEBFILE=$(curl -s https://www.dyalog.com/uploads/php/download.dyalog.com/download.php?file=docker.metafile | awk -v v="20.0" '$0~v && /deb/ {print $3}')
           curl -o /tmp/dyalog.deb "${DEBFILE}"
           sudo apt install -y /tmp/dyalog.deb
       - name: Setup .NET
