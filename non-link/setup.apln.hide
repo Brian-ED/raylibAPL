@@ -1,7 +1,5 @@
 :Namespace setup
-⍝ Makes an importer that improves the FFI function creation syntax
-
-⎕io←1
+⎕io ⎕ML←1
 
 ⍝ ¨, with the prototype given as ⍵⍵, wrapped in a namespace due to operators not entering scopes
 :Namespace E
@@ -17,8 +15,6 @@ debug ← {
   ⎕←⍵
   ⍵
 }
-
-Assert ← {⍺←'assertion failure' ⋄ 0∊⍵:⍺{(⎕←⍺) ⎕SIGNAL 8}⍵ ⋄ shy←0}
 
 ⍝ predefined C types
 atomTypes ← ⍬
@@ -37,14 +33,14 @@ atomTypes ,←⊂ u2   ← 'U2'
 atomTypes ← ∪atomTypes
 
 pathFromThisFileToRaylibAPLRoot←{
-  9≡40⎕ATX'##.##.TatinVars': ##.##.TatinVars.HOME
-  ##.pathToRaylibDotAPLN,'..'
+  9≡40⎕ATX'##.TatinVars': ##.TatinVars.HOME
+  pathToRaylibDotAPLN,'..'
 }
 
 ∇success←installAutoForTatin libPath
   :If (~⎕NEXISTS libPath)
-    :If 9≡40⎕ATX '##.##.TatinVars'
-      ##.##.installraylib 1
+    :If 9≡40⎕ATX '##.TatinVars'
+      ##.installraylib 1
     :Else
       0 Assert⍨'ERROR: File ',libPath,' was not found'
     :EndIf
@@ -63,11 +59,6 @@ pathFromThisFileToRaylibAPLRoot←{
   pathToBinary ← '\'@('/'∘=)⍣('Windows'≡platform)∊1⎕NPARTS (pathFromThisFileToRaylibAPLRoot⍬),'/lib/',relativePathToBinary
 ∇
 
-pathToBinary ← GetPathToBinary⍬
-_ ← installAutoForTatin pathToBinary
-_ ← {0::0 Assert⍨'ERROR: Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
-pathToBinary ← '"',pathToBinary,'"' ⍝ Wrapped in quotes so that paths including spaces conform inside ⎕NA calls
-
 Read ← {
   _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8'
   R (⍺⍴0) ⍵ ⍺
@@ -85,9 +76,6 @@ unitPushGen ← {
   'I'≡⊃⍵: ⎕OR'i'
   ⎕OR'o'
 }
-typeByteSize ← {⍵≡,'P':8 ⋄ ⍎⊃⌽⍵} E._Each_ ⍬⊢ atomTypes
-pop  ← typeByteSize unitPopGen  E._Each_(0/⊂id)⊢ atomTypes
-push ← typeByteSize unitPushGen E._Each_(0/⊂id)⊢ atomTypes
 
 PtrToBytes ← {
   _←'fromU1'⎕NA pathToBinary,'|memcpy2 =U1[','] P U8',⍨⍕⍵
@@ -97,8 +85,7 @@ PtrToBytes ← {
 ⍝ --------------------------- ⍝
 ⍝ Special int vector handling ⍝
 ⍝ --------------------------- ⍝
-LenStack ← ⍬
-popLenStack ← {l←⊃⌽LenStack ⋄ LenStack↓⍨←¯1 ⋄ l}
+
 intVecRefPopGen ← {
   _←'A'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
   O←(⊃pop[atomTypes⍳⊂,'P']){
@@ -126,14 +113,6 @@ intVecRefPushGen ← {
   ⎕OR 'push'
 }
 
-
-pop  ,← ⊂intVecRefPopGen ⍬
-push ,← ⊂intVecRefPushGen⍬
-atomTypes,←⊂'=I4'
-typeByteSize,←8
-
-runAfterFuncDone ← 0/⊂id
-
 intVecPushGen ← {
   _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
@@ -149,17 +128,10 @@ intVecPushGen ← {
   }M
   ⎕OR 'push'
 }
-pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
-push ,← ⊂intVecPushGen⍬
-atomTypes,←⊂'<I4'
-typeByteSize,←8
 
 ⍝ ---------------- ⍝
 ⍝ Stack operations ⍝
 ⍝ ---------------- ⍝
-stack ← ⍬
-topRuntime ← 0
-
 Push ← {
   topRuntime+←1
   stack ,← {tempAlloc BytesEachArg}E._Each_⍬⍳0⌈topRuntime-≢stack ⍝ Make sure stack always has enough space
@@ -182,24 +154,6 @@ remPtrInfo ← {⍵/⍨~ (~atomTypes∊⍨⊂⍵)∧ ∧\'<=>'∊⍨⍵}
 ⍝ -------------------------------- ⍝
 ⍝ Handling pop and pushing structs ⍝
 ⍝ -------------------------------- ⍝
-structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}##.{⍎⍵._Each_(0/⊂,⊂'')⎕NL¯2} E
-⎕NA 'I4 ',pathToBinary,'|StructCount'
-
-⎕NA 'I4 ',pathToBinary,'|GetStructNameLength I4'
-⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
-structNamesAll ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ⎕IO-⍨⍳StructCount
-('ERROR: Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
-rrr ← structNamesAll⍳NameOfStruct¨structs
-⎕EX 'structNamesAll' 'r'
-
-⎕NA 'I4 ',pathToBinary,'|GetStructSize I4'
-'tempAlloc' ⎕NA 'P ',pathToBinary,'|MemAlloc U4'
-'tempFree'  ⎕NA      pathToBinary,'|MemFree P'
-structByteSizes ← (GetStructSize¨⎕IO-⍨⍳StructCount)[rrr]
-
-BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
-⎕EX 'rrr'
-
 ∇r←FormatArrType (t l)
   r←t,'[',(⍕l),']'
 ∇
@@ -235,21 +189,6 @@ PushArrGen ← {
   ⎕OR'O'
 }
 ⍝ TODO: Possible improvement: Automatically read the loaded structs and create these ArrTypes
-arrTypes ← ⍬
-arrTypes ,←⊂ 'F4'     4  ⋄ typeByteSize ,← 4×4
-arrTypes ,←⊂ 'F4'     2  ⋄ typeByteSize ,← 4×2
-arrTypes ,←⊂ 'Matrix' 2  ⋄ typeByteSize ,← (4×4)×4
-arrTypes ,←⊂ 'U1'     32 ⋄ typeByteSize ,← 1×32
-arrTypes ,←⊂ 'I4'     4  ⋄ typeByteSize ,← 4×4
-arrTypes ,←⊂ 'Vector2'2  ⋄ typeByteSize ,← 8×2
-arrTypes ,←⊂ 'F4'     3  ⋄ typeByteSize ,← 4×3
-arrTypes ,←⊂ 'F4'     16 ⋄ typeByteSize ,← 4×16
-arrTypes ,←⊂ 'U4'     4  ⋄ typeByteSize ,← 4×4
-
-atomTypes,←FormatArrType¨arrTypes
-pop ,←  PopArrGen E._Each_(0/⊂id)⊢ arrTypes
-push,← PushArrGen E._Each_(0/⊂id)⊢ arrTypes
-
 PopStructGen ← {
   name←NameOfStruct ⍵
   cleaned ← {0=≢⍵: ⍵ ⋄ NameOfStruct¨⍵} {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
@@ -282,10 +221,7 @@ PushStructGen ← {
   }(name cleaned)
   ⎕OR'O'
 }
-atomTypes ,← 1↓¨⊃¨structs
-pop ,← PopStructGen  E._Each_(0/⊂id)⊢ structs
-push,← PushStructGen E._Each_(0/⊂id)⊢ structs
-typeByteSize,← structByteSizes
+
 ⍝ -------------------------------- ⍝
 
 ⍝ --------------------------- ⍝
@@ -299,10 +235,7 @@ equalPtrPushGen ← {
   O←⍵{ ⍵⍵ ⍺⍺ ⍵ }(⊃push[atomTypes⍳⊂,'P'])
   ⎕OR'O'
 }
-pop ,← equalPtrPopGen  E._Each_(0/⊂id)⊢ pop
-push,← equalPtrPushGen E._Each_(0/⊂id)⊢ push
-typeByteSize,← 8⍨¨atomTypes
-atomTypes,←'=',¨atomTypes
+
 ⍝ --------------------------- ⍝
 
 
@@ -332,10 +265,7 @@ StringPushGen ← {
   }M
   ⎕OR 'push'
 }
-atomTypes ,←⊂ str ← '=0C1'
-typeByteSize,← 8
-pop ,←⊂ StringPopGen  ⍬
-push,←⊂ StringPushGen ⍬
+
 ⍝ --------------------------- ⍝
 
 
@@ -385,12 +315,6 @@ push,←⊂ StringPushGen ⍬
 ⍝ ----------------------------- ⍝
 ⍝ Utilities alongside libraries ⍝
 ⍝ ----------------------------- ⍝
-_←'MemCpyF4'   ⎕NA pathToBinary,'|memcpy2 P <F4[] U8'
-_←'MemCpyI4'   ⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
-_←'MemCpyI4Out'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
-_←'MemCpyF4Out'⎕NA pathToBinary,'|memcpy2 =F4[] P U8'
-_←'MemCpy'     ⎕NA pathToBinary,'|memcpy2 P P U8'
-_←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
 
 ∇{r}←ptr WriteF4 floats
   r←⍬⊣MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
@@ -560,5 +484,87 @@ _←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
   yellowgreen          ← 154 205 50  255
 :EndNamespace
 
+∇r←Setup x ;_
+  r←⍬
+  initialized←1
+  pathToBinary ← GetPathToBinary⍬
+  _ ← installAutoForTatin pathToBinary
+  _ ← {0::0 Assert⍨'ERROR: Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
+  pathToBinary ← '"',pathToBinary,'"' ⍝ Wrapped in quotes so that paths including spaces conform inside ⎕NA calls
 
+  typeByteSize ← {⍵≡,'P':8 ⋄ ⍎⊃⌽⍵} E._Each_ ⍬⊢ atomTypes
+  pop  ← typeByteSize unitPopGen  E._Each_(0/⊂id)⊢ atomTypes
+  push ← typeByteSize unitPushGen E._Each_(0/⊂id)⊢ atomTypes
+  LenStack ← ⍬
+  popLenStack ← {l←⊃⌽LenStack ⋄ LenStack↓⍨←¯1 ⋄ l}
+
+  pop  ,← ⊂intVecRefPopGen ⍬
+  push ,← ⊂intVecRefPushGen⍬
+  atomTypes,←⊂'=I4'
+  typeByteSize,←8
+
+  runAfterFuncDone ← 0/⊂id
+
+  pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
+  push ,← ⊂intVecPushGen⍬
+  atomTypes,←⊂'<I4'
+  typeByteSize,←8
+
+  stack ← ⍬
+  topRuntime ← 0
+
+  structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}{⍎⍵._Each_(0/⊂,⊂'')⎕NL¯2} E
+  _←⎕NA 'I4 ',pathToBinary,'|StructCount'
+
+  _←⎕NA 'I4 ',pathToBinary,'|GetStructNameLength I4'
+  _←⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
+  structNamesAll ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ⎕IO-⍨⍳StructCount
+  _←('ERROR: Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
+  rrr ← structNamesAll⍳NameOfStruct¨structs
+  _←⎕EX 'structNamesAll' 'r'
+
+  _←⎕NA 'I4 ',pathToBinary,'|GetStructSize I4'
+  _←'tempAlloc' ⎕NA 'P ',pathToBinary,'|MemAlloc U4'
+  _←'tempFree'  ⎕NA      pathToBinary,'|MemFree P'
+  _←structByteSizes ← (GetStructSize¨⎕IO-⍨⍳StructCount)[rrr]
+
+  _←BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
+  _←⎕EX 'rrr'
+
+  arrTypes ← ⍬
+  arrTypes ,←⊂ 'F4'     4  ⋄ typeByteSize ,← 4×4
+  arrTypes ,←⊂ 'F4'     2  ⋄ typeByteSize ,← 4×2
+  arrTypes ,←⊂ 'Matrix' 2  ⋄ typeByteSize ,← (4×4)×2
+  arrTypes ,←⊂ 'U1'     32 ⋄ typeByteSize ,← 1×32
+  arrTypes ,←⊂ 'I4'     4  ⋄ typeByteSize ,← 4×4
+  arrTypes ,←⊂ 'Vector2'2  ⋄ typeByteSize ,← 8×2
+  arrTypes ,←⊂ 'F4'     3  ⋄ typeByteSize ,← 4×3
+  arrTypes ,←⊂ 'F4'     16 ⋄ typeByteSize ,← 4×16
+  arrTypes ,←⊂ 'U4'     4  ⋄ typeByteSize ,← 4×4
+
+  atomTypes,←FormatArrType¨arrTypes
+  pop ,←  PopArrGen E._Each_(0/⊂id)⊢ arrTypes
+  push,← PushArrGen E._Each_(0/⊂id)⊢ arrTypes
+  atomTypes ,← 1↓¨⊃¨structs
+  pop ,← PopStructGen  E._Each_(0/⊂id)⊢ structs
+  push,← PushStructGen E._Each_(0/⊂id)⊢ structs
+  typeByteSize,← structByteSizes
+
+  pop ,← equalPtrPopGen  E._Each_(0/⊂id)⊢ pop
+  push,← equalPtrPushGen E._Each_(0/⊂id)⊢ push
+  typeByteSize,← 8⍨¨atomTypes
+  atomTypes,←'=',¨atomTypes
+
+  atomTypes ,←⊂ str ← '=0C1'
+  typeByteSize,← 8
+  pop ,←⊂ StringPopGen  ⍬
+  push,←⊂ StringPushGen ⍬
+
+  _←'MemCpyF4'   ⎕NA pathToBinary,'|memcpy2 P <F4[] U8'
+  _←'MemCpyI4'   ⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
+  _←'MemCpyI4Out'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
+  _←'MemCpyF4Out'⎕NA pathToBinary,'|memcpy2 =F4[] P U8'
+  _←'MemCpy'     ⎕NA pathToBinary,'|memcpy2 P P U8'
+  _←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
+∇
 :EndNamespace

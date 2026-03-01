@@ -60,13 +60,588 @@ float16 ← ⊂'⋄float16' ⍝
   float16,←⊂ f,'[16]' ⍝ v  ⍝
 
 
+⎕io ⎕ML←1
+
+⍝ ¨, with the prototype given as ⍵⍵, wrapped in a namespace due to operators not entering scopes
+:Namespace E
+  _Each_ ← {⍺←⊢ ⋄ 0≡≢⍵:⍵⍵ ⋄ ⍺ ⍺⍺¨⍵}
+:EndNamespace
+
+⍝ id function used for array-of-functions' prototype
+id ← {F←⊢⋄⎕OR'F'}⍬
+
+debug ← {
+  0:_←⍬
+  ⎕←'StackSize',topRuntime
+  ⎕←⍵
+  ⍵
+}
+
+⍝ predefined C types
+atomTypes ← ⍬
+atomTypes ,←⊂ bool ← 'I1'
+atomTypes ,←⊂ c    ← 'I1'
+atomTypes ,←⊂ i    ← 'I4'
+atomTypes ,←⊂ f    ← 'F4'
+atomTypes ,←⊂ u    ← 'U4'
+atomTypes ,←⊂ i1   ← 'I1'
+atomTypes ,←⊂ u1   ← 'U1'
+atomTypes ,←⊂ u8   ← 'U8'
+atomTypes ,←⊂ ptr  ← ,'P'
+atomTypes ,←⊂ f8   ← 'F8'
+atomTypes ,←⊂ i8   ← 'I8'
+atomTypes ,←⊂ u2   ← 'U2'
+atomTypes ← ∪atomTypes
+
+pathFromThisFileToRaylibAPLRoot←{
+  9≡40⎕ATX'##.TatinVars': ##.TatinVars.HOME
+  pathToRaylibDotAPLN,'..'
+}
+
+∇success←installAutoForTatin libPath
+  :If (~⎕NEXISTS libPath)
+    :If 9≡40⎕ATX '##.TatinVars'
+      ##.installraylib 1
+    :Else
+      0 Assert⍨'ERROR: File ',libPath,' was not found'
+    :EndIf
+  :EndIf
+  success←1
+∇
+
+∇pathToBinary←GetPathToBinary _
+  ;validPlatforms ;platformLibName ;platform ;relativePathToBinary
+  validPlatforms ← 'Windows' 'Mac' 'Linux'
+  platformLibName ← '@'⎕R'temp-c-raylib'⊢'@.dll' 'lib@.dylib' 'lib@.so'
+
+  platform ← '-64'~⍨⊃#⎕WG'APLVersion'
+  ('ERROR: Unknown platform (',platform,')') Assert validPlatforms∊⍨⊂platform
+  relativePathToBinary ← platformLibName⊃⍨validPlatforms⍳⊂platform
+  pathToBinary ← '\'@('/'∘=)⍣('Windows'≡platform)∊1⎕NPARTS (pathFromThisFileToRaylibAPLRoot⍬),'/lib/',relativePathToBinary
+∇
+
+Read ← {
+  _←'R'⎕NA pathToBinary,'|memcpy2 =U1[',(⍕⍺),'] P U8'
+  R (⍺⍴0) ⍵ ⍺
+}
+
+unitPopGen ← {
+  _←'CpyPop'⎕NA pathToBinary,'|memcpy2 >',⍵,' P U8'
+  o ← CpyPop{ ⍺⍺ (⍬ (Pop⍬) ⍵⍵) }⍺
+  ⎕OR'o'
+}
+unitPushGen ← {
+  _←'CpyPush'⎕NA pathToBinary,'|memcpy2 P <',⍵,' U8'
+  o ← CpyPush{ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
+  i ← CpyPush{_←'ERROR: Expected a whole number, got a non-whole number' Assert ⍵≡⌊⍵ ⋄ ptr⊣⍺⍺((ptr←Push⍬)(,⊂⍵) ⍵⍵) }⍺
+  'I'≡⊃⍵: ⎕OR'i'
+  ⎕OR'o'
+}
+
+PtrToBytes ← {
+  _←'fromU1'⎕NA pathToBinary,'|memcpy2 =U1[','] P U8',⍨⍕⍵
+  fromU1(⍵⍴0)⍺⍵
+}
+
+⍝ --------------------------- ⍝
+⍝ Special int vector handling ⍝
+⍝ --------------------------- ⍝
+
+intVecRefPopGen ← {
+  _←'A'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
+  O←(⊃pop[atomTypes⍳⊂,'P']){
+    len←popLenStack⍬
+    intVecPtr ← ⍺⍺⍬
+    ptrToIntVec←(topRuntime+1)⊃stack
+    _←'INTERNAL ERROR: the string pointer popped was Null' Assert 0≢intVecPtr
+    r ← ⍵⍵((len⍴0) ptrToIntVec (len×4))
+    _←tempFree intVecPtr
+    r
+  }A
+  ⎕OR 'O'
+}
+intVecRefPushGen ← {
+  _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
+
+  push←(⊃push[atomTypes⍳⊂,'P']){
+    LenStack,←≢⍵
+    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected int vector, got: ',⍕⍵
+    intVecPtr ← tempAlloc 4×≢⍵
+    _←'INTERNAL ERROR: pointer allocated for int vector was Null' Assert 0≢intVecPtr
+    _←⍵⍵(intVecPtr ⍵ (4×≢⍵))
+    ⍺⍺ intVecPtr
+  }M
+  ⎕OR 'push'
+}
+
+intVecPushGen ← {
+  _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
+
+  push←(⊃push[atomTypes⍳⊂,'P']){
+    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
+    intVecPtr ← tempAlloc 4×≢⍵
+    _←'INTERNAL ERROR: string pointer allocated for string to push was Null' Assert 0≢intVecPtr
+    _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
+    r←⍺⍺ intVecPtr
+    F←intVecPtr{tempFree ⍺⍺}
+    runAfterFuncDone,←⊂⎕OR'F'
+    r
+  }M
+  ⎕OR 'push'
+}
+
+⍝ ---------------- ⍝
+⍝ Stack operations ⍝
+⍝ ---------------- ⍝
+Push ← {
+  topRuntime+←1
+  stack ,← {tempAlloc BytesEachArg}E._Each_⍬⍳0⌈topRuntime-≢stack ⍝ Make sure stack always has enough space
+  topRuntime⊃stack
+}
+Pop ← {
+  topRuntime-←1
+  _←'INTERNAL ERROR: Stack underflow' Assert 0≤topRuntime
+  (topRuntime+1)⊃stack
+}
+
+NameOfStruct ← {
+  2>|≡⍵:⍵
+  _← 'INTERNAL ERROR: NameCheck applied to a non-atomic pointer type, this should be impossible.' Assert ∧/'<=>'≢¨⊂⊃⍵
+  ,'⋄'∘,⍣¯1⊢(⊃⍵),⍵/⍨⌽∧\⌽0=≡¨⍵
+}
+remPtrInfo ← {⍵/⍨~ (~atomTypes∊⍨⊂⍵)∧ ∧\'<=>'∊⍨⍵}
+
+
+⍝ -------------------------------- ⍝
+⍝ Handling pop and pushing structs ⍝
+⍝ -------------------------------- ⍝
+∇r←FormatArrType (t l)
+  r←t,'[',(⍕l),']'
+∇
+PopArrGen ← {
+  (t l)←⍵
+
+  O←(t l){ ⍝ pop value
+    (t l)←⍺⍺
+    Popper←⊃pop[atomTypes⍳⊂t]
+    typeLen ← typeByteSize[atomTypes⍳⊂t]
+    eachValueInResultPtr ← (Pop⍬) MovePtr⍤,E._Each_⍬⊢ typeLen×⎕IO-⍨⍳l
+    resultPtrs←Push E._Each_⍬⍳l
+    _←resultPtrs({MemCpy⍺⍵typeLen}E._Each_⍬)eachValueInResultPtr
+    ⌽{Popper∘⊢⍬}E._Each_⍬⌽resultPtrs
+  }
+  ⎕OR 'O'
+}
+PushArrGen ← {
+  (t l)←⍵
+
+  O←(t l){ ⍝ push value
+    (t l)←⍺⍺
+    l≢≢⍵:0 Assert⍨'ERROR: Wrong list length given for ',t,'[',(⍕l),'], (',(⍕l),'≢≢⍵)'
+    Pusher←⊃push[atomTypes⍳⊂t]
+    typeLen ← typeByteSize[atomTypes⍳⊂t]
+    ptr←Push⍬
+    _←{Pusher∘⊢⍵}E._Each_⍬⊢⌽⍵
+    _←(Pop E._Each_⍬⍳l) ({MemCpy (⍵⍺typeLen)}E._Each_⍬) (MovePtr ptr,⊢)E._Each_⍬⊢typeLen×⎕IO-⍨⍳l
+    ⍝_←{_←{⎕←⍵}¨'this '∘,¨⍵⋄⍵≡⍥(⊂100÷⍨(⌊.5∘+)⍤×∘100)⊢⎕←ptr ReadF4 16×l}⍣('Matrix'≡t)⊢⍵
+    ptr
+  }
+
+  ⎕OR'O'
+}
+⍝ TODO: Possible improvement: Automatically read the loaded structs and create these ArrTypes
+PopStructGen ← {
+  name←NameOfStruct ⍵
+  cleaned ← {0=≢⍵: ⍵ ⋄ NameOfStruct¨⍵} {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
+  _←('INTERNAL ERROR: Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
+  args←' P'⍴⍨2×1+≢cleaned   ⍝ Includes result
+  _←'F'⎕NA pathToBinary,'|',name,'FROM',args
+
+  O←F{ ⍝ pop value
+    i←atomTypes⍳⍵⍵
+    _←⍺⍺ (Push E._Each_⍬⊢i),⍨Pop⍬
+    ⌽{⍵∘⊢⍬}E._Each_⍬⌽pop[i]
+  }cleaned
+  ⎕OR 'O'
+}
+PushStructGen ← {
+  name←NameOfStruct ⍵
+  cleaned ← NameOfStruct E._Each_ (0/⊂'') {'='≡⊃⍵:,'P'⋄⍵}¨ 1↓⍵
+  _←('INTERNAL ERROR: Struct ',name,' not cleaned properly') Assert ∧/2>≡¨cleaned
+  args←' P'⍴⍨2×1+≢cleaned   ⍝ Includes result
+  _←'I'⎕NA pathToBinary,'|',name,'INTO',args
+
+  O←I{ ⍝ push value
+    (name cleaned)←⍵⍵
+    i←atomTypes⍳cleaned
+    i≢⍥≢⍵:0 Assert⍨'ERROR: Wrong struct length given for ',name,', (',(⍕≢i),'≢≢⍵)'
+    ptr←Push⍬
+    _←push[i] {⍺∘⊢⍵}E._Each_⍬⊢ ⍵
+    _←⍺⍺ ptr,⌽Pop E._Each_⍬⊢i
+    ptr
+  }(name cleaned)
+  ⎕OR'O'
+}
+
+⍝ -------------------------------- ⍝
+
+⍝ --------------------------- ⍝
+⍝ Handling all =type versions ⍝
+⍝ --------------------------- ⍝
+equalPtrPopGen ← {
+  O←⍵{ ⍺⍺⍬⊣⍵⍵⍬ }(⊃pop[atomTypes⍳⊂,'P'])
+  ⎕OR'O'
+}
+equalPtrPushGen ← {
+  O←⍵{ ⍵⍵ ⍺⍺ ⍵ }(⊃push[atomTypes⍳⊂,'P'])
+  ⎕OR'O'
+}
+
+⍝ --------------------------- ⍝
+
+
+⍝ --------------------------- ⍝
+⍝ Handling signed string type ⍝
+⍝ --------------------------- ⍝
+StringPopGen ← {
+  _←'A'⎕NA pathToBinary,'|strcpy2 >0T1[] P'
+  O←(⊃pop[atomTypes⍳⊂,'P']){
+    strPtr ← ⍺⍺⍬
+    ptrToStr←(topRuntime+1)⊃stack
+    _←'INTERNAL ERROR: the string pointer popped was Null' Assert 0≢strPtr
+    r←⍵⍵ (⍬ ptrToStr)
+    _←tempFree strPtr
+    r
+  }A
+  ⎕OR 'O'
+}
+StringPushGen ← {
+  _←'M'⎕NA pathToBinary,'|strcpy2 P <0T1[]'
+  push←(⊃push[atomTypes⍳⊂,'P']){
+    (⍕≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
+    strPtr ← tempAlloc 1+≢⍵
+    _←'INTERNAL ERROR: String pointer allocated for string to push was Null' Assert 0≢strPtr
+    _←⍵⍵ (strPtr ⍵)
+    ⍺⍺ strPtr
+  }M
+  ⎕OR 'push'
+}
+
+⍝ --------------------------- ⍝
+
+
+∇F←R (name t);bm;in;out;io
+  'Func'⎕NA pathToBinary,'|',name,' P'⍴⍨2×≢t
+  io←(~atomTypes∊⍨t)∧'='≡¨⊃¨t ⍝ In and out
+  bm ← '>'≢¨⊃¨t ⍝ In or out mask, neither is impossible
+  FF ← {(~atomTypes∊⍨⊂⍵)∧'='≡⊃⍵: ,'P' ⋄ ⍵}
+  GG ← {(b/⍵), NameOfStruct ⍵/⍨~b←∧\⍵∊'<=>'}
+  in  ←                             FF¨ GG E._Each_ (0/⊂'')⊢ t/⍨ bm ⍝ ~atomTypes∊⍨⊂⍵ is for mainly checking if something is a string
+  out ← ,¨'>'∘,⍣¯1 E._Each_ (0/⊂'') FF¨ GG E._Each_ (0/⊂'')⊢ t/⍨~bm ⍝ ~atomTypes∊⍨⊂⍵ is for mainly checking if something is a string
+  F←(io bm in out name){(io bm in out name)←⍺⍺
+    inArgsList ← {1≡≢in:,⊂⍵⋄⍵}⍵
+    in≢⍥≢inArgsList:0 Assert⍨'ERROR: Wrong amount of arguments given to ',name,': ','≢≢⍵',⍨⍕≢in
+
+    ⍝ all elements in args will be replaced by pointers
+    ⍝ which will be arguments given to the called function
+    args ← bm
+
+    ⍝ Push all outputs, pop them last with the typed-pop
+    ((~bm)/args)←Push{⍺⍺⍬} E._Each_⍬⊢ out
+
+    ⍝ Push inputs, first references since those will be in the output too
+    ref ← (str∘≢¨in) ∧ '='=⊃¨in
+    (( ref)/bm/args) ← push[atomTypes⍳in/⍨ ref] {⍺∘⊢⍵}E._Each_⍬⊢ inArgsList/⍨ ref ⍝ References allocated
+    ((~ref)/bm/args) ← push[atomTypes⍳in/⍨~ref] {⍺∘⊢⍵}E._Each_⍬⊢ inArgsList/⍨~ref ⍝ Non references allocated
+
+    maybeNilFunc ← ⍵⍵ ⍝ I tried simplifying out this assignment but was unsuccessful. ⎕OR with niladic functions is no joke.
+    _←{⍬≡⍵:maybeNilFunc ⋄ maybeNilFunc⍵} args
+    _←{⍵∘⊢⍬}¨runAfterFuncDone
+    runAfterFuncDone ⊢← 0/⊂id
+    _←Pop E._Each_⍬ (/⍨)~ref ⍝ First popping non reference inputs
+    refOuts ←{⍵∘⊢⍬}E._Each_⍬⌽pop[atomTypes⍳in/⍨ref]
+    {1≡≢⍵:⊃⍵⋄⍵} refOuts,⍨{⍵∘⊢⍬}E._Each_⍬⌽pop[atomTypes⍳out]
+  }(⎕OR'Func')
+∇
+
+
+∇{r}←AfterNewDefinitions libName
+  r←⍬
+  :if 'raylib'≡libName
+    _←SetTraceLogLevelRAYLIB TraceLogLevel.LOG_WARNING
+    _←SetTargetFPSRAYLIB 60
+  :EndIf
+∇
+
+⍝ ----------------------------- ⍝
+⍝ Utilities alongside libraries ⍝
+⍝ ----------------------------- ⍝
+
+∇{r}←ptr WriteF4 floats
+  r←⍬⊣MemCpyF4 {⍺⍺ ⍵} (ptr floats (4×≢floats))
+∇
+∇{r}←ptr WriteI4 ints
+  r←⍬⊣_←MemCpyI4 {⍺⍺ ⍵} (ptr ints (4×≢ints))
+∇
+∇r←ptr ReadI4 amount
+  r←MemCpyI4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))
+∇
+∇r←ptr ReadF4 amount
+  r←MemCpyF4Out {⍺⍺ ⍵} ((amount⍴0) ptr (4×amount))
+∇
+
+⍝ list of rgba-format colors for convenience
+:Namespace color
+  aliceblue            ← 240 248 255 255
+  antiquewhite         ← 250 235 215 255
+  aqua                 ← 0   255 255 255
+  aquamarine           ← 127 255 212 255
+  azure                ← 240 255 255 255
+  beige                ← 211 176 131 255
+  bisque               ← 255 228 196 255
+  black                ← 0   0   0   255
+  blanchedalmond       ← 255 235 205 255
+  blue                 ← 0   121 241 255
+  blueviolet           ← 138 43  226 255
+  brown                ← 127 106 79  255
+  burlywood            ← 222 184 135 255
+  cadetblue            ← 95  158 160 255
+  chartreuse           ← 127 255 0   255
+  chocolate            ← 210 105 30  255
+  coral                ← 255 127 80  255
+  cornflowerblue       ← 100 149 237 255
+  cornsilk             ← 255 248 220 255
+  crimson              ← 220 20  60  255
+  cyan                 ← 0   255 255 255
+  darkblue             ← 0   82  172 255
+  darkbrown            ← 76  63  47  255
+  darkcyan             ← 0   139 139 255
+  darkgoldenrod        ← 184 134 11  255
+  darkgray             ← 80  80  80  255
+  darkgrey             ← 80  80  80  255
+  darkgreen            ← 0   117 44  255
+  darkkhaki            ← 189 183 107 255
+  darkmagenta          ← 139 0   139 255
+  darkolivegreen       ← 85  107 47  255
+  darkorange           ← 255 140 0   255
+  darkorchid           ← 153 50  204 255
+  darkpurple           ← 112 31  126 255
+  darkred              ← 139 0   0   255
+  darksalmon           ← 230 150 122 255
+  darkseagreen         ← 143 188 143 255
+  darkslateblue        ← 72  61  139 255
+  darkslategray        ← 47  79  79  255
+  darkslategrey        ← 47  79  79  255
+  darkturquoise        ← 64  206 209 255
+  darkviolet           ← 148 0   211 255
+  deeppink             ← 255 20  147 255
+  deepskyblue          ← 0   191 255 255
+  dimgray              ← 105 105 105 255
+  dimgrey              ← 105 105 105 255
+  dodgerblue           ← 30  144 255 255
+  firebrick            ← 178 34  34  255
+  floralwhite          ← 255 250 240 255
+  forestgreen          ← 34  139 34  255
+  fuschia              ← 255 0   255 255
+  gainsboro            ← 220 220 220 255
+  ghostwhite           ← 248 248 255 255
+  gold                 ← 255 203 0   255
+  goldenrod            ← 218 165 32  255
+  gray                 ← 130 130 130 255
+  grey                 ← 130 130 130 255
+  green                ← 0   228 48  255
+  greenyellow          ← 173 255 47  255
+  honeydew             ← 240 255 240 255
+  hotpink              ← 255 105 180 255
+  indianred            ← 205 92  92  255
+  indigo               ← 75  0   130 255
+  ivory                ← 255 255 240 255
+  khaki                ← 240 230 140 255
+  lavender             ← 230 230 250 255
+  lavenderblush        ← 255 240 245 255
+  lawngreen            ← 124 252 0   255
+  lemonshiffon         ← 255 250 205 255
+  lightblue            ← 173 216 230 255
+  lightcoral           ← 240 128 128 255
+  lightcyan            ← 225 255 255 255
+  lightgoldenrodyellow ← 250 250 210 255
+  lightgray            ← 200 200 200 255
+  lightgrey            ← 200 200 200 255
+  lightgreen           ← 144 238 144 255
+  lightred             ← 255 102 102 255
+  lightsalmon          ← 255 160 122 255
+  lightseagreen        ← 32  178 170 255
+  lightskyblue         ← 135 206 250 255
+  lightslategray       ← 119 136 153 255
+  lightslategrey       ← 119 136 153 255
+  lightsteelblue       ← 176 196 222 255
+  lightyellow          ← 255 255 224 255
+  lime                 ← 0   158 47  255
+  limegreen            ← 50  205 50  255
+  linen                ← 250 240 230 255
+  magenta              ← 255 0   255 255
+  maroon               ← 190 33  55  255
+  mediumaquamarine     ← 102 205 170 255
+  mediumblue           ← 0   0   205 255
+  mediumorchid         ← 186 85  211 255
+  mediumpurple         ← 147 112 219 255
+  mediumseagreen       ← 60  179 113 255
+  mediumslateblue      ← 123 104 238 255
+  mediumspringgreen    ← 0   250 154 255
+  mediumturquoise      ← 72  209 204 255
+  mediumvioletred      ← 199 21  133 255
+  midnightblue         ← 25  25  112 255
+  mintcream            ← 245 255 250 255
+  mistyrose            ← 255 228 225 255
+  moccasin             ← 255 228 181 255
+  navajowhite          ← 255 228 181 255
+  navy                 ← 0   0   128 255
+  oldlace              ← 253 245 230 255
+  olive                ← 128 128 0   255
+  olivedrab            ← 107 142 35  255
+  orange               ← 255 161 0   255
+  orangered            ← 255 69  0   255
+  orchid               ← 218 112 214 255
+  palegoldenrod        ← 238 232 170 255
+  palegreen            ← 152 251 152 255
+  paleturquoise        ← 175 238 238 255
+  palevioletred        ← 219 112 147 255
+  papayawhip           ← 255 239 213 255
+  peachpuff            ← 255 218 185 255
+  peru                 ← 205 133 63  255
+  pink                 ← 255 109 194 255
+  plum                 ← 221 160 221 255
+  powderblue           ← 176 224 230 255
+  purple               ← 200 122 255 255
+  raywhite             ← 245 245 245 255
+  red                  ← 230 41  55  255
+  rosybrown            ← 188 143 143 255
+  royalblue            ← 65  105 225 255
+  saddlebrown          ← 139 69  19  255
+  salmon               ← 250 128 114 255
+  sandybrown           ← 244 164 96  255
+  seagreen             ← 46  139 87  255
+  seashell             ← 255 248 238 255
+  sienna               ← 160 82  45  255
+  silver               ← 192 192 192 255
+  skyblue              ← 102 191 255 255
+  slateblue            ← 106 90  205 255
+  slategray            ← 112 128 144 255
+  slategrey            ← 112 128 144 255
+  snow                 ← 255 250 250 255
+  springgreen          ← 0   255 127 255
+  steelblue            ← 70  130 180 255
+  tan                  ← 210 180 140 255
+  teal                 ← 0   128 128 255
+  thistle              ← 216 191 216 255
+  tomato               ← 255 99  71  255
+  transparent          ← 0   0   0   0
+  turquoise            ← 64  224 208 255
+  violet               ← 135 60  190 255
+  wheat                ← 245 222 179 255
+  white                ← 255 255 255 255
+  whitesmoke           ← 245 245 245 255
+  yellow               ← 253 249 0   255
+  yellowgreen          ← 154 205 50  255
+:EndNamespace
+
+∇r←Setup x ;_
+  r←⍬
+  initialized←1
+  pathToBinary ← GetPathToBinary⍬
+  _ ← installAutoForTatin pathToBinary
+  _ ← {0::0 Assert⍨'ERROR: Library file at ',⍵,' is either missing or invalid. It could be a broken symbolic link.'⋄ ⎕NInfo ⍵} pathToBinary
+  pathToBinary ← '"',pathToBinary,'"' ⍝ Wrapped in quotes so that paths including spaces conform inside ⎕NA calls
+
+  typeByteSize ← {⍵≡,'P':8 ⋄ ⍎⊃⌽⍵} E._Each_ ⍬⊢ atomTypes
+  pop  ← typeByteSize unitPopGen  E._Each_(0/⊂id)⊢ atomTypes
+  push ← typeByteSize unitPushGen E._Each_(0/⊂id)⊢ atomTypes
+  LenStack ← ⍬
+  popLenStack ← {l←⊃⌽LenStack ⋄ LenStack↓⍨←¯1 ⋄ l}
+
+  pop  ,← ⊂intVecRefPopGen ⍬
+  push ,← ⊂intVecRefPushGen⍬
+  atomTypes,←⊂'=I4'
+  typeByteSize,←8
+
+  runAfterFuncDone ← 0/⊂id
+
+  pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
+  push ,← ⊂intVecPushGen⍬
+  atomTypes,←⊂'<I4'
+  typeByteSize,←8
+
+  stack ← ⍬
+  topRuntime ← 0
+
+  structs ← ∪{(('⋄'≡⊃⍤⊃)¨⍵)/⍵}{⍎⍵._Each_(0/⊂,⊂'')⎕NL¯2} E
+  _←⎕NA 'I4 ',pathToBinary,'|StructCount'
+
+  _←⎕NA 'I4 ',pathToBinary,'|GetStructNameLength I4'
+  _←⎕NA pathToBinary,'|GetStructName =C1[] I4 I4'
+  structNamesAll ← {l←GetStructNameLength⍵ ⋄ GetStructName ((l⍴'')l ⍵)}E._Each_(0/⊂'')⊢ ⎕IO-⍨⍳StructCount
+  _←('ERROR: Not all structs were found in the .so/dll/dylib library binary:',⊃,/' ',¨(~r)/NameOfStruct¨structs) Assert ∧/r←structNamesAll∊⍨NameOfStruct¨structs
+  rrr ← structNamesAll⍳NameOfStruct¨structs
+  _←⎕EX 'structNamesAll' 'r'
+
+  _←⎕NA 'I4 ',pathToBinary,'|GetStructSize I4'
+  _←'tempAlloc' ⎕NA 'P ',pathToBinary,'|MemAlloc U4'
+  _←'tempFree'  ⎕NA      pathToBinary,'|MemFree P'
+  _←structByteSizes ← (GetStructSize¨⎕IO-⍨⍳StructCount)[rrr]
+
+  _←BytesEachArg ← ⌈/ GetStructSize¨ ⎕IO-⍨⍳≢structs
+  _←⎕EX 'rrr'
+
+  arrTypes ← ⍬
+  arrTypes ,←⊂ 'F4'     4  ⋄ typeByteSize ,← 4×4
+  arrTypes ,←⊂ 'F4'     2  ⋄ typeByteSize ,← 4×2
+  arrTypes ,←⊂ 'Matrix' 2  ⋄ typeByteSize ,← (4×4)×2
+  arrTypes ,←⊂ 'U1'     32 ⋄ typeByteSize ,← 1×32
+  arrTypes ,←⊂ 'I4'     4  ⋄ typeByteSize ,← 4×4
+  arrTypes ,←⊂ 'Vector2'2  ⋄ typeByteSize ,← 8×2
+  arrTypes ,←⊂ 'F4'     3  ⋄ typeByteSize ,← 4×3
+  arrTypes ,←⊂ 'F4'     16 ⋄ typeByteSize ,← 4×16
+  arrTypes ,←⊂ 'U4'     4  ⋄ typeByteSize ,← 4×4
+
+  atomTypes,←FormatArrType¨arrTypes
+  pop ,←  PopArrGen E._Each_(0/⊂id)⊢ arrTypes
+  push,← PushArrGen E._Each_(0/⊂id)⊢ arrTypes
+  atomTypes ,← 1↓¨⊃¨structs
+  pop ,← PopStructGen  E._Each_(0/⊂id)⊢ structs
+  push,← PushStructGen E._Each_(0/⊂id)⊢ structs
+  typeByteSize,← structByteSizes
+
+  pop ,← equalPtrPopGen  E._Each_(0/⊂id)⊢ pop
+  push,← equalPtrPushGen E._Each_(0/⊂id)⊢ push
+  typeByteSize,← 8⍨¨atomTypes
+  atomTypes,←'=',¨atomTypes
+
+  atomTypes ,←⊂ str ← '=0C1'
+  typeByteSize,← 8
+  pop ,←⊂ StringPopGen  ⍬
+  push,←⊂ StringPushGen ⍬
+
+  _←'MemCpyF4'   ⎕NA pathToBinary,'|memcpy2 P <F4[] U8'
+  _←'MemCpyI4'   ⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
+  _←'MemCpyI4Out'⎕NA pathToBinary,'|memcpy2 =I4[] P U8'
+  _←'MemCpyF4Out'⎕NA pathToBinary,'|memcpy2 =F4[] P U8'
+  _←'MemCpy'     ⎕NA pathToBinary,'|memcpy2 P P U8'
+  _←'MovePtr'⎕NA'P ',pathToBinary,'|MovePtr P I4'
+∇
+
+initialized←0
+
 ⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes
-∇{r}←Init pathToRaylibDotAPLN ;import
+∇{r}←Init pathToRaylibDotAPLN
 r←⍬
 
+:If initialized
+  →0
+:EndIf
+initialized←1
+
 pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN
-import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'
-'' ⎕NS 'import.'∘,¨import.⎕NL-2 3 9
+Setup⍬
 
 ClampRAYLIB                          ← R('ClampRetPtr'                          (('>',f) f f f                                                 )) ⍝ value min max                                   ⍝
 LerpRAYLIB                           ← R('LerpRetPtr'                           (('>',f) f f f                                                 )) ⍝ start end amount                                ⍝

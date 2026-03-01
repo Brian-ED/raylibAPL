@@ -144,14 +144,21 @@ ToFFI ← {𝕨𝕊data: nameMapping ← 𝕨⊣↕2‿0
     "ustr ← '=C1'"
     "str  ← '=0C1'"
   ⟩
-  initTradFnHeader ← ⟨
+  initTradFnHeader ← (∾⟜⟨":EndNamespace"⟩⁼⟨":Namespace setup"⟩∾⁼•FLines "../non-link/setup.apln.hide")∾⟨
+    ""
+    "initialized←0"
+    ""
     "⍝ Mode is either 3:All changes, 2:only manual changes 1:only automatic changes, or 0: no changes"
-    "∇{r}←Init pathToRaylibDotAPLN ;import"
+    "∇{r}←Init pathToRaylibDotAPLN"
     "r←⍬"
     ""
+    ":If initialized"
+    "  →0"
+    ":EndIf"
+    "initialized←1"
+    ""
     "pathToRaylibDotAPLN ← (⊢,'/'/⍨'/'≢⊃⍤⌽)(⊢,'.'/⍨0=≢⍤⊢),pathToRaylibDotAPLN"
-    "import ← 0 ⎕FIX pathToRaylibDotAPLN,'../non-link/setup.apln.hide'"
-    "'' ⎕NS 'import.'∘,¨import.⎕NL-2 3 9"
+    "Setup⍬"
   ⟩
   bottom ← ⟨
     "∇"
