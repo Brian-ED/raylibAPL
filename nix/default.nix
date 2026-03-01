@@ -12,7 +12,6 @@
     mkdir -p "$out/lib"
     ln -s "${temp-c-raylib}/lib/libraylib.so" "$out/lib/libtemp-c-raylib.so"
     cp -r ./link "$out"
-    cp -r ./non-link "$out"
     cp -r ./examples "$out"
     cp -r ./testing "$out"
     cp apl-package.json "$out/apl-package.json"
