@@ -3,10 +3,11 @@
 pkgs.mkShell {
   buildInputs = with pkgs; [
     git
-    bqn
+    cbqn
     raylibAPL
     tatinInstall
     tatinCLI
+    (dyalog.override { acceptLicense = true; })
   ];
 
   shellHook = ''
