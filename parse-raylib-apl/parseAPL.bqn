@@ -144,7 +144,7 @@ ToFFI ← {𝕨𝕊data: nameMapping ← 𝕨⊣↕2‿0
     "ustr ← '=C1'"
     "str  ← '=0C1'"
   ⟩
-  initTradFnHeader ← (∾⟜⟨":EndNamespace"⟩⁼⟨":Namespace setup"⟩∾⁼•FLines "../non-link/setup.apln.hide")∾⟨
+  initTradFnHeader ← (∾⟜⟨":EndNamespace"⟩⁼⟨":Namespace setup"⟩∾⁼•FLines "setup.apln.hide")∾⟨
     ""
     "initialized←0"
     ""
