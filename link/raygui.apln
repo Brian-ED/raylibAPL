@@ -694,8 +694,6 @@ PushStructGen ← {
   ⎕OR'O'
 }
 
-⍝ -------------------------------- ⍝
-
 ⍝ --------------------------- ⍝
 ⍝ Handling all =type versions ⍝
 ⍝ --------------------------- ⍝
@@ -707,9 +705,6 @@ equalPtrPushGen ← {
   O←⍵{ ⍵⍵ ⍺⍺ ⍵ }(⊃push[atomTypes⍳⊂,'P'])
   ⎕OR'O'
 }
-
-⍝ --------------------------- ⍝
-
 
 ⍝ --------------------------- ⍝
 ⍝ Handling signed string type ⍝
@@ -739,7 +734,6 @@ StringPushGen ← {
 }
 
 ⍝ --------------------------- ⍝
-
 
 ∇F←R (name t);bm;in;out;io
   'Func'⎕NA pathToBinary,'|',name,' P'⍴⍨2×≢t
