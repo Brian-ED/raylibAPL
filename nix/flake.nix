@@ -3,7 +3,7 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # Unstable has v20 dyalog
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     temp-c-raylib = { url="github:Brian-ED/temp-c-raylib"            ; inputs.nixpkgs.follows="nixpkgs"; };
     tatinCLIPkg   = { url="github:Bombardier-C-Kram/TatinCLI?dir=nix"; inputs.nixpkgs.follows="nixpkgs"; };
   };
@@ -11,7 +11,7 @@
     systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" ];
   in flake-utils.lib.eachSystem systems (system:
     let
-      tatinCLI = tatinCLIPkg.packages.${pkgs.system}.default;
+      tatinCLI = tatinCLIPkg.packages.${system}.default;
       versionNums = let
         splitPick = ss: i: s: builtins.elemAt (pkgs.lib.strings.splitString ss s) i;
       in splitPick "\",\n" 0 (splitPick "  version: \"" 1
@@ -19,7 +19,7 @@
       );
       pkgs = nixpkgs.legacyPackages.${system};
       raylibAPL = import ./default.nix {
-        temp-c-raylib = temp-c-raylib.packages.${pkgs.system}.default;
+        temp-c-raylib = temp-c-raylib.packages.${system}.default;
         inherit (pkgs) lib stdenv;
         inherit versionNums;
       };
