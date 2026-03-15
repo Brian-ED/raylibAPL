@@ -19,11 +19,12 @@ topLen ← ≢topLines
   scriptText←⊃⎕NGet example 1
   errMsgTopIncorrect ← 'Filepath does not point to a valid example. Top ',(⍕topLen),' lines did not match the standard'
   errMsgTopIncorrect Assert topLines≡2↑scriptText
-  'ERROR: Example cannot include ∇' Assert ∧/'∇'≠⊃,/4↓scriptText
+  'ERROR: Example cannot include ∇' Assert ~'∇'∊∊scriptText
   pathToMe←⊃1⎕NPARTS''
   pathToEx←⊃1⎕NParts example
   ⎕SE.Dyalog.Utils.CD pathToEx
-    (0⎕Fix '∇' ':EndNamespace',⍨(':Namespace n',⍥⊂'∇namespaceName (','rlDir)',⍨∊,∘' '¨shortLibNames),TrimImports topLen↓scriptText).namespaceName (raylibAPL.(⍎¨)longLibNames),⊂rlDir
+    _←2⎕Fix (⊂'N42 (','rlDir)',⍨∊shortLibNames,¨' '),TrimImports topLen↓scriptText
+    N42 (raylibAPL.(⍎¨)longLibNames),⊂rlDir
   ⎕SE.Dyalog.Utils.CD pathToMe
 ∇
 :EndNamespace
