@@ -104,16 +104,15 @@ showControls ← 1   ⍝ Show controls
     offsetVelocity ← (offsetSpeedMul÷zoom)÷¯0.5+mousePos÷(rl.GetScreenWidth⍬)(rl.GetScreenHeight⍬)
 
     offset +← offsetVelocity÷rl.GetFrameTime⍬ ⍝ Apply move velocity to camera
-    zoomFloat rl.WriteF4 ,zoom ⍝ Update the shader uniform values!
+    _←zoomFloat rl.WriteF4 ,zoom ⍝ Update the shader uniform values!
 
     offset⊢←0 0
-    (¯1+⍳2)offsetV2.Write¨offset
-
-    rl.SetShaderValue(shader zoomLoc   zoomfloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
-    rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
+    _←offsetV2 rl.WriteF4 offset
+    _←rl.SetShaderValue(shader zoomLoc   zoomFloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
+    _←rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
 
-  _←FH⍣(rl.IsMouseButtonDown rl.MouseButton.MOUSE_BUTTON_RIGHT)⊢⍬
+  FH⍣(∨/rl.IsMouseButtonDown¨ rl.MouseButton.MOUSE_BUTTON_LEFT rl.MouseButton.MOUSE_BUTTON_RIGHT)⊢⍬
 
   ⍝ Increment c value with time
   c +← (rl.GetFrameTime⍬)×incrementSpeed×0.0005
