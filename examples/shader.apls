@@ -72,8 +72,9 @@ showControls ← 1   ⍝ Show controls
 ⍝ Main game loop
 :While ~rl.WindowShouldClose⍬
   FF←{
-    cv2 rl.WriteF4 ⍵
-    rl.SetShaderValue (shader cLoc cv2 rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2)
+    c⊢←⍵
+    _←cv2 rl.WriteF4 ⍵
+    _←rl.SetShaderValue (shader cLoc cv2 rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2)
   }
   FF⍤¯1⍣(0<≢a)⊢a←pointsOfInterest⌿⍨rl.IsKeyPressed¨key.KEY_ZERO+⍳6
 
