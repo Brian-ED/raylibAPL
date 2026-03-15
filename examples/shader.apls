@@ -81,12 +81,12 @@ showControls ← 1   ⍝ Show controls
   FG←{
     zoom⊢←startingZoom
     offset⊢←0 0
-    zoomFloat rl.WriteF4 ,zoom
-    offsetV2 rl.WriteF4 offset
-    rl.SetShaderValue(shader zoomLoc   zoomFloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
-    rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
+    _←zoomFloat rl.WriteF4 ,zoom
+    _←offsetV2 rl.WriteF4 offset
+    _←rl.SetShaderValue(shader zoomLoc   zoomFloat rl.ShaderUniformDataType.SHADER_UNIFORM_FLOAT)
+    _←rl.SetShaderValue(shader offsetLoc offsetV2  rl.ShaderUniformDataType.SHADER_UNIFORM_VEC2 )
   }
-  _←FG⍣(rl.IsKeyPressed key.KEY_R)⊢⍬
+  FG⍣(rl.IsKeyPressed key.KEY_R)⊢⍬
 
   incrementSpeed ×← ~rl.IsKeyPressed key.KEY_SPACE ⍝ Pause animation (c change)
   showControls   ≠←  rl.IsKeyPressed key.KEY_F1    ⍝ Toggle whether or not to show controls
