@@ -178,12 +178,32 @@ intVecPushGen ← {
   _←'M'⎕NA pathToBinary,'|memcpy2 P <I4[] U8'
 
   push←(⊃push[atomTypes⍳⊂,'P']){
-    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected string, got: ',⍕⍵
+    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected integers, got: ',⍕⍵
     intVecPtr ← tempAlloc 4×≢⍵
     _←'INTERNAL ERROR: string pointer allocated for string to push was Null' Assert 0≢intVecPtr
     _←⍵⍵ (intVecPtr ⍵ (4×≢⍵))
     r←⍺⍺ intVecPtr
     F←intVecPtr{tempFree ⍺⍺}
+    runAfterFuncDone,←⊂⎕OR'F'
+    r
+  }M
+  ⎕OR 'push'
+}
+
+⍝ ----------------------------- ⍝
+⍝ Special float vector handling ⍝
+⍝ ----------------------------- ⍝
+
+floatVecPushGen ← {
+  _←'M'⎕NA pathToBinary,'|memcpy2 P <F4[] U8'
+
+  push←(⊃push[atomTypes⍳⊂,'P']){
+    (⌊≢⊢)⍵:0 Assert⍨'ERROR: Expected float, got: ',⍕⍵
+    floatVecPtr ← tempAlloc 4×≢⍵
+    _←'INTERNAL ERROR: string pointer allocated for string to push was Null' Assert 0≢floatVecPtr
+    _←⍵⍵ (floatVecPtr ⍵ (4×≢⍵))
+    r←⍺⍺ floatVecPtr
+    F←floatVecPtr{tempFree ⍺⍺}
     runAfterFuncDone,←⊂⎕OR'F'
     r
   }M
@@ -322,6 +342,19 @@ StringPushGen ← {
   ⎕OR 'push'
 }
 
+⍝ -------------------------------- ⍝
+⍝ "Special" string vector handling ⍝
+⍝ -------------------------------- ⍝
+stringVecPushGen ← {
+  push←{
+    s←'ERROR: The raylib function that was called uses'
+    s,←' a vector of strings, which is, and will not be implemented.'
+    s,←'This is due to these raylib functions not being useful and being a headache with arrays of pointers.'
+    s Assert 0
+  }
+  ⎕OR 'push'
+}
+
 ⍝ --------------------------- ⍝
 
 ∇F←R (name t);bm;in;out;io
@@ -332,21 +365,29 @@ StringPushGen ← {
   GG ← {(b/⍵), NameOfStruct ⍵/⍨~b←∧\⍵∊'<=>'}
   in  ←                             FF¨ GG E._Each_ (0/⊂'')⊢ t/⍨ bm ⍝ ~atomTypes∊⍨⊂⍵ is for mainly checking if something is a string
   out ← ,¨'>'∘,⍣¯1 E._Each_ (0/⊂'') FF¨ GG E._Each_ (0/⊂'')⊢ t/⍨~bm ⍝ ~atomTypes∊⍨⊂⍵ is for mainly checking if something is a string
-  F←(io bm in out name){(io bm in out name)←⍺⍺
+
+  ⍝ Pre-push all outputs, pop them last with the typed-pop
+  outPtr ← Push{⍺⍺⍬} E._Each_⍬⊢ out
+  topRuntime ⊢← 0
+  args ← bm
+
+  ⍝ all elements in args will be replaced by pointers
+  ⍝ which will be arguments given to the called function
+  ((~bm)/args)←outPtr
+
+  ref ← (str∘≢¨in) ∧ '='=⊃¨in
+
+  refPushers  ← {0≡≢⍵:⍬⋄⍵} push[atomTypes⍳in[⍋~ref]]
+
+  F←(io bm args ref refPushers in out name outPtr){(io bm args ref refPushers in out name outPtr)←⍺⍺
     inArgsList ← {1≡≢in:,⊂⍵⋄⍵}⍵
     in≢⍥≢inArgsList:0 Assert⍨'ERROR: Wrong amount of arguments given to ',name,': ','≢≢⍵',⍨⍕≢in
 
-    ⍝ all elements in args will be replaced by pointers
-    ⍝ which will be arguments given to the called function
-    args ← bm
-
     ⍝ Push all outputs, pop them last with the typed-pop
-    ((~bm)/args)←Push{⍺⍺⍬} E._Each_⍬⊢ out
+    topRuntime +← ≢outPtr
 
     ⍝ Push inputs, first references since those will be in the output too
-    ref ← (str∘≢¨in) ∧ '='=⊃¨in
-    (( ref)/bm/args) ← push[atomTypes⍳in/⍨ ref] {⍺∘⊢⍵}E._Each_⍬⊢ inArgsList/⍨ ref ⍝ References allocated
-    ((~ref)/bm/args) ← push[atomTypes⍳in/⍨~ref] {⍺∘⊢⍵}E._Each_⍬⊢ inArgsList/⍨~ref ⍝ Non references allocated
+    (bm/args)[⍋~ref] ← refPushers {⍺∘⊢⍵}¨ inArgsList[⍋~ref] ⍝ References allocated, then non-references allocated
 
     maybeNilFunc ← ⍵⍵ ⍝ I tried simplifying out this assignment but was unsuccessful. ⎕OR with niladic functions is no joke.
     _←{⍬≡⍵:maybeNilFunc ⋄ maybeNilFunc⍵} args
@@ -561,6 +602,16 @@ StringPushGen ← {
   runAfterFuncDone ← 0/⊂id
 
   pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
+  push ,← ⊂floatVecPushGen f
+  atomTypes,←⊂'<',f
+  typeByteSize,←8
+
+  pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
+  push ,← ⊂stringVecPushGen⍬
+  atomTypes,←⊂'<',str
+  typeByteSize,←8
+
+  pop  ,← ¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
   push ,← ⊂intVecPushGen⍬
   atomTypes,←⊂'<I4'
   typeByteSize,←8
@@ -604,6 +655,11 @@ StringPushGen ← {
   pop ,← PopStructGen  E._Each_(0/⊂id)⊢ structs
   push,← PushStructGen E._Each_(0/⊂id)⊢ structs
   typeByteSize,← structByteSizes
+
+  pop  ,← (≢structs)/¯1↑pop ⍝ Adding a filler function. It won't be used since popping an input-only type can't happen.
+  push ,← PushStructGen¨structs
+  atomTypes,←('<',1↓⊃)¨structs
+  typeByteSize,←(≢structs)⍴8
 
   pop ,← equalPtrPopGen  E._Each_(0/⊂id)⊢ pop
   push,← equalPtrPushGen E._Each_(0/⊂id)⊢ push
